@@ -60,7 +60,9 @@ def test_un_paso_de_protocolo_aparece_en_el_informe():
         await nav.post("/api/demo/dia", json={"dia": 5})
         await nav.post("/api/protocolo/paso", json={"alerta_id": "FATIGA", "paso_id": "f1", "hecho": True})
         return (await nav.get("/api/informes")).json()
-    acciones = correr_con_app(caso)["informes"][0]["contenido"]["acciones_tomadas"]
+    informes = correr_con_app(caso)["informes"]
+    # Desde la v1.1.0 también el día 4 genera informe: el de este caso es el del día 5.
+    acciones = next(i for i in informes if i["dia"] == 5)["contenido"]["acciones_tomadas"]
     assert acciones and acciones[0]["alerta"] == "FATIGA"
     assert "Detén" in acciones[0]["paso"]
 
@@ -72,9 +74,10 @@ def test_el_enlace_con_la_tierra_envia_la_cola_una_sola_vez():
         segundo = (await nav.post("/api/demo/enlace-tierra")).json()
         return primero, segundo
     primero, segundo = correr_con_app(caso)
-    assert primero["ultimo_enlace"]["enviados"] == 1
+    # Con la v1.1.0 hay informe pendiente en el día 4 y en el día 5: se envían los dos.
+    assert primero["ultimo_enlace"]["enviados"] == 2
     assert segundo["ultimo_enlace"]["enviados"] == 0
-    assert primero["informes"][0]["estado"] == "enviado"
+    assert all(i["estado"] == "enviado" for i in primero["informes"])
 
 
 def test_el_evento_solar_suma_12_msv_a_la_dosis():

@@ -7,7 +7,9 @@ from pathlib import Path
 import pila
 
 FRONTEND = Path(__file__).resolve().parents[1] / "laptop1-backend-frontend" / "frontend"
-HISTORIA = ["verde", "verde", "amarillo", "amarillo", "rojo", "amarillo", "verde"]
+# Versión 1.1.0 del especialista de sueño: el día 4 sube a naranja (sueño con riesgo 0.52 y
+# confianza 0.62 eleva la alerta de FATIGA). Ver SUPUESTOS.md y README.
+HISTORIA = ["verde", "verde", "amarillo", "naranja", "rojo", "amarillo", "verde"]
 
 
 async def recorrer_semana(app):

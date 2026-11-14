@@ -9,7 +9,7 @@ import pila
 from orquestador.clientes import ClienteGuardado
 
 ARCHIVO = Path(__file__).resolve().parents[1] / "respuestas-guardadas.json"
-HISTORIA = ["verde", "verde", "amarillo", "amarillo", "rojo", "amarillo", "verde"]
+HISTORIA = ["verde", "verde", "amarillo", "naranja", "rojo", "amarillo", "verde"]   # ver test_integracion.py
 
 
 @pytest.fixture

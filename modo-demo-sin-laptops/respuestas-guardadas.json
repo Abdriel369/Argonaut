@@ -2,7 +2,7 @@
  "meta": {
   "consultas_guardadas": 88,
   "estados_recorridos": 112,
-  "generado": "2026-11-14T21:48:31+00:00",
+  "generado": "2026-11-14T23:25:13+00:00",
   "nota": "Respuestas de los modelos grabadas de ejecuciones reales. Datos 100 % simulados. No es una herramienta de diagnóstico médico."
  },
  "respuestas": {
@@ -133,36 +133,36 @@
    "version_modelo": "1.0.0"
   },
   "088acf33104ed5f627d3": {
-   "confianza": 0.8,
+   "confianza": 0.75,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 0.835,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.6
-    },
-    {
-     "aporte": 0.623,
+     "aporte": 0.642,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 1.9
     },
     {
-     "aporte": 0.331,
-     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
-     "frase": "recibiste poca luz brillante por la mañana",
-     "indicador": "luz_brillante_min",
-     "valor": 42.0
+     "aporte": 0.551,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
     },
     {
-     "aporte": 0.309,
+     "aporte": 0.336,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 48.0
+    },
+    {
+     "aporte": 0.335,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
@@ -171,8 +171,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "amarillo",
-   "riesgo": 0.251,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.313,
+   "version_modelo": "1.1.0"
   },
   "0bcb7f8dfe318a6908ca": {
    "confianza": 0.96,
@@ -301,36 +301,36 @@
    "version_modelo": "1.0.0"
   },
   "11a0e23363b383e6df79": {
-   "confianza": 0.69,
+   "confianza": 0.78,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y llevas varios días durmiendo poco.",
    "factores": [
     {
-     "aporte": 1.148,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.0
-    },
-    {
-     "aporte": 0.935,
+     "aporte": 0.963,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.6
     },
     {
-     "aporte": 0.716,
+     "aporte": 0.916,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.27
     },
     {
-     "aporte": 0.617,
+     "aporte": 0.788,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.761,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -339,8 +339,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "naranja",
-   "riesgo": 0.617,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.728,
+   "version_modelo": "1.1.0"
   },
   "11fdf9b8c2881bc8ce45": {
    "confianza": 0.87,
@@ -721,36 +721,36 @@
    "version_modelo": "1.0.0"
   },
   "3a66e139c2e2e6a9a415": {
-   "confianza": 0.69,
+   "confianza": 0.78,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y llevas varios días durmiendo poco.",
    "factores": [
     {
-     "aporte": 1.148,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.0
-    },
-    {
-     "aporte": 0.935,
+     "aporte": 0.963,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.6
     },
     {
-     "aporte": 0.716,
+     "aporte": 0.916,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.27
     },
     {
-     "aporte": 0.617,
+     "aporte": 0.788,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.761,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -759,8 +759,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "naranja",
-   "riesgo": 0.617,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.728,
+   "version_modelo": "1.1.0"
   },
   "3db9defa3ebd66451a0b": {
    "confianza": 0.73,
@@ -805,36 +805,36 @@
    "version_modelo": "1.0.0"
   },
   "3de5737245f8474efce5": {
-   "confianza": 0.66,
+   "confianza": 0.62,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 1.043,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.2
-    },
-    {
-     "aporte": 0.712,
+     "aporte": 0.734,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.1
     },
     {
-     "aporte": 0.543,
+     "aporte": 0.709,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.669,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.73
     },
     {
-     "aporte": 0.441,
+     "aporte": 0.549,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -842,9 +842,9 @@
     }
    ],
    "laptop": "Laptop 2",
-   "nivel": "amarillo",
-   "riesgo": 0.42,
-   "version_modelo": "1.0.0"
+   "nivel": "naranja",
+   "riesgo": 0.521,
+   "version_modelo": "1.1.0"
   },
   "3f58b6d344592028c409": {
    "confianza": 0.73,
@@ -1477,36 +1477,36 @@
    "version_modelo": "1.0.0"
   },
   "6aa6c209069b80e1747e": {
-   "confianza": 0.8,
+   "confianza": 0.75,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 0.835,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.6
-    },
-    {
-     "aporte": 0.623,
+     "aporte": 0.642,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 1.9
     },
     {
-     "aporte": 0.331,
-     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
-     "frase": "recibiste poca luz brillante por la mañana",
-     "indicador": "luz_brillante_min",
-     "valor": 42.0
+     "aporte": 0.551,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
     },
     {
-     "aporte": 0.309,
+     "aporte": 0.336,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 48.0
+    },
+    {
+     "aporte": 0.335,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
@@ -1515,8 +1515,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "amarillo",
-   "riesgo": 0.251,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.313,
+   "version_modelo": "1.1.0"
   },
   "6d7e0c780b0368b49690": {
    "confianza": 0.96,
@@ -1939,36 +1939,36 @@
    "version_modelo": "1.0.0"
   },
   "85fa9cfccb4f82ebffd9": {
-   "confianza": 0.69,
+   "confianza": 0.78,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y llevas varios días durmiendo poco.",
    "factores": [
     {
-     "aporte": 1.148,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.0
-    },
-    {
-     "aporte": 0.935,
+     "aporte": 0.963,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.6
     },
     {
-     "aporte": 0.716,
+     "aporte": 0.916,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.27
     },
     {
-     "aporte": 0.617,
+     "aporte": 0.788,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.761,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -1977,8 +1977,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "naranja",
-   "riesgo": 0.617,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.728,
+   "version_modelo": "1.1.0"
   },
   "867959523b976fe5150f": {
    "confianza": 0.88,
@@ -2065,36 +2065,36 @@
    "version_modelo": "1.0.0"
   },
   "900554dfdc3a95efd12b": {
-   "confianza": 0.66,
+   "confianza": 0.62,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 1.043,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.2
-    },
-    {
-     "aporte": 0.712,
+     "aporte": 0.734,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.1
     },
     {
-     "aporte": 0.543,
+     "aporte": 0.709,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.669,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.73
     },
     {
-     "aporte": 0.441,
+     "aporte": 0.549,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -2102,9 +2102,9 @@
     }
    ],
    "laptop": "Laptop 2",
-   "nivel": "amarillo",
-   "riesgo": 0.42,
-   "version_modelo": "1.0.0"
+   "nivel": "naranja",
+   "riesgo": 0.521,
+   "version_modelo": "1.1.0"
   },
   "90470fd3cc36b57de038": {
    "confianza": 0.79,
@@ -2317,36 +2317,36 @@
    "version_modelo": "1.0.0"
   },
   "9bdc493f691a5a71191b": {
-   "confianza": 0.66,
+   "confianza": 0.62,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 1.043,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.2
-    },
-    {
-     "aporte": 0.712,
+     "aporte": 0.734,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.1
     },
     {
-     "aporte": 0.543,
+     "aporte": 0.709,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.669,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.73
     },
     {
-     "aporte": 0.441,
+     "aporte": 0.549,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -2354,9 +2354,9 @@
     }
    ],
    "laptop": "Laptop 2",
-   "nivel": "amarillo",
-   "riesgo": 0.42,
-   "version_modelo": "1.0.0"
+   "nivel": "naranja",
+   "riesgo": 0.521,
+   "version_modelo": "1.1.0"
   },
   "9ceb97d9832fd58e47aa": {
    "confianza": 0.72,
@@ -2485,36 +2485,36 @@
    "version_modelo": "1.0.0"
   },
   "a2756c78f4fb3eee57fd": {
-   "confianza": 0.8,
+   "confianza": 0.75,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 0.835,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.6
-    },
-    {
-     "aporte": 0.623,
+     "aporte": 0.642,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 1.9
     },
     {
-     "aporte": 0.331,
-     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
-     "frase": "recibiste poca luz brillante por la mañana",
-     "indicador": "luz_brillante_min",
-     "valor": 42.0
+     "aporte": 0.551,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
     },
     {
-     "aporte": 0.309,
+     "aporte": 0.336,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 48.0
+    },
+    {
+     "aporte": 0.335,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
@@ -2523,8 +2523,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "amarillo",
-   "riesgo": 0.251,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.313,
+   "version_modelo": "1.1.0"
   },
   "a734f72a39075af51fe0": {
    "confianza": 0.66,
@@ -2905,36 +2905,36 @@
    "version_modelo": "1.0.0"
   },
   "b9249197848dc50abd4e": {
-   "confianza": 0.69,
+   "confianza": 0.78,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y llevas varios días durmiendo poco.",
    "factores": [
     {
-     "aporte": 1.148,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.0
-    },
-    {
-     "aporte": 0.935,
+     "aporte": 0.963,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.6
     },
     {
-     "aporte": 0.716,
+     "aporte": 0.916,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.27
     },
     {
-     "aporte": 0.617,
+     "aporte": 0.788,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.761,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -2943,8 +2943,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "naranja",
-   "riesgo": 0.617,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.728,
+   "version_modelo": "1.1.0"
   },
   "bb143bcc7d060dafd048": {
    "confianza": 0.66,
@@ -3157,36 +3157,36 @@
    "version_modelo": "1.0.0"
   },
   "cc025978234f7a0beefc": {
-   "confianza": 0.66,
+   "confianza": 0.62,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 1.043,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.2
-    },
-    {
-     "aporte": 0.712,
+     "aporte": 0.734,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.1
     },
     {
-     "aporte": 0.543,
+     "aporte": 0.709,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.669,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.73
     },
     {
-     "aporte": 0.441,
+     "aporte": 0.549,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -3194,41 +3194,41 @@
     }
    ],
    "laptop": "Laptop 2",
-   "nivel": "amarillo",
-   "riesgo": 0.42,
-   "version_modelo": "1.0.0"
+   "nivel": "naranja",
+   "riesgo": 0.521,
+   "version_modelo": "1.1.0"
   },
   "ce1b339b309c8bed68e5": {
-   "confianza": 0.69,
+   "confianza": 0.78,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y llevas varios días durmiendo poco.",
    "factores": [
     {
-     "aporte": 1.148,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.0
-    },
-    {
-     "aporte": 0.935,
+     "aporte": 0.963,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.6
     },
     {
-     "aporte": 0.716,
+     "aporte": 0.916,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.27
     },
     {
-     "aporte": 0.617,
+     "aporte": 0.788,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.761,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -3237,40 +3237,40 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "naranja",
-   "riesgo": 0.617,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.728,
+   "version_modelo": "1.1.0"
   },
   "d3bb3fe24461666d75ec": {
-   "confianza": 0.69,
+   "confianza": 0.78,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y llevas varios días durmiendo poco.",
    "factores": [
     {
-     "aporte": 1.148,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.0
-    },
-    {
-     "aporte": 0.935,
+     "aporte": 0.963,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.6
     },
     {
-     "aporte": 0.716,
+     "aporte": 0.916,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.27
     },
     {
-     "aporte": 0.617,
+     "aporte": 0.788,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.761,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -3279,40 +3279,40 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "naranja",
-   "riesgo": 0.617,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.728,
+   "version_modelo": "1.1.0"
   },
   "d85d1706d3eaa92807ae": {
-   "confianza": 0.66,
+   "confianza": 0.62,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 1.043,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.2
-    },
-    {
-     "aporte": 0.712,
+     "aporte": 0.734,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 2.1
     },
     {
-     "aporte": 0.543,
+     "aporte": 0.709,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.669,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
      "valor": 5.73
     },
     {
-     "aporte": 0.441,
+     "aporte": 0.549,
      "etiqueta": "Estrés percibido",
      "frase": "tu estrés está alto",
      "indicador": "estres",
@@ -3320,9 +3320,9 @@
     }
    ],
    "laptop": "Laptop 2",
-   "nivel": "amarillo",
-   "riesgo": 0.42,
-   "version_modelo": "1.0.0"
+   "nivel": "naranja",
+   "riesgo": 0.521,
+   "version_modelo": "1.1.0"
   },
   "db6ab1bf25b9d1102354": {
    "confianza": 0.96,
@@ -3367,36 +3367,36 @@
    "version_modelo": "1.0.0"
   },
   "ddb897c41fddb6d397d7": {
-   "confianza": 0.8,
+   "confianza": 0.75,
    "datos_entrenamiento": "sintéticos",
    "datos_faltantes": [],
    "dispositivo": "cpu",
    "especialista": "sueno",
-   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: tu reloj interno está desajustado (16 amaneceres al día en órbita) y dormiste poco anoche.",
    "factores": [
     {
-     "aporte": 0.835,
-     "etiqueta": "Horas de sueño de anoche",
-     "frase": "dormiste poco anoche",
-     "indicador": "sueno_h",
-     "valor": 5.6
-    },
-    {
-     "aporte": 0.623,
+     "aporte": 0.642,
      "etiqueta": "Desfase del reloj interno",
      "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
      "indicador": "desfase_circadiano_h",
      "valor": 1.9
     },
     {
-     "aporte": 0.331,
-     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
-     "frase": "recibiste poca luz brillante por la mañana",
-     "indicador": "luz_brillante_min",
-     "valor": 42.0
+     "aporte": 0.551,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
     },
     {
-     "aporte": 0.309,
+     "aporte": 0.336,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 48.0
+    },
+    {
+     "aporte": 0.335,
      "etiqueta": "Sueño medio de 3 días",
      "frase": "llevas varios días durmiendo poco",
      "indicador": "sueno_media_3d",
@@ -3405,8 +3405,8 @@
    ],
    "laptop": "Laptop 2",
    "nivel": "amarillo",
-   "riesgo": 0.251,
-   "version_modelo": "1.0.0"
+   "riesgo": 0.313,
+   "version_modelo": "1.1.0"
   },
   "df1e25f8739e12d1be90": {
    "confianza": 0.96,

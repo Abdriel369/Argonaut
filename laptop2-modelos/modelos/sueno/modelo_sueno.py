@@ -45,7 +45,7 @@ DEFINICION = Definicion(
     nombre="sueno",
     titulo="Sueño",
     riesgo_que_estima="problemas por falta o desorden de sueño",
-    version="1.0.0",
+    version="1.1.0",
     tipo="logistica",
     laptop="Laptop 2",
     variables=generador.VARIABLES,
@@ -57,8 +57,10 @@ DEFINICION = Definicion(
     auc_minimo=0.78,
     limitaciones=(
         "Entrenado solo con datos sintéticos: aprende una regla escrita a mano, no fisiología real.",
-        "Los rangos vienen de estudios en Tierra y de resúmenes públicos de vuelos; no representan por completo el espacio.",
+        "Los rangos y las dependencias entre variables (p. ej. estrés y sueño) son supuestos documentados, "
+        "pendientes de verificar con fuentes; no representan por completo el espacio.",
         "El desfase circadiano y la luz son valores simulados; en una estación real vendrían de sensores y horarios.",
         "Modelo lineal: no capta combinaciones complejas entre factores.",
+        "La prevalencia de riesgo de los datos (≈12 %) es un supuesto de diseño, no una medición.",
     ),
 )

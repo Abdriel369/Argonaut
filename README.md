@@ -67,7 +67,7 @@ python3 -m pytest          # desde la raíz (ver el número exacto en la salida)
 
 Qué cubren:
 - **Contratos:** cada esquema JSON es válido; mensajes incorrectos se rechazan.
-- **Reglas:** cada día del guion da el nivel esperado (verde, verde, amarillo, amarillo, rojo, amarillo, verde);
+- **Reglas:** cada día del guion da el nivel esperado (verde, verde, amarillo, naranja, rojo, amarillo, verde; el día 4 sube a naranja desde la versión 1.1.0 del especialista de sueño);
   ventana de adaptación; persistencia; datos faltantes sin romper nada.
 - **Orquestador:** enrutamiento por tabla; un especialista solo sube un escalón (nunca baja la regla);
   modo degradado sin especialistas.
