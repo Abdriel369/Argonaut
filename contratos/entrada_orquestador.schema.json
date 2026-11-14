@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "entrada_orquestador",
+  "title": "Entrada al orquestador (Laptop 1 -> Laptop 3)",
+  "description": "Lo que el backend envía al orquestador para evaluar un día de misión. Todos los datos son simulados.",
+  "type": "object",
+  "required": ["astronauta_id", "dia_mision", "indicadores", "desviaciones_vs_base", "tendencias_7d", "contexto"],
+  "properties": {
+    "astronauta_id": { "type": "string", "minLength": 1 },
+    "dia_mision": { "type": "integer", "minimum": 1 },
+    "indicadores": {
+      "description": "Valor de hoy por indicador. null significa 'sin dato'.",
+      "type": "object",
+      "additionalProperties": { "type": ["number", "null"] }
+    },
+    "desviaciones_vs_base": {
+      "description": "Diferencia de hoy contra la línea base personal.",
+      "type": "object",
+      "additionalProperties": {
+        "type": ["object", "null"],
+        "required": ["absoluta"],
+        "properties": {
+          "absoluta": { "type": "number" },
+          "porcentual": { "type": ["number", "null"] }
+        }
+      }
+    },
+    "tendencias_7d": {
+      "description": "Hasta 7 valores por indicador, del más antiguo al de hoy (el último es hoy).",
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "maxItems": 7,
+        "items": { "type": ["number", "null"] }
+      }
+    },
+    "linea_base": {
+      "description": "Línea base personal vigente (pre-vuelo, recalibrada tras los 2 días de adaptación).",
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "plan": {
+      "description": "Metas planificadas, por ejemplo minutos de ejercicio al día.",
+      "type": "object",
+      "additionalProperties": { "type": "number" }
+    },
+    "contexto": {
+      "type": "object",
+      "required": ["dosis_acumulada", "evento_solar"],
+      "properties": {
+        "dosis_acumulada": { "type": "number", "minimum": 0, "description": "mSv acumulados en la misión" },
+        "evento_solar": { "type": "boolean" }
+      }
+    }
+  }
+}

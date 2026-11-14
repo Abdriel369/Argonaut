@@ -1,0 +1,3706 @@
+{
+ "meta": {
+  "consultas_guardadas": 88,
+  "estados_recorridos": 112,
+  "generado": "2026-11-14T21:48:31+00:00",
+  "nota": "Respuestas de los modelos grabadas de ejecuciones reales. Datos 100 % simulados. No es una herramienta de diagnóstico médico."
+ },
+ "respuestas": {
+  "00ec55bcf0d3b0c76df3": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.94,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.488,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.02
+    },
+    {
+     "aporte": -0.439,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.327,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "061307fd1d2563ca38c7": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo alto de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y tu pulso en reposo está más alto que tu normal.",
+   "factores": [
+    {
+     "aporte": 0.689,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -33.33
+    },
+    {
+     "aporte": 0.387,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": -0.349,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.58,
+   "version_modelo": "1.0.0"
+  },
+  "06fa64b7f619c35c4982": {
+   "confianza": 0.89,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo muy alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 2.015,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.86,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.44,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.52
+    },
+    {
+     "aporte": 0.436,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "rojo",
+   "riesgo": 0.859,
+   "version_modelo": "1.0.0"
+  },
+  "088acf33104ed5f627d3": {
+   "confianza": 0.8,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 0.835,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": 0.623,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 1.9
+    },
+    {
+     "aporte": 0.331,
+     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
+     "frase": "recibiste poca luz brillante por la mañana",
+     "indicador": "luz_brillante_min",
+     "valor": 42.0
+    },
+    {
+     "aporte": 0.309,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.251,
+   "version_modelo": "1.0.0"
+  },
+  "0bcb7f8dfe318a6908ca": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.94,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.488,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.02
+    },
+    {
+     "aporte": -0.439,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.327,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "0cac258c4bd83268322c": {
+   "confianza": 0.93,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo bajo de sobrecarga del corazón y la circulación.",
+   "factores": [
+    {
+     "aporte": -0.842,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 1.2
+    },
+    {
+     "aporte": -0.41,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.258,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -3.7
+    },
+    {
+     "aporte": -0.218,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 118.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.082,
+   "version_modelo": "1.0.0"
+  },
+  "0de2cf19379a3b47e785": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.512,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  },
+  "11a0e23363b383e6df79": {
+   "confianza": 0.69,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.148,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.935,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.6
+    },
+    {
+     "aporte": 0.716,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.617,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.617,
+   "version_modelo": "1.0.0"
+  },
+  "11fdf9b8c2881bc8ce45": {
+   "confianza": 0.87,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.356,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": -0.257,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": 0.197,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.191,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.16,
+   "version_modelo": "1.0.0"
+  },
+  "1216028f5be60b9cf542": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.512,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  },
+  "1903757de1014776cc38": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo moderado de fatiga y desgaste emocional. Lo que más pesa: dormiste poco anoche y tu estrés está alto.",
+   "factores": [
+    {
+     "aporte": 0.465,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    },
+    {
+     "aporte": 0.173,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.144,
+     "etiqueta": "Comida frente a lo planeado",
+     "frase": "comiste menos de lo planeado",
+     "indicador": "ingesta_pct",
+     "valor": 93.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.341,
+   "version_modelo": "1.0.0"
+  },
+  "1ac741001c1bc5c5bcca": {
+   "confianza": 0.94,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo bajo de sobrecarga del corazón y la circulación.",
+   "factores": [
+    {
+     "aporte": -0.884,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.422,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.397,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -1.82
+    },
+    {
+     "aporte": -0.217,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 118.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.077,
+   "version_modelo": "1.0.0"
+  },
+  "1de9acb91269eea258a8": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo muy alto de fatiga y desgaste emocional. Lo que más pesa: tu estrés está alto y dormiste poco anoche.",
+   "factores": [
+    {
+     "aporte": 0.919,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    },
+    {
+     "aporte": 0.687,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.532,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.504,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "rojo",
+   "riesgo": 0.793,
+   "version_modelo": "1.0.0"
+  },
+  "27977bd2cad657fa6e66": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "2aaff399c96db43f6bc2": {
+   "confianza": 0.77,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y llevas varios días durmiendo poco.",
+   "factores": [
+    {
+     "aporte": -0.4,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": 0.255,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -18.52
+    },
+    {
+     "aporte": -0.199,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 120.0
+    },
+    {
+     "aporte": 0.169,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.67
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.292,
+   "version_modelo": "1.0.0"
+  },
+  "3126b530481d1311ff4f": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.903,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.51,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 13.51
+    },
+    {
+     "aporte": -0.411,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.329,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.051,
+   "version_modelo": "1.0.0"
+  },
+  "3666885429edc3673804": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo alto de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y tu pulso en reposo está más alto que tu normal.",
+   "factores": [
+    {
+     "aporte": 0.689,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -33.33
+    },
+    {
+     "aporte": 0.387,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": -0.349,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.58,
+   "version_modelo": "1.0.0"
+  },
+  "3a66e139c2e2e6a9a415": {
+   "confianza": 0.69,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.148,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.935,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.6
+    },
+    {
+     "aporte": 0.716,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.617,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.617,
+   "version_modelo": "1.0.0"
+  },
+  "3db9defa3ebd66451a0b": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo moderado de fatiga y desgaste emocional. Lo que más pesa: dormiste poco anoche y tu estrés está alto.",
+   "factores": [
+    {
+     "aporte": 0.465,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    },
+    {
+     "aporte": 0.173,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.144,
+     "etiqueta": "Comida frente a lo planeado",
+     "frase": "comiste menos de lo planeado",
+     "indicador": "ingesta_pct",
+     "valor": 93.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.341,
+   "version_modelo": "1.0.0"
+  },
+  "3de5737245f8474efce5": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.043,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.712,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.1
+    },
+    {
+     "aporte": 0.543,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    },
+    {
+     "aporte": 0.441,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.42,
+   "version_modelo": "1.0.0"
+  },
+  "3f58b6d344592028c409": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y llevas varios días durmiendo poco.",
+   "factores": [
+    {
+     "aporte": 0.423,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -24.07
+    },
+    {
+     "aporte": -0.383,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    },
+    {
+     "aporte": -0.204,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 121.0
+    },
+    {
+     "aporte": 0.125,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.333,
+   "version_modelo": "1.0.0"
+  },
+  "4895200fd9ca397037ea": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.926,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.513,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.02
+    },
+    {
+     "aporte": -0.421,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.394,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.048,
+   "version_modelo": "1.0.0"
+  },
+  "4a6ecd0dd553b8bb4825": {
+   "confianza": 0.71,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 1.823,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.72,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.484,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 12.5
+    },
+    {
+     "aporte": -0.334,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "naranja",
+   "riesgo": 0.642,
+   "version_modelo": "1.0.0"
+  },
+  "51f88926d9f0153e8ef7": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo muy alto de fatiga y desgaste emocional. Lo que más pesa: tu estrés está alto y dormiste poco anoche.",
+   "factores": [
+    {
+     "aporte": 0.919,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    },
+    {
+     "aporte": 0.687,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.532,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.504,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "rojo",
+   "riesgo": 0.793,
+   "version_modelo": "1.0.0"
+  },
+  "53bffe4bcfba3ca6d51a": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.926,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.513,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.02
+    },
+    {
+     "aporte": -0.421,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.394,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.048,
+   "version_modelo": "1.0.0"
+  },
+  "576ba160403c9f498f99": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.984,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.487,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.52
+    },
+    {
+     "aporte": -0.443,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.326,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "579c762a722e5f5c448d": {
+   "confianza": 0.97,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.888,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.601,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 3.53
+    },
+    {
+     "aporte": -0.403,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.383,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.043,
+   "version_modelo": "1.0.0"
+  },
+  "581f8d03680029eba45d": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó.",
+   "factores": [
+    {
+     "aporte": -0.391,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    },
+    {
+     "aporte": -0.343,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 6.02
+    },
+    {
+     "aporte": -0.193,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 120.0
+    },
+    {
+     "aporte": 0.191,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -14.81
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.21,
+   "version_modelo": "1.0.0"
+  },
+  "5b824501f96249817d7d": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo moderado de fatiga y desgaste emocional. Lo que más pesa: dormiste poco anoche y tu estrés está alto.",
+   "factores": [
+    {
+     "aporte": 0.465,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    },
+    {
+     "aporte": 0.173,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.144,
+     "etiqueta": "Comida frente a lo planeado",
+     "frase": "comiste menos de lo planeado",
+     "indicador": "ingesta_pct",
+     "valor": 93.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.341,
+   "version_modelo": "1.0.0"
+  },
+  "630e9a1778862c6142f2": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "63f1831355fbf3bc3cbb": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "651b37f083b78301d821": {
+   "confianza": 0.97,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.907,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.747,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 1.01
+    },
+    {
+     "aporte": -0.419,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.388,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.036,
+   "version_modelo": "1.0.0"
+  },
+  "66c4d982e1e395a1f479": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.986,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.601,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 2.52
+    },
+    {
+     "aporte": -0.442,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.323,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.051,
+   "version_modelo": "1.0.0"
+  },
+  "68c6822d93f24e1de95f": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo alto de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y tu pulso en reposo está más alto que tu normal.",
+   "factores": [
+    {
+     "aporte": 0.689,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -33.33
+    },
+    {
+     "aporte": 0.387,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": -0.349,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.58,
+   "version_modelo": "1.0.0"
+  },
+  "69f5ffcdce533a11926a": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo muy alto de fatiga y desgaste emocional. Lo que más pesa: tu estrés está alto y dormiste poco anoche.",
+   "factores": [
+    {
+     "aporte": 0.919,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    },
+    {
+     "aporte": 0.687,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.532,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.504,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "rojo",
+   "riesgo": 0.793,
+   "version_modelo": "1.0.0"
+  },
+  "6aa6c209069b80e1747e": {
+   "confianza": 0.8,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 0.835,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": 0.623,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 1.9
+    },
+    {
+     "aporte": 0.331,
+     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
+     "frase": "recibiste poca luz brillante por la mañana",
+     "indicador": "luz_brillante_min",
+     "valor": 42.0
+    },
+    {
+     "aporte": 0.309,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.251,
+   "version_modelo": "1.0.0"
+  },
+  "6d7e0c780b0368b49690": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.984,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.487,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.52
+    },
+    {
+     "aporte": -0.443,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.326,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "6e14efa8b96cf26a380d": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "73740cdb4e1e39eeb060": {
+   "confianza": 0.87,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.356,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": -0.257,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": 0.197,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.191,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.16,
+   "version_modelo": "1.0.0"
+  },
+  "75f47532ac656c2d13e4": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "768893bf00c94741d013": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.984,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.487,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.52
+    },
+    {
+     "aporte": -0.443,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.326,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "7788451c54fe6f60a058": {
+   "confianza": 0.87,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.356,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": -0.257,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": 0.197,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.191,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.16,
+   "version_modelo": "1.0.0"
+  },
+  "7cc44b4dda0c67b11b31": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo moderado de fatiga y desgaste emocional. Lo que más pesa: dormiste poco anoche y tu estrés está alto.",
+   "factores": [
+    {
+     "aporte": 0.465,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    },
+    {
+     "aporte": 0.173,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.144,
+     "etiqueta": "Comida frente a lo planeado",
+     "frase": "comiste menos de lo planeado",
+     "indicador": "ingesta_pct",
+     "valor": 93.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.341,
+   "version_modelo": "1.0.0"
+  },
+  "7eeb16a40eb377c09a56": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.926,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.513,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.02
+    },
+    {
+     "aporte": -0.421,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.394,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.048,
+   "version_modelo": "1.0.0"
+  },
+  "7fac461659322b9a7a08": {
+   "confianza": 0.97,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.907,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.831,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 0.5
+    },
+    {
+     "aporte": -0.421,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.389,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.033,
+   "version_modelo": "1.0.0"
+  },
+  "811a7b7eaaf1632b3514": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.907,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.645,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 1.51
+    },
+    {
+     "aporte": -0.414,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.326,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.045,
+   "version_modelo": "1.0.0"
+  },
+  "85fa9cfccb4f82ebffd9": {
+   "confianza": 0.69,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.148,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.935,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.6
+    },
+    {
+     "aporte": 0.716,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.617,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.617,
+   "version_modelo": "1.0.0"
+  },
+  "867959523b976fe5150f": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "8bbc4ae69198bceaf5a7": {
+   "confianza": 0.97,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.932,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.648,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 3.02
+    },
+    {
+     "aporte": -0.425,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.403,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.041,
+   "version_modelo": "1.0.0"
+  },
+  "900554dfdc3a95efd12b": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.043,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.712,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.1
+    },
+    {
+     "aporte": 0.543,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    },
+    {
+     "aporte": 0.441,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.42,
+   "version_modelo": "1.0.0"
+  },
+  "90470fd3cc36b57de038": {
+   "confianza": 0.79,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 1.861,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.788,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.471,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 13.51
+    },
+    {
+     "aporte": -0.278,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "naranja",
+   "riesgo": 0.734,
+   "version_modelo": "1.0.0"
+  },
+  "9080f8f917a92d5d5f83": {
+   "confianza": 0.8,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo muy alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 1.899,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.804,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.475,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.02
+    },
+    {
+     "aporte": -0.318,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "rojo",
+   "riesgo": 0.754,
+   "version_modelo": "1.0.0"
+  },
+  "94b8890519c97ecaf588": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y llevas varios días durmiendo poco.",
+   "factores": [
+    {
+     "aporte": 0.423,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -24.07
+    },
+    {
+     "aporte": -0.383,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    },
+    {
+     "aporte": -0.204,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 121.0
+    },
+    {
+     "aporte": 0.125,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.333,
+   "version_modelo": "1.0.0"
+  },
+  "95ea373112f93c8fe732": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.926,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.513,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.02
+    },
+    {
+     "aporte": -0.421,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.394,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.048,
+   "version_modelo": "1.0.0"
+  },
+  "99860bc03b2ea074f0b7": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo moderado de fatiga y desgaste emocional. Lo que más pesa: dormiste poco anoche y tu estrés está alto.",
+   "factores": [
+    {
+     "aporte": 0.465,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    },
+    {
+     "aporte": 0.173,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.144,
+     "etiqueta": "Comida frente a lo planeado",
+     "frase": "comiste menos de lo planeado",
+     "indicador": "ingesta_pct",
+     "valor": 93.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.341,
+   "version_modelo": "1.0.0"
+  },
+  "9bdc493f691a5a71191b": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.043,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.712,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.1
+    },
+    {
+     "aporte": 0.543,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    },
+    {
+     "aporte": 0.441,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.42,
+   "version_modelo": "1.0.0"
+  },
+  "9ceb97d9832fd58e47aa": {
+   "confianza": 0.72,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 1.823,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.72,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.482,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 13.01
+    },
+    {
+     "aporte": -0.334,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "naranja",
+   "riesgo": 0.644,
+   "version_modelo": "1.0.0"
+  },
+  "9dd1f42447362b2fe5a8": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y llevas varios días durmiendo poco.",
+   "factores": [
+    {
+     "aporte": 0.423,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -24.07
+    },
+    {
+     "aporte": -0.383,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    },
+    {
+     "aporte": -0.204,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 121.0
+    },
+    {
+     "aporte": 0.125,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.333,
+   "version_modelo": "1.0.0"
+  },
+  "a107796725eacbb6b5e6": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.94,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.488,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.02
+    },
+    {
+     "aporte": -0.439,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.327,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "a2756c78f4fb3eee57fd": {
+   "confianza": 0.8,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 0.835,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": 0.623,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 1.9
+    },
+    {
+     "aporte": 0.331,
+     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
+     "frase": "recibiste poca luz brillante por la mañana",
+     "indicador": "luz_brillante_min",
+     "valor": 42.0
+    },
+    {
+     "aporte": 0.309,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.251,
+   "version_modelo": "1.0.0"
+  },
+  "a734f72a39075af51fe0": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo alto de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y tu pulso en reposo está más alto que tu normal.",
+   "factores": [
+    {
+     "aporte": 0.689,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -33.33
+    },
+    {
+     "aporte": 0.387,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": -0.349,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.58,
+   "version_modelo": "1.0.0"
+  },
+  "a8cea8d4017c3acbf174": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo alto de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y tu pulso en reposo está más alto que tu normal.",
+   "factores": [
+    {
+     "aporte": 0.689,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -33.33
+    },
+    {
+     "aporte": 0.387,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": -0.349,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.58,
+   "version_modelo": "1.0.0"
+  },
+  "abbeaccd1a064a47ad48": {
+   "confianza": 0.88,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.276,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 55.0
+    },
+    {
+     "aporte": -0.238,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 6.8
+    },
+    {
+     "aporte": -0.216,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": -0.2,
+     "etiqueta": "Ejercicio frente al plan",
+     "frase": "entrenaste menos de lo planeado",
+     "indicador": "ejercicio_pct_plan",
+     "valor": 83.33
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.156,
+   "version_modelo": "1.0.0"
+  },
+  "ae31f37c1e3c35e0c147": {
+   "confianza": 0.86,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo muy alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 1.956,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.842,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.449,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.02
+    },
+    {
+     "aporte": -0.266,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "rojo",
+   "riesgo": 0.824,
+   "version_modelo": "1.0.0"
+  },
+  "af8be323a1ed0520e107": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo muy alto de fatiga y desgaste emocional. Lo que más pesa: tu estrés está alto y dormiste poco anoche.",
+   "factores": [
+    {
+     "aporte": 0.919,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    },
+    {
+     "aporte": 0.687,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.532,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.504,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "rojo",
+   "riesgo": 0.793,
+   "version_modelo": "1.0.0"
+  },
+  "b0ddc4ca1e4ef3bebebb": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.943,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.616,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 2.02
+    },
+    {
+     "aporte": -0.438,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.322,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.05,
+   "version_modelo": "1.0.0"
+  },
+  "b0f7c10bfc8287b9ec2f": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y llevas varios días durmiendo poco.",
+   "factores": [
+    {
+     "aporte": 0.423,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -24.07
+    },
+    {
+     "aporte": -0.383,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    },
+    {
+     "aporte": -0.204,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 121.0
+    },
+    {
+     "aporte": 0.125,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.333,
+   "version_modelo": "1.0.0"
+  },
+  "b10d8870c42cd383b3ef": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.926,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.513,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.02
+    },
+    {
+     "aporte": -0.421,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.394,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.048,
+   "version_modelo": "1.0.0"
+  },
+  "b851237bd15656a9ffaf": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.984,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.487,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 14.52
+    },
+    {
+     "aporte": -0.443,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.326,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.056,
+   "version_modelo": "1.0.0"
+  },
+  "b9249197848dc50abd4e": {
+   "confianza": 0.69,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.148,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.935,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.6
+    },
+    {
+     "aporte": 0.716,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.617,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.617,
+   "version_modelo": "1.0.0"
+  },
+  "bb143bcc7d060dafd048": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo alto de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y tu pulso en reposo está más alto que tu normal.",
+   "factores": [
+    {
+     "aporte": 0.689,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -33.33
+    },
+    {
+     "aporte": 0.387,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 15.66
+    },
+    {
+     "aporte": 0.375,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": -0.349,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.58,
+   "version_modelo": "1.0.0"
+  },
+  "bb4f42708f8c3b37bb06": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.512,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  },
+  "bc86b4b5283c99a82d1a": {
+   "confianza": 0.87,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo bajo de fatiga y desgaste emocional.",
+   "factores": [
+    {
+     "aporte": 0.356,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": -0.257,
+     "etiqueta": "Tiempo de reacción",
+     "frase": "tus reflejos están más lentos",
+     "indicador": "tiempo_reaccion_ms",
+     "valor": 300.0
+    },
+    {
+     "aporte": 0.197,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 3.0
+    },
+    {
+     "aporte": -0.191,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.16,
+   "version_modelo": "1.0.0"
+  },
+  "c2c0bf1f8ea2366cf99f": {
+   "confianza": 0.73,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo moderado de sobrecarga del corazón y la circulación. Lo que más pesa: la variabilidad de tu pulso bajó y llevas varios días durmiendo poco.",
+   "factores": [
+    {
+     "aporte": 0.423,
+     "etiqueta": "Variabilidad del pulso frente a tu normal",
+     "frase": "la variabilidad de tu pulso bajó",
+     "indicador": "hrv_desv_pct",
+     "valor": -24.07
+    },
+    {
+     "aporte": -0.383,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    },
+    {
+     "aporte": -0.204,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 121.0
+    },
+    {
+     "aporte": 0.125,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.333,
+   "version_modelo": "1.0.0"
+  },
+  "c300496104c67fa7bc97": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.903,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.51,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 13.51
+    },
+    {
+     "aporte": -0.411,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    },
+    {
+     "aporte": -0.329,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación está baja",
+     "indicador": "spo2",
+     "valor": 97.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.051,
+   "version_modelo": "1.0.0"
+  },
+  "cc025978234f7a0beefc": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.043,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.712,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.1
+    },
+    {
+     "aporte": 0.543,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    },
+    {
+     "aporte": 0.441,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.42,
+   "version_modelo": "1.0.0"
+  },
+  "ce1b339b309c8bed68e5": {
+   "confianza": 0.69,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.148,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.935,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.6
+    },
+    {
+     "aporte": 0.716,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.617,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.617,
+   "version_modelo": "1.0.0"
+  },
+  "d3bb3fe24461666d75ec": {
+   "confianza": 0.69,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.148,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.935,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.6
+    },
+    {
+     "aporte": 0.716,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.617,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "naranja",
+   "riesgo": 0.617,
+   "version_modelo": "1.0.0"
+  },
+  "d85d1706d3eaa92807ae": {
+   "confianza": 0.66,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 1.043,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.2
+    },
+    {
+     "aporte": 0.712,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 2.1
+    },
+    {
+     "aporte": 0.543,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.73
+    },
+    {
+     "aporte": 0.441,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 60.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.42,
+   "version_modelo": "1.0.0"
+  },
+  "db6ab1bf25b9d1102354": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.514,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 13.01
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  },
+  "ddb897c41fddb6d397d7": {
+   "confianza": 0.8,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "sueno",
+   "explicacion_corta": "Riesgo moderado de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche y tu reloj interno está desajustado (16 amaneceres al día en órbita).",
+   "factores": [
+    {
+     "aporte": 0.835,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.6
+    },
+    {
+     "aporte": 0.623,
+     "etiqueta": "Desfase del reloj interno",
+     "frase": "tu reloj interno está desajustado (16 amaneceres al día en órbita)",
+     "indicador": "desfase_circadiano_h",
+     "valor": 1.9
+    },
+    {
+     "aporte": 0.331,
+     "etiqueta": "Minutos de luz brillante en tu 'mañana'",
+     "frase": "recibiste poca luz brillante por la mañana",
+     "indicador": "luz_brillante_min",
+     "valor": 42.0
+    },
+    {
+     "aporte": 0.309,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 6.37
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "amarillo",
+   "riesgo": 0.251,
+   "version_modelo": "1.0.0"
+  },
+  "df1e25f8739e12d1be90": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.512,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  },
+  "e4fe1972f210f31a5a5b": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo muy alto de fatiga y desgaste emocional. Lo que más pesa: tu estrés está alto y dormiste poco anoche.",
+   "factores": [
+    {
+     "aporte": 0.919,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    },
+    {
+     "aporte": 0.687,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.532,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.504,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "rojo",
+   "riesgo": 0.793,
+   "version_modelo": "1.0.0"
+  },
+  "ebcbe5c0ff020440abf2": {
+   "confianza": 0.83,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "fatiga-bienestar",
+   "explicacion_corta": "Riesgo muy alto de fatiga y desgaste emocional. Lo que más pesa: tu estrés está alto y dormiste poco anoche.",
+   "factores": [
+    {
+     "aporte": 0.919,
+     "etiqueta": "Estrés percibido",
+     "frase": "tu estrés está alto",
+     "indicador": "estres",
+     "valor": 72.0
+    },
+    {
+     "aporte": 0.687,
+     "etiqueta": "Horas de sueño de anoche",
+     "frase": "dormiste poco anoche",
+     "indicador": "sueno_h",
+     "valor": 5.0
+    },
+    {
+     "aporte": 0.532,
+     "etiqueta": "Sueño medio de 3 días",
+     "frase": "llevas varios días durmiendo poco",
+     "indicador": "sueno_media_3d",
+     "valor": 5.27
+    },
+    {
+     "aporte": 0.504,
+     "etiqueta": "Ánimo",
+     "frase": "tu ánimo está bajo",
+     "indicador": "animo",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "rojo",
+   "riesgo": 0.793,
+   "version_modelo": "1.0.0"
+  },
+  "f085d56e858780e7e4f0": {
+   "confianza": 0.92,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "cardiovascular",
+   "explicacion_corta": "Riesgo bajo de sobrecarga del corazón y la circulación.",
+   "factores": [
+    {
+     "aporte": -0.878,
+     "etiqueta": "Pulso en reposo frente a tu normal",
+     "frase": "tu pulso en reposo está más alto que tu normal",
+     "indicador": "fc_desv_pct",
+     "valor": 1.61
+    },
+    {
+     "aporte": -0.412,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.217,
+     "etiqueta": "Presión arterial (módulo externo)",
+     "frase": "tu presión está alta",
+     "indicador": "presion_sistolica",
+     "valor": 119.0
+    },
+    {
+     "aporte": 0.201,
+     "etiqueta": "Día de misión",
+     "frase": "tu cuerpo aún se adapta: en microgravedad los líquidos suben hacia el pecho y la cabeza",
+     "indicador": "dia_mision",
+     "valor": 2.0
+    }
+   ],
+   "laptop": "Laptop 2",
+   "nivel": "verde",
+   "riesgo": 0.097,
+   "version_modelo": "1.0.0"
+  },
+  "f3e9db1523adc69462b6": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.512,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  },
+  "f78ed3d19a21fc69b47d": {
+   "confianza": 0.72,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo alto de exposición a radiación. Lo que más pesa: la radiación que llega ahora es más alta de lo normal y hay una tormenta solar en curso.",
+   "factores": [
+    {
+     "aporte": 1.823,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 350.0
+    },
+    {
+     "aporte": 0.72,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 1.0
+    },
+    {
+     "aporte": -0.48,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.334,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "naranja",
+   "riesgo": 0.644,
+   "version_modelo": "1.0.0"
+  },
+  "fabf271030e721096a55": {
+   "confianza": 0.96,
+   "datos_entrenamiento": "sintéticos",
+   "datos_faltantes": [],
+   "dispositivo": "cpu",
+   "especialista": "riesgo-solar",
+   "explicacion_corta": "Riesgo bajo de exposición a radiación.",
+   "factores": [
+    {
+     "aporte": -0.887,
+     "etiqueta": "Radiación que llega ahora",
+     "frase": "la radiación que llega ahora es más alta de lo normal",
+     "indicador": "tasa_dosis_usv_h",
+     "valor": 21.0
+    },
+    {
+     "aporte": -0.512,
+     "etiqueta": "Radiación acumulada en la misión",
+     "frase": "tu radiación acumulada es baja",
+     "indicador": "dosis_acumulada_msv",
+     "valor": 15.53
+    },
+    {
+     "aporte": -0.395,
+     "etiqueta": "Oxigenación",
+     "frase": "tu oxigenación es buena",
+     "indicador": "spo2",
+     "valor": 98.0
+    },
+    {
+     "aporte": -0.381,
+     "etiqueta": "Tormenta solar en curso",
+     "frase": "hay una tormenta solar en curso",
+     "indicador": "evento_solar",
+     "valor": 0.0
+    }
+   ],
+   "laptop": "Laptop 3",
+   "nivel": "verde",
+   "riesgo": 0.047,
+   "version_modelo": "1.0.0"
+  }
+ }
+}

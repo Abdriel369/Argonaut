@@ -1,0 +1,16 @@
+{
+  "consulta_id": "AST-01-D5-ejemplo",
+  "especialista": "sueno",
+  "riesgo": 0.62,
+  "nivel": "naranja",
+  "factores": [
+    { "indicador": "sueno_h", "aporte": 1.043, "etiqueta": "Horas de sueño de anoche", "valor": 5.0, "frase": "dormiste poco anoche" }
+  ],
+  "explicacion_corta": "Riesgo alto de problemas por falta o desorden de sueño. Lo que más pesa: dormiste poco anoche.",
+  "confianza": 0.69,
+  "version_modelo": "1.0.0",
+  "datos_entrenamiento": "sintéticos",
+  "dispositivo": "cpu",
+  "laptop": "Laptop 2",
+  "datos_faltantes": []
+}

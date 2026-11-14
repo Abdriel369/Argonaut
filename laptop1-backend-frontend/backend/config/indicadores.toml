@@ -1,0 +1,206 @@
+# ============================================================================
+# CATÁLOGO DE INDICADORES: nombres, unidades y rangos de validación
+# ============================================================================
+# minimo / maximo: límites para aceptar un dato ingresado a mano (valores de
+# ejemplo, amplios a propósito). Fuera de ese rango el backend rechaza el dato.
+# principal: aparece como tarjeta grande en el tablero.
+# editable:  se puede ingresar a mano desde la interfaz.
+# ============================================================================
+
+[sueno_h]
+nombre = "Sueño"
+unidad = "h"
+minimo = 0.0
+maximo = 14.0
+paso = 0.1
+decimales = 1
+principal = true
+editable = true
+icono = "luna"
+
+[animo]
+nombre = "Ánimo"
+unidad = "de 5"
+minimo = 1.0
+maximo = 5.0
+paso = 1.0
+decimales = 0
+principal = true
+editable = true
+icono = "cara"
+
+[estres]
+nombre = "Estrés"
+unidad = "de 100"
+minimo = 0.0
+maximo = 100.0
+paso = 1.0
+decimales = 0
+principal = true
+editable = true
+icono = "onda"
+
+[ejercicio_min]
+nombre = "Ejercicio"
+unidad = "min"
+minimo = 0.0
+maximo = 300.0
+paso = 5.0
+decimales = 0
+principal = true
+editable = true
+icono = "pesa"
+
+[fc_reposo]
+nombre = "Pulso en reposo"
+unidad = "lpm"
+minimo = 30.0
+maximo = 200.0
+paso = 1.0
+decimales = 0
+principal = true
+editable = true
+icono = "corazon"
+
+[hrv]
+nombre = "Variabilidad del pulso"
+unidad = "ms"
+minimo = 5.0
+maximo = 200.0
+paso = 1.0
+decimales = 0
+principal = true
+editable = true
+icono = "pulso"
+
+[spo2]
+nombre = "Oxigenación"
+unidad = "%"
+minimo = 70.0
+maximo = 100.0
+paso = 1.0
+decimales = 0
+principal = false
+editable = true
+icono = "gota"
+
+[temperatura]
+nombre = "Temperatura"
+unidad = "°C"
+minimo = 34.0
+maximo = 42.0
+paso = 0.1
+decimales = 1
+principal = false
+editable = true
+icono = "termometro"
+
+[ingesta_pct]
+nombre = "Comida"
+unidad = "% del plan"
+minimo = 0.0
+maximo = 150.0
+paso = 5.0
+decimales = 0
+principal = false
+editable = true
+icono = "plato"
+
+[tasa_dosis_usv_h]
+nombre = "Radiación ahora"
+unidad = "µSv/h"
+minimo = 0.0
+maximo = 5000.0
+paso = 1.0
+decimales = 0
+principal = false
+editable = true
+icono = "radiacion"
+
+[dosis_acumulada_msv]
+nombre = "Radiación acumulada"
+unidad = "mSv"
+minimo = 0.0
+maximo = 2000.0
+paso = 0.1
+decimales = 1
+principal = false
+editable = false
+icono = "radiacion"
+
+[cohesion_equipo]
+nombre = "Cohesión del equipo"
+unidad = "de 5"
+minimo = 1.0
+maximo = 5.0
+paso = 0.1
+decimales = 1
+principal = false
+editable = false
+icono = "equipo"
+
+[tiempo_reaccion_ms]
+nombre = "Tiempo de reacción"
+unidad = "ms"
+minimo = 100.0
+maximo = 2000.0
+paso = 1.0
+decimales = 0
+principal = false
+editable = false
+icono = "rayo"
+
+[desfase_circadiano_h]
+nombre = "Desfase del reloj interno"
+unidad = "h"
+minimo = 0.0
+maximo = 12.0
+paso = 0.1
+decimales = 1
+principal = false
+editable = false
+icono = "reloj"
+
+[luz_brillante_min]
+nombre = "Luz brillante"
+unidad = "min"
+minimo = 0.0
+maximo = 600.0
+paso = 5.0
+decimales = 0
+principal = false
+editable = false
+icono = "sol"
+
+[presion_sistolica]
+nombre = "Presión sistólica"
+unidad = "mmHg"
+minimo = 60.0
+maximo = 250.0
+paso = 1.0
+decimales = 0
+principal = false
+editable = false
+icono = "modulo"
+
+[presion_diastolica]
+nombre = "Presión diastólica"
+unidad = "mmHg"
+minimo = 30.0
+maximo = 150.0
+paso = 1.0
+decimales = 0
+principal = false
+editable = false
+icono = "modulo"
+
+[glucosa]
+nombre = "Glucosa"
+unidad = "mg/dL"
+minimo = 30.0
+maximo = 500.0
+paso = 1.0
+decimales = 0
+principal = false
+editable = false
+icono = "modulo"

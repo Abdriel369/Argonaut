@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "respuesta_gateway",
+  "title": "Respuesta del gateway de la Laptop 2",
+  "description": "Devuelve lo que haya respondido a tiempo y marca los especialistas que fallaron.",
+  "type": "object",
+  "required": ["consulta_id", "respuestas", "fallidos"],
+  "properties": {
+    "consulta_id": { "type": "string" },
+    "respuestas": {
+      "type": "array",
+      "items": { "type": "object", "description": "Cada elemento cumple respuesta_especialista.schema.json" }
+    },
+    "fallidos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["especialista", "motivo"],
+        "properties": {
+          "especialista": { "type": "string" },
+          "motivo": { "type": "string" }
+        }
+      }
+    }
+  }
+}

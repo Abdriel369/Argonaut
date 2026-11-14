@@ -1,0 +1,26 @@
+{
+  "especialista": "riesgo-solar",
+  "version_modelo": "1.0.0",
+  "tipo_modelo": "boosting",
+  "datos_entrenamiento": "sintéticos",
+  "semilla": 20264,
+  "n_entrenamiento": 48000,
+  "n_prueba": 12000,
+  "prevalencia_riesgo": 0.3316,
+  "auc": 0.9037,
+  "exactitud": 0.8688,
+  "sensibilidad": 0.7691,
+  "especificidad": 0.9181,
+  "brier": 0.1015,
+  "importancia_global": {
+    "tasa_dosis_usv_h": 1.3196,
+    "evento_solar": 0.5269,
+    "spo2": 0.4785,
+    "dosis_acumulada_msv": 0.4383,
+    "fc_desv_pct": 0.1985,
+    "temperatura": 0.1228
+  },
+  "dispositivo_entrenamiento": "cpu",
+  "sha256_modelo": "61e92d88ba705a896cdda344f67810b1721dec542da64a52fa1c860276305680",
+  "nota": "Métricas medidas sobre datos sintéticos generados con reglas propias. Indican que el modelo aprendió esas reglas; NO son evidencia de validez clínica."
+}

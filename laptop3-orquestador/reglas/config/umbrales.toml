@@ -1,0 +1,277 @@
+# ============================================================================
+# UMBRALES Y PESOS DEL MOTOR DE REGLAS  ·  VALORES DE EJEMPLO
+# ============================================================================
+# Ningún número de este archivo es una recomendación médica. Son valores de
+# ejemplo para el prototipo. Antes de cualquier uso serio hay que sustituirlos
+# por valores revisados y citar la fuente en el comentario "FUENTE POR CITAR".
+# Sugerencias de dónde buscar (documentos públicos, verificar la versión vigente):
+#   - NASA-STD-3001 (Space Flight Human-System Standard), volúmenes 1 y 2.
+#   - NASA Human Research Program (HRP): Evidence Reports por riesgo.
+#   - CSA (Agencia Espacial Canadiense): páginas públicas de salud en el espacio.
+# ============================================================================
+
+[general]
+# Ventana de adaptación: los primeros días el cuerpo se ajusta a la microgravedad
+# y los umbrales relativos a la línea base se hacen más tolerantes.
+dias_adaptacion = 2
+factor_tolerancia_adaptacion = 1.5   # FUENTE POR CITAR (duración típica de la adaptación inicial)
+
+# ----------------------------------------------------------------------------
+# NIVEL 1 · Reglas por indicador contra la línea base, con persistencia
+# ----------------------------------------------------------------------------
+# sentido:    "bajo" = preocupa cuando baja; "alto" = preocupa cuando sube.
+# medida:     "absoluta"   -> diferencia con la referencia, en la unidad del indicador
+#             "porcentual" -> diferencia con la referencia, en %
+#             "valor"      -> se compara el valor directamente (sin línea base)
+# referencia: "base" (línea base personal), "plan" (meta planificada) o "ninguna".
+# amarillo / naranja / rojo: cuánto debe alejarse para llegar a ese nivel.
+# persistencia_dias: si lleva tantos días seguidos fuera de rango, sube un escalón.
+# tolerante:  si se relaja durante la ventana de adaptación.
+
+[indicadores.sueno_h]
+decimales = 1
+frase = "dormiste {valor} h (tu normal son {referencia} h)"
+consecuencia = "Con poco sueño baja la atención y es más fácil cometer errores."
+nombre = "Sueño"
+unidad = "h"
+sentido = "bajo"
+medida = "absoluta"
+referencia = "base"
+amarillo = 1.0        # 1 h menos que tu normal   · FUENTE POR CITAR (NASA HRP, riesgo de sueño y fatiga)
+naranja = 2.5
+rojo = 3.5
+persistencia_dias = 3
+tolerante = true
+alerta_id = "SUENO_BAJO"
+titulo = "Estás durmiendo menos de lo normal"
+protocolo_id = "sueno"
+
+[indicadores.animo]
+decimales = 0
+frase = "tu ánimo está bajo ({valor} de 5)"
+consecuencia = "Un ánimo bajo sostenido quita energía y afecta la convivencia con el equipo."
+nombre = "Ánimo"
+unidad = "1-5"
+sentido = "bajo"
+medida = "absoluta"
+referencia = "base"
+amarillo = 2.0        # 2 puntos menos en escala 1-5 · FUENTE POR CITAR (NASA HRP, salud conductual)
+naranja = 3.0
+persistencia_dias = 3
+tolerante = false
+alerta_id = "ANIMO_BAJO"
+titulo = "Tu ánimo está bajo"
+protocolo_id = "animo_estres"
+
+[indicadores.estres]
+decimales = 0
+frase = "tu estrés está alto ({valor} de 100)"
+consecuencia = "El estrés alto sostenido cansa, quita sueño y dificulta concentrarse."
+nombre = "Estrés"
+unidad = "0-100"
+sentido = "alto"
+medida = "absoluta"
+referencia = "base"
+amarillo = 20.0       # 20 puntos sobre tu normal · FUENTE POR CITAR (escala propia del prototipo)
+naranja = 35.0
+rojo = 55.0
+persistencia_dias = 4
+tolerante = true
+alerta_id = "ESTRES_ALTO"
+titulo = "Tu estrés está alto"
+protocolo_id = "animo_estres"
+
+[indicadores.ejercicio_min]
+decimales = 0
+frase = "hiciste {valor} min de ejercicio de los {referencia} planeados"
+consecuencia = "Sin gravedad, los músculos y los huesos se debilitan si no se ejercitan."
+nombre = "Ejercicio"
+unidad = "min"
+sentido = "bajo"
+medida = "porcentual"
+referencia = "plan"
+amarillo = 30.0       # 30 % menos que el plan · FUENTE POR CITAR (contramedidas de ejercicio, ~2 h/día en ISS)
+naranja = 50.0
+persistencia_dias = 5
+tolerante = false
+alerta_id = "EJERCICIO_BAJO"
+titulo = "Hiciste poco ejercicio"
+protocolo_id = "muscular_oseo"
+
+[indicadores.fc_reposo]
+decimales = 0
+frase = "tu pulso en reposo está en {valor} (tu normal es {referencia})"
+consecuencia = "Un pulso en reposo alto indica que tu cuerpo está bajo carga."
+nombre = "Pulso en reposo"
+unidad = "lpm"
+sentido = "alto"
+medida = "porcentual"
+referencia = "base"
+amarillo = 15.0       # +15 % sobre tu normal · FUENTE POR CITAR
+naranja = 25.0
+rojo = 40.0
+persistencia_dias = 3
+tolerante = true
+alerta_id = "FC_ALTA"
+titulo = "Tu pulso en reposo está alto"
+protocolo_id = "cardiovascular"
+
+[indicadores.hrv]
+decimales = 0
+frase = "la variabilidad de tu pulso está baja ({valor}, tu normal es {referencia})"
+consecuencia = "Es señal de que tu cuerpo no se está recuperando bien."
+nombre = "Variabilidad del pulso (HRV)"
+unidad = "ms"
+sentido = "bajo"
+medida = "porcentual"
+referencia = "base"
+amarillo = 20.0       # 20 % bajo tu normal · FUENTE POR CITAR
+naranja = 35.0
+rojo = 50.0
+persistencia_dias = 4
+tolerante = true
+alerta_id = "HRV_BAJA"
+titulo = "Tu cuerpo se está recuperando menos"
+protocolo_id = "cardiovascular"
+
+[indicadores.spo2]
+decimales = 0
+frase = "tu oxigenación está en {valor} %"
+consecuencia = "Con poco oxígeno en la sangre puedes sentir cansancio, mareo o confusión."
+nombre = "Oxigenación (SpO2)"
+unidad = "%"
+sentido = "bajo"
+medida = "absoluta"
+referencia = "base"
+amarillo = 3.0        # 3 puntos bajo tu normal (aprox. 95 %) · FUENTE POR CITAR
+naranja = 5.0
+rojo = 8.0
+persistencia_dias = 2
+tolerante = false
+alerta_id = "SPO2_BAJA"
+titulo = "Tu oxigenación está baja"
+protocolo_id = "oxigenacion"
+
+[indicadores.temperatura]
+decimales = 1
+frase = "tu temperatura está en {valor} °C"
+consecuencia = "Una temperatura elevada indica que tu cuerpo está reaccionando a algo."
+nombre = "Temperatura"
+unidad = "°C"
+sentido = "alto"
+medida = "absoluta"
+referencia = "base"
+amarillo = 0.8        # +0.8 °C sobre tu normal · FUENTE POR CITAR
+naranja = 1.3
+rojo = 2.0
+persistencia_dias = 2
+tolerante = false
+alerta_id = "TEMPERATURA_ALTA"
+titulo = "Tu temperatura está elevada"
+protocolo_id = "temperatura"
+
+[indicadores.ingesta_pct]
+decimales = 0
+frase = "comiste el {valor} % de lo planeado"
+consecuencia = "Comer poco te deja sin energía para trabajar y entrenar."
+nombre = "Comida"
+unidad = "%"
+sentido = "bajo"
+medida = "valor"
+referencia = "ninguna"
+amarillo = 75.0       # comer menos del 75 % de lo planeado · FUENTE POR CITAR (NASA HRP, nutrición)
+persistencia_dias = 3
+tolerante = false
+alerta_id = "INGESTA_BAJA"
+titulo = "Estás comiendo menos de lo planeado"
+protocolo_id = "energia"
+
+[indicadores.tasa_dosis_usv_h]
+decimales = 0
+frase = "la radiación que llega ahora es de {valor} µSv/h, más alta de lo habitual"
+consecuencia = "Conviene reducir el tiempo de exposición."
+nombre = "Radiación ahora"
+unidad = "µSv/h"
+sentido = "alto"
+medida = "valor"
+referencia = "ninguna"
+amarillo = 60.0       # varias veces la tasa habitual simulada (~20 µSv/h) · FUENTE POR CITAR
+naranja = 200.0
+rojo = 1000.0
+persistencia_dias = 99
+tolerante = false
+alerta_id = "TASA_DOSIS_ALTA"
+titulo = "La radiación que llega ahora es alta"
+protocolo_id = "radiacion"
+
+# ----------------------------------------------------------------------------
+# NIVEL 2 · Reglas por combinación
+# ----------------------------------------------------------------------------
+
+[combinaciones.FATIGA]
+consecuencia = "Esta combinación puede causar fatiga: menos atención, reflejos lentos y más errores."
+titulo = "Riesgo de fatiga"
+protocolo_id = "fatiga"
+margen_sueno_h = 0.4            # "sueño bajo la base": al menos 0.4 h menos que tu normal
+dias_sueno_bajo = 3             # durante 3 días seguidos
+estres_sobre_base = 20.0        # estrés alto: 20 puntos sobre tu normal
+ejercicio_pct_plan = 120.0      # ejercicio alto: 120 % del plan o más
+caida_animo = 2.0               # sube a ROJO si además el ánimo cae 2 puntos
+# FUENTE POR CITAR (NASA HRP: Risk of Performance Decrements from Sleep Loss, Circadian Desynchronization and Work Overload)
+
+[combinaciones.AISLAMIENTO]
+consecuencia = "Es una señal frecuente de aislamiento en misiones largas y conviene atenderla pronto."
+titulo = "Señales de aislamiento"
+protocolo_id = "aislamiento"
+dias_animo_bajando = 4          # ánimo bajando 4 días
+cohesion_baja = 2.5             # cohesión del equipo en 2.5 o menos (escala 1-5)
+# FUENTE POR CITAR (NASA HRP: riesgos de salud conductual y de cohesión del equipo)
+
+[combinaciones.PERDIDA_MUSCULAR_OSEA]
+consecuencia = "En microgravedad eso acelera la pérdida de músculo y de hueso."
+titulo = "Riesgo de pérdida muscular y ósea"
+protocolo_id = "muscular_oseo"
+ejercicio_pct_plan = 50.0       # menos del 50 % del plan
+dias = 5                        # 5 días seguidos -> naranja
+dias_aviso = 3                  # 3 días seguidos -> amarillo
+dias_mision_larga = 14          # a partir de este día de misión basta un día menos
+# FUENTE POR CITAR (NASA HRP: pérdida ósea y muscular en microgravedad; contramedidas de ejercicio)
+
+[combinaciones.RADIACION]
+consecuencia = "Hay que reducir la exposición cuanto antes."
+titulo = "Exposición a radiación"
+protocolo_id = "radiacion"
+tasa_alta_usv_h = 200.0         # tasa de dosis alta
+fc_sobre_base_pct = 10.0        # "pulso elevado" para esta regla
+temperatura_sobre_base = 0.8    # "temperatura elevada" para esta regla
+# FUENTE POR CITAR (NASA-STD-3001 vol. 1: límites de exposición a radiación; procedimientos de refugio)
+
+[combinaciones.CARDIOVASCULAR]
+consecuencia = "Juntas, estas señales indican que tu corazón está trabajando de más."
+titulo = "Señales de sobrecarga del corazón"
+protocolo_id = "cardiovascular"
+fc_sobre_base_pct = 15.0        # pulso en reposo +15 %
+hrv_bajo_base_pct = 20.0        # HRV 20 % bajo tu normal
+sueno_pobre_h = 1.0             # sueño medio de 3 días al menos 1 h bajo tu normal
+# FUENTE POR CITAR (NASA HRP: riesgo cardiovascular; desplazamiento de fluidos en microgravedad)
+
+[combinaciones.ENERGIA_BAJA]
+consecuencia = "Sin suficiente comida te faltará energía para trabajar y entrenar."
+titulo = "Energía baja por comer poco"
+protocolo_id = "energia"
+ingesta_pct = 60.0              # menos del 60 % de lo planeado
+dias_para_naranja = 2
+# FUENTE POR CITAR (NASA HRP: nutrición inadecuada)
+
+# ----------------------------------------------------------------------------
+# NIVEL 3 · Reglas por contexto de misión
+# ----------------------------------------------------------------------------
+
+[contexto.dosis_acumulada]
+consecuencia = "Conviene limitar exposiciones adicionales y avisar al equipo médico."
+titulo = "Radiación acumulada en la misión"
+protocolo_id = "radiacion"
+alerta_id = "DOSIS_ACUMULADA"
+amarillo = 50.0                 # mSv acumulados · VALOR DE EJEMPLO
+naranja = 150.0                 # FUENTE POR CITAR (NASA-STD-3001 vol. 1: límites de carrera y de corto plazo)
+rojo = 250.0

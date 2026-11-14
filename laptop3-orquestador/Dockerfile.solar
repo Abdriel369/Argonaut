@@ -1,0 +1,12 @@
+# Laptop 3 · modelo de riesgo solar (el más pesado; usa GPU NVIDIA si está disponible).
+FROM python:3.13-slim
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PYTHONPATH=/app
+WORKDIR /app
+COPY laptop3-orquestador/requirements-modelos.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+COPY comun /app/comun
+COPY contratos /app/contratos
+COPY laptop3-orquestador/modelos/riesgo-solar /app/laptop3-orquestador/modelos/riesgo-solar
+WORKDIR /app/laptop3-orquestador/modelos/riesgo-solar
+EXPOSE 8310
+CMD ["uvicorn", "api_solar:app", "--host", "0.0.0.0", "--port", "8310"]

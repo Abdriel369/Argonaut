@@ -1,0 +1,31 @@
+# MODO DEMO · todo en UNA máquina, con respuestas de modelos grabadas de ejecuciones reales.
+# Arranque (desde esta carpeta):   docker compose up --build   y abrir http://localhost:8100/
+# Para regenerar respuestas-guardadas.json:  python grabar_respuestas.py  (requiere los modelos).
+name: astro-demo
+
+services:
+  orquestador:
+    build:
+      context: ..
+      dockerfile: laptop3-orquestador/Dockerfile.orquestador
+    image: astro-laptop3-orquestador:local
+    environment:
+      RESPUESTAS_GUARDADAS: /config/respuestas-guardadas.json
+    volumes:
+      - ./respuestas-guardadas.json:/config/respuestas-guardadas.json:ro
+
+  backend:
+    build:
+      context: ..
+      dockerfile: laptop1-backend-frontend/Dockerfile
+    image: astro-laptop1:local
+    ports:
+      - "8100:8100"
+    environment:
+      URL_ORQUESTADOR: "http://orquestador:8300"
+      TIEMPO_MAX_ORQUESTADOR_S: "8"
+      REINTENTOS_ORQUESTADOR: "1"
+    volumes:
+      - ./datos:/datos
+    depends_on:
+      - orquestador

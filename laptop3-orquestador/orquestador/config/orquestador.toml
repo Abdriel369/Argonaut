@@ -1,0 +1,152 @@
+# ============================================================================
+# CONFIGURACIÓN DEL ORQUESTADOR  ·  VALORES DE EJEMPLO
+# ============================================================================
+# El enrutamiento es una TABLA DE REGLAS (no un modelo): así se puede explicar
+# por qué se consultó a cada especialista.
+# ============================================================================
+
+[fusion]
+# Las reglas mandan. Un especialista puede SUBIR una alerta, nunca bajarla.
+confianza_minima = 0.60     # por debajo de esta confianza la opinión no cambia el nivel
+escalones_maximos = 1       # como mucho sube un escalón (amarillo -> naranja, etc.)
+
+[informe]
+nivel_minimo = "naranja"    # desde este nivel se prepara informe para el cirujano de vuelo
+
+# ----------------------------------------------------------------------------
+# Especialistas: dónde viven y sobre qué alertas pueden opinar
+# ----------------------------------------------------------------------------
+[especialistas.sueno]
+titulo = "Sueño"
+laptop = "Laptop 2"
+via = "gateway"
+alertas = ["SUENO_BAJO", "FATIGA"]
+protocolo_id = "sueno"
+
+[especialistas.fatiga-bienestar]
+titulo = "Fatiga y bienestar"
+laptop = "Laptop 2"
+via = "gateway"
+alertas = ["FATIGA", "ESTRES_ALTO", "ANIMO_BAJO", "AISLAMIENTO", "ENERGIA_BAJA", "INGESTA_BAJA"]
+protocolo_id = "fatiga"
+
+[especialistas.cardiovascular]
+titulo = "Cardiovascular"
+laptop = "Laptop 2"
+via = "gateway"
+alertas = ["CARDIOVASCULAR", "FC_ALTA", "HRV_BAJA", "SPO2_BAJA"]
+protocolo_id = "cardiovascular"
+
+[especialistas.riesgo-solar]
+titulo = "Riesgo solar (radiación)"
+laptop = "Laptop 3"
+via = "local"
+alertas = ["RADIACION", "TASA_DOSIS_ALTA", "DOSIS_ACUMULADA"]
+protocolo_id = "radiacion"
+
+# ----------------------------------------------------------------------------
+# Tabla de enrutamiento: señal de las reglas -> especialistas a consultar
+# ----------------------------------------------------------------------------
+# Las señales las emite el motor de reglas:
+#   "<indicador>:<bajo|alto>"  un indicador salió de su rango
+#   "regla:<NOMBRE>"           se activó una regla de combinación
+#   "evento_solar" / "dosis_acumulada"   contexto de misión
+
+[[rutas]]
+senal = "sueno_h:bajo"
+especialistas = ["sueno", "fatiga-bienestar"]
+motivo = "Dormiste menos de lo normal"
+
+[[rutas]]
+senal = "estres:alto"
+especialistas = ["fatiga-bienestar"]
+motivo = "Tu estrés está alto"
+
+[[rutas]]
+senal = "animo:bajo"
+especialistas = ["fatiga-bienestar"]
+motivo = "Tu ánimo está bajo"
+
+[[rutas]]
+senal = "ingesta_pct:bajo"
+especialistas = ["fatiga-bienestar"]
+motivo = "Comiste menos de lo planeado"
+
+[[rutas]]
+senal = "ejercicio_min:bajo"
+especialistas = ["fatiga-bienestar", "cardiovascular"]
+motivo = "Hiciste poco ejercicio"
+
+[[rutas]]
+senal = "fc_reposo:alto"
+especialistas = ["cardiovascular"]
+motivo = "Tu pulso en reposo está alto"
+
+[[rutas]]
+senal = "hrv:bajo"
+especialistas = ["cardiovascular", "fatiga-bienestar"]
+motivo = "La variabilidad de tu pulso bajó"
+
+[[rutas]]
+senal = "spo2:bajo"
+especialistas = ["cardiovascular"]
+motivo = "Tu oxigenación está baja"
+
+[[rutas]]
+senal = "temperatura:alto"
+especialistas = ["riesgo-solar", "cardiovascular"]
+motivo = "Tu temperatura está elevada"
+
+[[rutas]]
+senal = "tasa_dosis_usv_h:alto"
+especialistas = ["riesgo-solar"]
+motivo = "La radiación que llega ahora es alta"
+
+[[rutas]]
+senal = "evento_solar"
+especialistas = ["riesgo-solar", "cardiovascular"]
+motivo = "Hay una tormenta solar en curso"
+
+[[rutas]]
+senal = "dosis_acumulada"
+especialistas = ["riesgo-solar"]
+motivo = "La radiación acumulada es alta"
+
+[[rutas]]
+senal = "regla:FATIGA"
+especialistas = ["sueno", "fatiga-bienestar"]
+motivo = "Las reglas ven riesgo de fatiga"
+
+[[rutas]]
+senal = "regla:AISLAMIENTO"
+especialistas = ["fatiga-bienestar"]
+motivo = "Las reglas ven señales de aislamiento"
+
+[[rutas]]
+senal = "regla:CARDIOVASCULAR"
+especialistas = ["cardiovascular", "sueno"]
+motivo = "Las reglas ven sobrecarga del corazón"
+
+[[rutas]]
+senal = "regla:ENERGIA_BAJA"
+especialistas = ["fatiga-bienestar"]
+motivo = "Las reglas ven energía baja"
+
+# ----------------------------------------------------------------------------
+# Escalamiento: qué hacer y a quién avisar según el nivel global
+# ----------------------------------------------------------------------------
+[escalamiento.verde]
+accion = "Sin acción. Sigue con tu rutina."
+destinatario = "Nadie"
+
+[escalamiento.amarillo]
+accion = "Autogestión: sigue el protocolo por tu cuenta y vuelve a revisar mañana."
+destinatario = "Tú"
+
+[escalamiento.naranja]
+accion = "Avisa a la tripulación o a tu comandante y sigue el protocolo."
+destinatario = "Tripulación / comandante"
+
+[escalamiento.rojo]
+accion = "Prepara el contacto con el cirujano de vuelo. El informe queda listo para el próximo enlace con la Tierra."
+destinatario = "Cirujano de vuelo (Tierra)"

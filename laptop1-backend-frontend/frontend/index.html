@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#081229">
+  <title>Médico de estación</title>
+  <!-- Todo es local: sin CDN, sin fuentes remotas, sin APIs externas. -->
+  <link rel="stylesheet" href="css/estilos.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23081229' stroke='%237CD4FF' stroke-width='2'/%3E%3Cpath d='M16 9v14M9 16h14' stroke='%233EE0A1' stroke-width='3.5' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+  <!-- Aviso visible y permanente (requisito del reto). -->
+  <div class="aviso-permanente" role="note">
+    <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 2.5 20h19L12 3Z"/><path d="M12 10v4.5M12 17.5v.5"/></svg>
+    <span>Prototipo con datos simulados. No es una herramienta de diagnóstico médico.</span>
+  </div>
+
+  <header class="cabecera">
+    <div class="marca">
+      <h1>Médico de estación</h1>
+      <p id="quien">Conectando con la estación…</p>
+    </div>
+    <div id="red" class="red" aria-label="Estado de las laptops y del modelo solar" aria-live="polite"></div>
+  </header>
+
+  <div id="avisos-sistema" class="avisos-sistema" aria-live="polite"></div>
+
+  <main class="rejilla" id="contenido">
+    <section id="sec-estado" class="panel estado" aria-labelledby="t-estado">
+      <h2 id="t-estado" class="solo-lectores">Estado general</h2>
+      <div id="estado-global"></div>
+    </section>
+
+    <!-- Dos columnas en pantallas anchas; en el celular se apilan en este orden. -->
+    <div class="columna">
+      <section id="sec-tablero" class="panel" aria-labelledby="t-tablero">
+        <h2 id="t-tablero">Indicadores de hoy</h2>
+        <div id="tablero"></div>
+      </section>
+
+      <section id="sec-alertas" class="panel" aria-labelledby="t-alertas">
+        <h2 id="t-alertas">Qué hacer ahora</h2>
+        <div id="alertas"></div>
+      </section>
+
+      <section id="sec-tendencia" class="panel" aria-labelledby="t-tendencia">
+        <h2 id="t-tendencia">Tendencia de 7 días</h2>
+        <div id="tendencia"></div>
+      </section>
+    </div>
+
+    <div class="columna">
+      <section id="sec-cuerpo" class="panel" aria-labelledby="t-cuerpo">
+        <h2 id="t-cuerpo">Mapa corporal</h2>
+        <p class="ayuda">Toca una zona para ver cómo está, qué la afecta en el espacio y qué hacer.</p>
+        <div id="cuerpo"></div>
+      </section>
+
+      <section id="sec-junta" class="panel" aria-labelledby="t-junta">
+        <h2 id="t-junta">Junta médica</h2>
+        <p class="ayuda">Las reglas detectan el riesgo y deciden a qué modelos especialistas consultar.</p>
+        <div id="junta"></div>
+      </section>
+
+      <section id="sec-informe" class="panel" aria-labelledby="t-informe">
+        <h2 id="t-informe">Informe para el cirujano de vuelo</h2>
+        <div id="informe"></div>
+      </section>
+    </div>
+
+    <section id="sec-checkin" class="panel" aria-labelledby="t-checkin">
+      <h2 id="t-checkin">Check-in</h2>
+
+      <div class="bloque">
+        <h3>¿Cómo está tu ánimo hoy?</h3>
+        <div id="animo-botones" class="fila-botones" role="group" aria-label="Ánimo de 1 a 5"></div>
+      </div>
+
+      <div class="bloque">
+        <h3>Prueba de reacción</h3>
+        <p class="ayuda">Cinco señales. Toca el recuadro en cuanto se encienda.</p>
+        <button type="button" id="reaccion-zona" class="reaccion-zona" data-estado="inicio">Empezar prueba</button>
+        <p id="reaccion-resultado" class="ayuda" aria-live="polite"></p>
+      </div>
+
+      <form class="bloque" id="encuesta-equipo">
+        <h3>Encuesta semanal del equipo</h3>
+        <p class="ayuda">De 1 (muy mal) a 5 (muy bien).</p>
+        <div id="encuesta-preguntas"></div>
+        <button type="submit" class="boton">Enviar encuesta</button>
+        <p id="encuesta-resultado" class="ayuda" aria-live="polite"></p>
+      </form>
+
+      <details class="bloque" id="registro-manual">
+        <summary>Ingresar datos a mano</summary>
+        <form id="form-manual">
+          <div id="manual-campos" class="campos"></div>
+          <button type="submit" class="boton">Guardar datos de hoy</button>
+          <p id="manual-resultado" class="ayuda" aria-live="polite"></p>
+        </form>
+      </details>
+    </section>
+
+    <section id="sec-demo" class="panel demo" aria-labelledby="t-demo">
+      <h2 id="t-demo">Panel de demo</h2>
+      <p class="ayuda">Controles del presentador. No forman parte del producto.</p>
+      <div class="demo-controles">
+        <div class="demo-dia">
+          <label for="demo-deslizador">Día de misión <output id="demo-dia-texto" for="demo-deslizador">1</output></label>
+          <input type="range" id="demo-deslizador" min="1" max="7" step="1" value="1" list="demo-marcas">
+          <datalist id="demo-marcas">
+            <option value="1"></option><option value="2"></option><option value="3"></option><option value="4"></option>
+            <option value="5"></option><option value="6"></option><option value="7"></option>
+          </datalist>
+        </div>
+        <button type="button" class="boton" id="demo-reproducir" aria-pressed="false">Reproducir semana</button>
+        <button type="button" class="boton" id="demo-solar" aria-pressed="false">Evento solar</button>
+        <button type="button" class="boton" id="demo-enlace">Simular enlace con la Tierra</button>
+        <label class="interruptor">
+          <input type="checkbox" id="demo-caida" role="switch">
+          <span class="interruptor-pista" aria-hidden="true"></span>
+          <span>Simular caída de la Laptop 2 (modelos)</span>
+        </label>
+        <button type="button" class="boton" id="demo-reiniciar">Reiniciar</button>
+      </div>
+      <p id="demo-mensaje" class="ayuda" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <nav class="nav-inferior" aria-label="Secciones">
+    <a href="#sec-tablero">Tablero</a>
+    <a href="#sec-alertas">Alertas</a>
+    <a href="#sec-cuerpo">Cuerpo</a>
+    <a href="#sec-junta">Junta</a>
+    <a href="#sec-checkin">Check-in</a>
+    <a href="#sec-demo">Demo</a>
+  </nav>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

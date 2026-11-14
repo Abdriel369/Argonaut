@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "consulta_especialista",
+  "title": "Consulta a un modelo especialista",
+  "description": "Lo que recibe POST /predecir de cada especialista. 'datos' lleva la misma información que la entrada al orquestador; cada modelo toma lo que necesita.",
+  "type": "object",
+  "required": ["consulta_id", "especialista", "datos"],
+  "properties": {
+    "consulta_id": { "type": "string", "minLength": 1 },
+    "especialista": { "enum": ["sueno", "fatiga-bienestar", "cardiovascular", "riesgo-solar"] },
+    "datos": {
+      "type": "object",
+      "required": ["indicadores"],
+      "properties": {
+        "dia_mision": { "type": "integer", "minimum": 1 },
+        "indicadores": { "type": "object", "additionalProperties": { "type": ["number", "null"] } },
+        "desviaciones_vs_base": { "type": "object" },
+        "tendencias_7d": { "type": "object" },
+        "linea_base": { "type": "object" },
+        "plan": { "type": "object" },
+        "contexto": { "type": "object" }
+      }
+    }
+  }
+}

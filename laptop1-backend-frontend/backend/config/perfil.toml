@@ -1,0 +1,49 @@
+# ============================================================================
+# PERFIL SIMULADO DEL ASTRONAUTA Y LÍNEA BASE PERSONAL  ·  DATOS 100 % SIMULADOS
+# ============================================================================
+
+[astronauta]
+id = "AST-01"
+nombre = "Cdte. Lucía Ferrer"
+rol = "Comandante"
+mision = "Estación orbital · semana 1"
+
+# Línea base medida en Tierra antes del vuelo (valores simulados del guion).
+[linea_base_prevuelo]
+fc_reposo = 62.0        # lpm
+hrv = 55.0              # ms
+spo2 = 98.0             # %
+temperatura = 36.5      # °C
+sueno_h = 7.2           # horas
+animo = 4.0             # escala 1-5
+estres = 30.0           # escala 0-100
+ejercicio_min = 120.0   # minutos al día
+ingesta_pct = 100.0     # % de lo planeado
+
+# Metas planificadas (no se recalibran: son el plan de la misión).
+[plan]
+ejercicio_min = 120.0   # FUENTE POR CITAR: contramedidas de ejercicio en ISS (~2 h/día)
+
+# Recalibración: al terminar los días de adaptación, la base se mezcla con lo
+# observado en esos días (el cuerpo cambia en microgravedad).
+[recalibracion]
+dias_adaptacion = 2
+peso_prevuelo = 0.5     # 0.5 = mitad pre-vuelo, mitad media de los días de adaptación (valor de ejemplo)
+indicadores = ["fc_reposo", "hrv", "spo2", "temperatura", "sueno_h", "estres", "ingesta_pct"]
+
+# Módulos externos opcionales (datos simulados).
+[modulos_externos]
+presion = true
+glucosa = true
+etiqueta = "No se miden de forma fiable sin equipo dedicado. Dato simulado de un módulo externo opcional."
+
+# Estimación de exposición músculo-hueso (NO es una medición).
+[musculo_hueso]
+proteccion_ejercicio = 0.8   # cumplir el plan de ejercicio evita el 80 % de la exposición diaria (valor de ejemplo)
+# FUENTE POR CITAR: NASA HRP, pérdida ósea y muscular en microgravedad.
+
+# Evento solar simulado (botón "Evento solar" del panel de demo).
+[evento_solar]
+tasa_dosis_usv_h = 350.0     # tasa durante la tormenta (valor de ejemplo)
+dosis_extra_msv = 12.0       # dosis que añade el evento a la acumulada (valor de ejemplo)
+# FUENTE POR CITAR: mediciones públicas de eventos de partículas solares (p. ej. instrumento RAD).

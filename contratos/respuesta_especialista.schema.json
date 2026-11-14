@@ -1,0 +1,39 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "respuesta_especialista",
+  "title": "Respuesta de un modelo especialista",
+  "type": "object",
+  "required": [
+    "consulta_id", "especialista", "riesgo", "nivel", "factores",
+    "explicacion_corta", "confianza", "version_modelo", "datos_entrenamiento"
+  ],
+  "properties": {
+    "consulta_id": { "type": "string" },
+    "especialista": { "enum": ["sueno", "fatiga-bienestar", "cardiovascular", "riesgo-solar"] },
+    "riesgo": { "type": "number", "minimum": 0, "maximum": 1 },
+    "nivel": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+    "factores": {
+      "description": "Qué indicadores empujan el riesgo. 'aporte' positivo sube el riesgo, negativo lo baja.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicador", "aporte"],
+        "properties": {
+          "indicador": { "type": "string" },
+          "aporte": { "type": "number" },
+          "etiqueta": { "type": "string" },
+          "valor": { "type": ["number", "null"] },
+          "frase": { "type": "string" }
+        }
+      }
+    },
+    "explicacion_corta": { "type": "string" },
+    "confianza": { "type": "number", "minimum": 0, "maximum": 1 },
+    "version_modelo": { "type": "string" },
+    "datos_entrenamiento": { "const": "sintéticos" },
+    "dispositivo": { "type": "string", "description": "cpu o cuda" },
+    "laptop": { "type": "string" },
+    "datos_faltantes": { "type": "array", "items": { "type": "string" } },
+    "respuesta_guardada": { "type": "boolean", "description": "true si viene de una ejecución real grabada (modo demo)" }
+  }
+}

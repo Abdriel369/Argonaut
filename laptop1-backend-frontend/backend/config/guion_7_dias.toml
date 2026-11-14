@@ -1,0 +1,38 @@
+# ============================================================================
+# GUION DETERMINISTA DE LA DEMO (7 días)  ·  DATOS 100 % SIMULADOS
+# ============================================================================
+# Cada lista tiene 7 valores: día 1 ... día 7.
+# Historia: el sueño y el ánimo decaen, el sistema avisa a tiempo, la astronauta
+# sigue el protocolo (día 6) y se recupera (día 7).
+# ============================================================================
+
+[indicadores]
+# --- Tabla principal del guion (valores exactos del reto) -------------------
+sueno_h       = [7.1, 6.4, 5.6, 5.2, 5.0, 6.8, 7.3]
+animo         = [4,   4,   3,   3,   2,   3,   4]
+estres        = [28,  35,  48,  60,  72,  55,  38]
+ejercicio_min = [118, 125, 140, 150, 160, 100, 120]
+fc_reposo     = [62,  63,  66,  69,  72,  67,  63]
+hrv           = [54,  52,  46,  41,  36,  44,  52]
+
+# --- Resto estable -----------------------------------------------------------
+spo2          = [98,   98,   97,   97,   97,   98,   98]
+temperatura   = [36.5, 36.6, 36.6, 36.7, 36.7, 36.6, 36.5]
+ingesta_pct   = [96,   95,   94,   93,   92,   95,   96]
+
+# --- Señales de apoyo para los especialistas (simuladas) ---------------------
+desfase_circadiano_h = [0.5, 0.9, 1.9, 2.1, 2.6, 1.2, 0.6]   # desajuste del reloj interno
+luz_brillante_min    = [70,  62,  42,  40,  30,  75,  80]    # luz brillante en la "mañana"
+cohesion_equipo      = [4.2, 4.2, 4.0, 3.8, 3.6, 3.9, 4.2]   # encuesta del equipo (1-5)
+tiempo_reaccion_ms   = [270, 275, 300, 320, 345, 300, 275]   # prueba de vigilancia
+
+# --- Radiación: tasa baja, ~0.5 mSv/día (salvo "Evento solar") ---------------
+tasa_dosis_usv_h     = [21, 21, 21, 21, 21, 21, 21]          # 21 µSv/h x 24 h ≈ 0.5 mSv/día
+
+# --- Módulos externos opcionales (no fiables sin equipo dedicado) ------------
+presion_sistolica    = [118, 119, 120, 121, 123, 120, 118]
+presion_diastolica   = [76,  76,  77,  78,  80,  78,  76]
+glucosa              = [90,  92,  91,  94,  96,  92,  90]
+
+[notas]
+6 = "Tras seguir el protocolo"

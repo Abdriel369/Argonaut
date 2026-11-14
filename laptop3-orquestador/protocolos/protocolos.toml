@@ -1,0 +1,213 @@
+# ============================================================================
+# PROTOCOLOS DE ACCIÓN POR TIPO DE ALERTA  ·  TEXTO DE EJEMPLO
+# ============================================================================
+# Pasos sencillos, sin jerga y SIN dosis de medicamentos. Son ejemplos para el
+# prototipo: un protocolo real lo define el equipo médico de la misión.
+# temporizador_min (opcional): la interfaz muestra una cuenta atrás en ese paso.
+# ============================================================================
+
+[sueno]
+titulo = "Recuperar el sueño"
+objetivo = "Dormir mejor esta noche y evitar que la falta de sueño se acumule."
+[[sueno.pasos]]
+id = "s1"
+texto = "Hoy termina las tareas exigentes al menos 2 horas antes de dormir."
+[[sueno.pasos]]
+id = "s2"
+texto = "Baja las luces y deja las pantallas 1 hora antes de dormir."
+[[sueno.pasos]]
+id = "s3"
+texto = "Por la 'mañana', ponte 30 minutos bajo luz brillante: ayuda a ajustar tu reloj interno."
+temporizador_min = 30
+[[sueno.pasos]]
+id = "s4"
+texto = "Evita la cafeína en las 6 horas previas a dormir."
+[[sueno.pasos]]
+id = "s5"
+texto = "Mañana registra cuántas horas dormiste para ver si mejoras."
+
+[animo_estres]
+titulo = "Bajar el estrés y cuidar el ánimo"
+objetivo = "Bajar la tensión hoy y evitar que se acumule."
+[[animo_estres.pasos]]
+id = "a1"
+texto = "Haz 5 minutos de respiración lenta: toma aire en 4 segundos y suéltalo en 6."
+temporizador_min = 5
+[[animo_estres.pasos]]
+id = "a2"
+texto = "Revisa tu agenda y pasa a mañana una tarea que no sea urgente."
+[[animo_estres.pasos]]
+id = "a3"
+texto = "Dedica 20 minutos a algo que disfrutes: música, mirar la Tierra por la ventana o escribir a tu familia."
+temporizador_min = 20
+[[animo_estres.pasos]]
+id = "a4"
+texto = "Cuéntale a un compañero cómo te sientes."
+
+[fatiga]
+titulo = "Protocolo de fatiga"
+objetivo = "Recuperar energía en 24 a 48 horas y evitar errores por cansancio."
+[[fatiga.pasos]]
+id = "f1"
+texto = "Detén las tareas delicadas por ahora: con fatiga es más fácil equivocarse."
+[[fatiga.pasos]]
+id = "f2"
+texto = "Avisa a tu comandante para que redistribuya la carga de trabajo de hoy."
+[[fatiga.pasos]]
+id = "f3"
+texto = "Toma una siesta corta de 20 minutos en un lugar oscuro y silencioso."
+temporizador_min = 20
+[[fatiga.pasos]]
+id = "f4"
+texto = "Hoy haz solo ejercicio suave: baja al plan normal o un poco menos."
+[[fatiga.pasos]]
+id = "f5"
+texto = "Come e hidrátate según lo planeado."
+[[fatiga.pasos]]
+id = "f6"
+texto = "Esta noche acuéstate 1 hora antes y deja las pantallas fuera."
+[[fatiga.pasos]]
+id = "f7"
+texto = "Repite la prueba de reacción en 15 minutos para ver cómo sigues."
+temporizador_min = 15
+
+[aislamiento]
+titulo = "Reconectar con el equipo"
+objetivo = "Recuperar el contacto con tus compañeros y con la Tierra."
+[[aislamiento.pasos]]
+id = "i1"
+texto = "Comparte hoy una comida con al menos un compañero."
+[[aislamiento.pasos]]
+id = "i2"
+texto = "Graba un mensaje para tu familia o amigos; se enviará en el próximo enlace."
+[[aislamiento.pasos]]
+id = "i3"
+texto = "Proponle al equipo una actividad corta en común: una película, un juego o música."
+[[aislamiento.pasos]]
+id = "i4"
+texto = "Habla con tu comandante sobre cómo se siente el equipo."
+
+[muscular_oseo]
+titulo = "Retomar el ejercicio"
+objetivo = "Proteger músculos y huesos, que se debilitan sin gravedad."
+[[muscular_oseo.pasos]]
+id = "m1"
+texto = "Reserva hoy tu bloque de ejercicio, aunque sea más corto que el plan."
+[[muscular_oseo.pasos]]
+id = "m2"
+texto = "Empieza con 10 minutos suaves y sube poco a poco."
+temporizador_min = 10
+[[muscular_oseo.pasos]]
+id = "m3"
+texto = "Incluye ejercicio de fuerza para piernas y espalda: son las zonas que más pierden."
+[[muscular_oseo.pasos]]
+id = "m4"
+texto = "Si algo te impide entrenar (dolor, equipo averiado, falta de tiempo), avisa a tu comandante."
+
+[radiacion]
+titulo = "Protocolo de radiación"
+objetivo = "Reducir tu exposición ahora."
+[[radiacion.pasos]]
+id = "r1"
+texto = "Ve al refugio o a la zona más protegida de la estación."
+[[radiacion.pasos]]
+id = "r2"
+texto = "Avisa a toda la tripulación para que haga lo mismo."
+[[radiacion.pasos]]
+id = "r3"
+texto = "Suspende cualquier salida al exterior."
+[[radiacion.pasos]]
+id = "r4"
+texto = "Quédate en el refugio y vuelve a medir la radiación en 15 minutos."
+temporizador_min = 15
+[[radiacion.pasos]]
+id = "r5"
+texto = "Anota cómo te sientes (náusea, cansancio, dolor de cabeza) para el informe médico."
+
+[cardiovascular]
+titulo = "Cuidar el corazón"
+objetivo = "Bajar la carga de tu cuerpo y comprobar que el pulso se normaliza."
+[[cardiovascular.pasos]]
+id = "c1"
+texto = "Detén el esfuerzo físico y quédate en reposo."
+[[cardiovascular.pasos]]
+id = "c2"
+texto = "Respira lento durante 5 minutos."
+temporizador_min = 5
+[[cardiovascular.pasos]]
+id = "c3"
+texto = "Bebe agua."
+[[cardiovascular.pasos]]
+id = "c4"
+texto = "Vuelve a medir tu pulso en 15 minutos."
+temporizador_min = 15
+[[cardiovascular.pasos]]
+id = "c5"
+texto = "Si sientes dolor en el pecho, falta de aire o mareo, avisa de inmediato a la tripulación."
+
+[energia]
+titulo = "Recuperar energía"
+objetivo = "Volver a comer lo planeado."
+[[energia.pasos]]
+id = "e1"
+texto = "Come ahora algo de tu menú, aunque no tengas hambre."
+[[energia.pasos]]
+id = "e2"
+texto = "Bebe agua con la comida."
+[[energia.pasos]]
+id = "e3"
+texto = "Programa tus comidas de hoy con alarma para no saltarte ninguna."
+[[energia.pasos]]
+id = "e4"
+texto = "Si tienes náusea o no toleras la comida, avisa a tu comandante."
+
+[oxigenacion]
+titulo = "Oxigenación baja"
+objetivo = "Comprobar la medición y actuar rápido si se confirma."
+[[oxigenacion.pasos]]
+id = "o1"
+texto = "Recoloca el sensor en el dedo, quédate quieto y espera la nueva lectura."
+[[oxigenacion.pasos]]
+id = "o2"
+texto = "Respira profundo y lento durante 2 minutos."
+temporizador_min = 2
+[[oxigenacion.pasos]]
+id = "o3"
+texto = "Pide a un compañero que revise la calidad del aire del módulo."
+[[oxigenacion.pasos]]
+id = "o4"
+texto = "Vuelve a medir en 15 minutos."
+temporizador_min = 15
+[[oxigenacion.pasos]]
+id = "o5"
+texto = "Si te falta el aire o te sientes confundido, avisa de inmediato a la tripulación."
+
+[temperatura]
+titulo = "Temperatura elevada"
+objetivo = "Confirmar la medición y vigilar cómo evoluciona."
+[[temperatura.pasos]]
+id = "t1"
+texto = "Descansa y bebe agua."
+[[temperatura.pasos]]
+id = "t2"
+texto = "Vuelve a medir tu temperatura en 15 minutos."
+temporizador_min = 15
+[[temperatura.pasos]]
+id = "t3"
+texto = "Anota otros síntomas: escalofríos, dolor, tos."
+[[temperatura.pasos]]
+id = "t4"
+texto = "Mantén distancia con tus compañeros hasta saber qué pasa y avisa a tu comandante."
+
+[general]
+titulo = "Vigilancia"
+objetivo = "Un especialista ve una señal temprana; conviene vigilarla."
+[[general.pasos]]
+id = "g1"
+texto = "Revisa tus indicadores de hoy en el tablero."
+[[general.pasos]]
+id = "g2"
+texto = "Cuida esta noche tu sueño, tu comida y tu hidratación."
+[[general.pasos]]
+id = "g3"
+texto = "Vuelve a registrar tus datos mañana para ver la tendencia."

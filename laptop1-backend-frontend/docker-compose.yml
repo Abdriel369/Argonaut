@@ -1,0 +1,25 @@
+# LAPTOP 1 · backend + frontend (+ registros y datos de la semana de misión)
+# Arranque:  cp .env.example .env   y luego   docker compose up --build
+name: astro-laptop1
+
+services:
+  backend:
+    build:
+      context: ..
+      dockerfile: laptop1-backend-frontend/Dockerfile
+    image: astro-laptop1:local
+    restart: unless-stopped
+    ports:
+      - "${PUERTO_BACKEND:-8100}:8100"
+    environment:
+      URL_ORQUESTADOR: "http://${IP_LAPTOP3}:${PUERTO_ORQUESTADOR:-8300}"
+      TIEMPO_MAX_ORQUESTADOR_S: "${TIEMPO_MAX_ORQUESTADOR_S:-8}"
+      REINTENTOS_ORQUESTADOR: "${REINTENTOS_ORQUESTADOR:-2}"
+      NIVEL_LOG: "${NIVEL_LOG:-INFO}"
+    volumes:
+      - ./datos:/datos            # base SQLite, sobrevive a reinicios
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8100/salud', timeout=3)"]
+      interval: 15s
+      timeout: 5s
+      retries: 3

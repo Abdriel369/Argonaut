@@ -1,0 +1,67 @@
+# LAPTOP 2 · 3 modelos especialistas + gateway (único puerto visible desde la Laptop 3)
+# Arranque:  cp .env.example .env   y luego   docker compose up --build
+name: astro-laptop2
+
+x-construccion: &construccion
+  context: ..
+  dockerfile: laptop2-modelos/Dockerfile
+
+x-salud: &salud-modelo
+  interval: 15s
+  timeout: 5s
+  retries: 3
+
+services:
+  gateway:
+    build: *construccion
+    image: astro-laptop2:local
+    working_dir: /app/laptop2-modelos
+    command: ["uvicorn", "gateway.principal:crear_app", "--factory", "--host", "0.0.0.0", "--port", "8200"]
+    restart: unless-stopped
+    ports:
+      - "${PUERTO_GATEWAY:-8200}:8200"    # lo único expuesto de la Laptop 2
+    environment:
+      URL_MODELO_SUENO: "http://modelo-sueno:8210"
+      URL_MODELO_FATIGA: "http://modelo-fatiga:8220"
+      URL_MODELO_CARDIO: "http://modelo-cardio:8230"
+      TIEMPO_MAX_MODELO_S: "${TIEMPO_MAX_MODELO_S:-3}"
+    depends_on:
+      modelo-sueno: {condition: service_healthy}
+      modelo-fatiga: {condition: service_healthy}
+      modelo-cardio: {condition: service_healthy}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8200/salud', timeout=3)"]
+      <<: *salud-modelo
+
+  modelo-sueno:
+    build: *construccion
+    image: astro-laptop2:local
+    working_dir: /app/laptop2-modelos/modelos/sueno
+    command: ["uvicorn", "api_sueno:app", "--host", "0.0.0.0", "--port", "8210"]
+    environment: {USAR_GPU: "${USAR_GPU:-auto}"}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8210/salud', timeout=3)"]
+      <<: *salud-modelo
+
+  modelo-fatiga:
+    build: *construccion
+    image: astro-laptop2:local
+    working_dir: /app/laptop2-modelos/modelos/fatiga-bienestar
+    command: ["uvicorn", "api_fatiga:app", "--host", "0.0.0.0", "--port", "8220"]
+    environment: {USAR_GPU: "${USAR_GPU:-auto}"}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8220/salud', timeout=3)"]
+      <<: *salud-modelo
+
+  modelo-cardio:
+    build: *construccion
+    image: astro-laptop2:local
+    working_dir: /app/laptop2-modelos/modelos/cardiovascular
+    command: ["uvicorn", "api_cardio:app", "--host", "0.0.0.0", "--port", "8230"]
+    environment: {USAR_GPU: "${USAR_GPU:-auto}"}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8230/salud', timeout=3)"]
+      <<: *salud-modelo

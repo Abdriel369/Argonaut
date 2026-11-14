@@ -1,0 +1,11 @@
+{
+  "consulta_id": "AST-01-D5-ejemplo",
+  "especialista": "sueno",
+  "datos": {
+    "dia_mision": 5,
+    "indicadores": {
+      "sueno_h": 5.0,
+      "estres": 72
+    }
+  }
+}

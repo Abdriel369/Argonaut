@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "resultado_final",
+  "title": "Resultado final del orquestador (Laptop 3 -> Laptop 1)",
+  "type": "object",
+  "required": [
+    "nivel_global", "alertas", "modo", "especialistas_no_disponibles",
+    "escalamiento", "informe_cirujano"
+  ],
+  "properties": {
+    "nivel_global": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+    "alertas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "nivel", "causa_en_lenguaje_simple", "indicadores_implicados",
+          "especialistas_consultados", "protocolo_id"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "titulo": { "type": "string" },
+          "nivel": { "enum": ["amarillo", "naranja", "rojo"] },
+          "nivel_reglas": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+          "causa_en_lenguaje_simple": { "type": "string" },
+          "indicadores_implicados": { "type": "array", "items": { "type": "string" } },
+          "especialistas_consultados": { "type": "array", "items": { "type": "string" } },
+          "elevada_por": { "type": "array", "items": { "type": "string" } },
+          "protocolo_id": { "type": "string" }
+        }
+      }
+    },
+    "modo": { "enum": ["completo", "degradado"] },
+    "especialistas_no_disponibles": { "type": "array", "items": { "type": "string" } },
+    "escalamiento": {
+      "type": "object",
+      "required": ["nivel", "accion"],
+      "properties": {
+        "nivel": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+        "accion": { "type": "string" },
+        "destinatario": { "type": "string" }
+      }
+    },
+    "informe_cirujano": {
+      "description": "Informe para el cirujano de vuelo; null si el nivel no lo requiere.",
+      "type": ["object", "null"]
+    },
+    "explicacion_global": { "type": "string" },
+    "semaforo_indicadores": {
+      "description": "Estado por indicador (reglas de nivel 1).",
+      "type": "object"
+    },
+    "junta": {
+      "description": "Qué pasó con cada especialista: respondió, no disponible o no convocado.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["especialista", "estado", "laptop"],
+        "properties": {
+          "especialista": { "type": "string" },
+          "titulo": { "type": "string" },
+          "laptop": { "type": "string" },
+          "estado": { "enum": ["respondio", "no_disponible", "no_convocado"] },
+          "motivo": { "type": "string" },
+          "respuesta": { "type": ["object", "null"] }
+        }
+      }
+    },
+    "protocolos": { "type": "object", "description": "Protocolos referenciados por las alertas, por protocolo_id." },
+    "reglas_activadas": { "type": "array", "items": { "type": "string" } },
+    "ventana_adaptacion": { "type": "boolean" },
+    "respuestas_guardadas": { "type": "boolean" },
+    "origen": { "type": "string", "description": "orquestador (Laptop 3) o respaldo-local (Laptop 1)" },
+    "dia_mision": { "type": "integer" },
+    "aviso": { "type": "string" }
+  }
+}

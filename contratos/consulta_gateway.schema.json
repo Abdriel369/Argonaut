@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "consulta_gateway",
+  "title": "Consulta al gateway de la Laptop 2 (Laptop 3 -> Laptop 2)",
+  "description": "Una sola llamada: el gateway reparte la pregunta a los especialistas pedidos.",
+  "type": "object",
+  "required": ["consulta_id", "especialistas", "datos"],
+  "properties": {
+    "consulta_id": { "type": "string", "minLength": 1 },
+    "especialistas": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["sueno", "fatiga-bienestar", "cardiovascular"] }
+    },
+    "datos": { "type": "object", "required": ["indicadores"] }
+  }
+}
