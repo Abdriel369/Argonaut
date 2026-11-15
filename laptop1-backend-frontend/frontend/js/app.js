@@ -124,6 +124,35 @@ function cerrarDetalle() {
   pintarEquipo();
 }
 
+async function activarAstronauta(astronautaId) {
+  app.ocupado = true;
+  try {
+    const datos = await pedir("api/tripulacion/activo", {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ astronauta_id: astronautaId }),
+    });
+    if (datos && datos.resultado) app.datos = datos;
+    app.conexion = true;
+    app.detalleEquipo = null;
+    app.detalleError = null;
+    app.cargandoDetalle = false;
+    app.nivelAnterior = null;
+    app.zonaElegida = false;
+    app.diaFormulario = null;
+    await cargarEquipo();
+    pintar();
+    const estado = $("sec-estado");
+    if (estado) estado.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch (error) {
+    app.detalleError = error instanceof TypeError
+      ? "No connection to Laptop 1. The active astronaut could not be changed."
+      : traducirError(error.message);
+  } finally {
+    app.ocupado = false;
+    pintar();
+  }
+}
+
 async function cargarRed() {
   try {
     app.red = await pedir("api/red");
@@ -410,6 +439,9 @@ function prepararEventos() {
 
     const cerrar = evento.target.closest("[data-cerrar-detalle]");
     if (cerrar) { cerrarDetalle(); return; }
+
+    const activar = evento.target.closest("[data-activar]");
+    if (activar) { await activarAstronauta(activar.dataset.activar); return; }
 
     const astronauta = evento.target.closest("[data-astronauta]");
     if (astronauta) { await abrirDetalle(astronauta.dataset.astronauta); return; }

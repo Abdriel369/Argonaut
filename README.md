@@ -49,7 +49,7 @@ Tests
 pip install -r laptop2-modelos/requirements.txt pytest
 python -m pytest           # from the repository root (see the exact count in the output)
 ```
-At the time of this change: **303 tests pass**. `xgboost` is pinned below 3.0 in
+At the time of this change: **304 tests pass**. `xgboost` is pinned below 3.0 in
 the model requirements: version 3.x crashed while shutting down with this
 machine's CUDA driver. On Windows the tests force `USAR_GPU=no` for the same
 reason; the runtime keeps `USAR_GPU=auto`. The pure watch queue
@@ -103,7 +103,7 @@ Readiness index: it is a demo heuristic built from simulated profiles and local 
 Crew profiles: the six astronauts are fictional and deterministic. AST-05 intentionally has no records for days 3–7, so the crew view shows **Not enough data** instead of a misleading zero.
 Watch: it is a web screen, not a native app, and it does not use Bluetooth or real sensors. Its offline queue lives in `localStorage` and is limited to 20 readings per astronaut; the demo does not use service workers or background execution.
 Verification status
-Verified here: all 303 tests pass; the 7-day scenario produces the expected scripted levels; the local demo (`arrancar_demo.sh local`) works end to end; the `docker-compose.yml` files have valid syntax. The real server was started and `/`, `/reloj/` (plus its JS/CSS/font assets), `/api/tripulacion`, `/api/reloj/estado`, `/api/reloj/lectura` and `/api/exportar.csv` answered correctly. The crew view, the individual detail and the five watch screens were smoke-tested from Node with a minimal DOM and real backend payloads.
+Verified here: all 304 tests pass; the 7-day scenario produces the expected scripted levels; the local demo (`arrancar_demo.sh local`) works end to end; the `docker-compose.yml` files have valid syntax. The real server was started and `/`, `/reloj/` (plus its JS/CSS/font assets), `/api/tripulacion`, `/api/reloj/estado`, `/api/reloj/lectura` and `/api/exportar.csv` answered correctly. The crew view, the individual detail and the five watch screens were smoke-tested from Node with a minimal DOM and real backend payloads.
 A visual check with headless Chrome rendered `/` and `/reloj/` at desktop size and with emulated 360/390 px viewports; the Crew table loaded its six rows, the AST-03 detail opened, and there was no horizontal overflow. The full offline → reload → online cycle in browser DevTools was not automated; the pure queue logic is covered by Node tests and the HTTP endpoints by pytest.
 Not verified here: Docker image builds and startup with `docker compose`. The development environment does not have a Docker daemon. The Dockerfiles follow the same folder structure used by the tests.
 To do on site: test with the three actual laptops on the router; set the IP and port in each `.env`; decide whether to use an NVIDIA GPU (see the commented section in `laptop3-orquestador/docker-compose.yml`).

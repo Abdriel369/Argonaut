@@ -678,7 +678,10 @@ export function vistaDetalleEquipo(detalle, cargando = false) {
     <div class="crew-detalle" role="region" aria-label="${EQUIPO.detalle}: ${esc(a.nombre)}">
       <div class="crew-detalle-cabecera">
         <div>
-          <button type="button" class="boton boton-chico" data-cerrar-detalle>${icono("baja")}${EQUIPO.cerrar}</button>
+          <div class="crew-detalle-acciones">
+            <button type="button" class="boton boton-chico" data-cerrar-detalle>${icono("baja")}${EQUIPO.cerrar}</button>
+            <button type="button" class="boton boton-chico boton-secundario" data-activar="${esc(a.id)}">${EQUIPO.activar}</button>
+          </div>
           <h3>${esc(a.nombre)} <small>${esc(traducirRol(a.rol))}</small></h3>
           <p class="ayuda">${origen} · ${modo} · ${EQUIPO.dia} ${detalle.dia_mision}</p>
         </div>

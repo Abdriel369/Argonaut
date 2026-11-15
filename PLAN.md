@@ -3,7 +3,7 @@
 > Prototipo con datos simulados. No es una herramienta de diagnóstico médico.
 
 Estado de las fases del encargo. La suite base se midió antes de tocar código:
-**254 pruebas pasando** (`python -m pytest -q`). Al cerrar este plan: **303**.
+**254 pruebas pasando** (`python -m pytest -q`). Al cerrar este plan: **304**.
 
 ## Fase 0 · Reconocimiento y base
 
@@ -89,5 +89,3 @@ Estado de las fases del encargo. La suite base se midió antes de tocar código:
   "Not enough data". Al enviar una lectura del reloj en uno de esos días, la
   cobertura sube porque la persona empieza a registrar.
 - El índice es una heurística de demo, no una probabilidad calibrada.
-
-

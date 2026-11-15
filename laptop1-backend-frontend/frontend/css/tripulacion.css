@@ -91,6 +91,7 @@
   border-radius: var(--radio); background: var(--noche-2); display: grid; gap: 0.8rem;
 }
 .crew-detalle-cabecera { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.7rem; align-items: flex-start; }
+.crew-detalle-acciones { display: flex; flex-wrap: wrap; gap: 0.4rem; }
 .crew-detalle-cabecera h3 { margin: 0.5rem 0 0.15rem; font-size: 1.25rem; }
 .crew-detalle-cabecera h3 small { color: var(--tinta-2); font-weight: 400; font-size: 0.95rem; }
 .crew-detalle-nivel { display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem; }

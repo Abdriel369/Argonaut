@@ -745,6 +745,7 @@ export const EQUIPO = {
   verDetalle: "View detail",
   detalle: "Astronaut detail",
   cerrar: "Close detail",
+  activar: "Show on dashboard",
   cargando: "Loading detail…",
   modeloRiesgo: "Model risk",
   modeloRiesgoNoDisponible: "—",

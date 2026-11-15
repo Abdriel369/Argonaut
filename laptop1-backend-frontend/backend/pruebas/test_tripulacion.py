@@ -85,6 +85,21 @@ def test_la_vista_general_funciona_con_el_orquestador_caido():
     assert len(datos["astronautas"]) == 6
 
 
+def test_cambiar_el_astronauta_activo_cambia_el_tablero_principal():
+    async def caso():
+        app = pila.crear_pila(laptop3_apagada=True)
+        async with pila.navegador(app) as nav:
+            respuesta = await nav.post("/api/tripulacion/activo", json={"astronauta_id": "AST-02"})
+            estado = await nav.get("/api/estado")
+            return respuesta.status_code, respuesta.json(), estado.json()
+
+    codigo, cambiado, estado = asyncio.run(caso())
+    assert codigo == 200
+    assert cambiado["astronauta_id"] == "AST-02"
+    assert estado["astronauta"]["id"] == "AST-02"
+    assert estado["astronauta_activo"] == "AST-02"
+
+
 def test_hana_sin_datos_no_se_ordena_como_un_cero():
     app = pila.crear_pila(laptop3_apagada=True)
     datos = asyncio.run(app.state.servicio.tripulacion(5))
