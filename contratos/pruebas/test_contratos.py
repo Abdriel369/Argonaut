@@ -48,3 +48,22 @@ def test_especialista_desconocido_se_rechaza():
     consulta = ejemplo("consulta_especialista")
     consulta["especialista"] = "inmunologico"   # línea futura: no está implementada
     assert errores("consulta_especialista", consulta)
+
+
+def test_la_entrada_admite_datos_sospechosos_y_sigue_aceptando_la_de_antes():
+    entrada = ejemplo("entrada_orquestador")
+    assert errores("entrada_orquestador", entrada) == [], "un mensaje sin el campo nuevo sigue siendo válido"
+    entrada["indicadores"]["fc_reposo"] = None
+    entrada["sensores_sospechosos"] = [{
+        "indicador": "fc_reposo", "motivo": "fuera_de_rango", "nombre": "Pulso en reposo", "unidad": "lpm",
+        "valor_leido": 250.0, "minimo": 30.0, "maximo": 200.0,
+    }]
+    assert errores("entrada_orquestador", entrada) == []
+
+
+def test_un_motivo_de_sospecha_desconocido_se_rechaza():
+    entrada = ejemplo("entrada_orquestador")
+    entrada["sensores_sospechosos"] = [{"indicador": "fc_reposo", "motivo": "mala_suerte"}]
+    assert errores("entrada_orquestador", entrada)
+    entrada["sensores_sospechosos"] = [{"motivo": "fuera_de_rango"}]   # falta decir qué indicador
+    assert errores("entrada_orquestador", entrada)

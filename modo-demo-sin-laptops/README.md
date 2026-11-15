@@ -30,10 +30,16 @@ python3 modo-demo-sin-laptops/grabar_respuestas.py
 ## Limitaciones
 - Solo cubre los estados recorridos. Si el presentador introduce **datos a mano** que no estaban en la grabación,
   los especialistas quedan como "no hay respuesta guardada para estos datos" y las reglas siguen funcionando.
+- El botón **"Simular sensor defectuoso"** tampoco está grabado: al pulsarlo cambia lo que recibirían los
+  especialistas, así que quedan como no disponibles y la pantalla pasa a modo degradado. Las reglas siguen
+  funcionando y el aviso del sensor aparece igual. Al reparar el sensor vuelven las respuestas guardadas.
+  Para ver la opinión de los modelos con un sensor defectuoso hacen falta los modelos reales
+  (`scripts/arrancar_local.sh` o las tres laptops).
 - Las respuestas guardadas son de los modelos del prototipo y están marcadas como tales en cada respuesta.
 
 ## Pruebas
 ```bash
 python3 -m pytest modo-demo-sin-laptops
 ```
-Comprueba que la historia de 7 días y la caída de la Laptop 2 se reproducen igual con respuestas guardadas.
+Comprueba que la historia de 7 días y la caída de la Laptop 2 se reproducen igual con respuestas guardadas, y que
+con datos no grabados (sensor defectuoso o un dato a mano) el especialista queda como no disponible y las reglas siguen.

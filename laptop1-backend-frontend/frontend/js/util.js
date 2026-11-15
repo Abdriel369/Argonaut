@@ -15,6 +15,8 @@ const TRAZOS = {
   naranja: '<path d="M12 2.5 21.5 12 12 21.5 2.5 12 12 2.5Z"/><path d="M12 8v5M12 15.8v.3"/>',
   rojo: '<path d="M8.2 3h7.6L21 8.2v7.6L15.8 21H8.2L3 15.8V8.2L8.2 3Z"/><path d="m9 9 6 6M15 9l-6 6"/>',
   sin_dato: '<circle cx="12" cy="12" r="9" stroke-dasharray="3 3.5"/><path d="M8.5 12h7"/>',
+  // Suspicious data: a dashed square with a question mark (its own shape, like every level).
+  sospechoso: '<rect x="3.5" y="3.5" width="17" height="17" rx="3" stroke-dasharray="3 3.5"/><path d="M9.5 9.6a2.5 2.5 0 1 1 3.7 2.2c-.8.5-1.2 1-1.2 1.9M12 16.9v.3"/>',
   sube: '<path d="M12 19V5M6 11l6-6 6 6"/>',
   baja: '<path d="M12 5v14M6 13l6 6 6-6"/>',
   estable: '<path d="M5 12h14M13 6l6 6-6 6"/>',
@@ -38,8 +40,9 @@ export function icono(nombre) {
 
 export const TEXTO_NIVEL = {
   verde: "Normal", amarillo: "Attention", naranja: "Alert", rojo: "Critical", sin_dato: "No data",
+  sospechoso: "Suspicious data",   // the sensor seems to be failing: the value is not used
 };
-const ORDEN = ["sin_dato", "verde", "amarillo", "naranja", "rojo"];
+const ORDEN = ["sin_dato", "sospechoso", "verde", "amarillo", "naranja", "rojo"];
 
 /** Level badge: icon + text + color (never color alone). */
 export function insignia(nivel) {

@@ -9,6 +9,11 @@
 # Las reglas mandan. Un especialista puede SUBIR una alerta, nunca bajarla.
 confianza_minima = 0.60     # por debajo de esta confianza la opinión no cambia el nivel
 escalones_maximos = 1       # como mucho sube un escalón (amarillo -> naranja, etc.)
+# Sensor que parece fallar: si hoy hay un dato sospechoso y a un especialista le faltan
+# datos, su opinión se muestra pero NO cambia el nivel (ni sube una alerta ni crea una
+# señal temprana). Motivo: al faltarle un dato el modelo lo rellena con un valor sano y su
+# "confianza" (una heurística) puede incluso subir; no es base para subir una alerta.
+sin_voto_con_dato_sospechoso = true
 
 [informe]
 nivel_minimo = "naranja"    # desde este nivel se prepara informe para el cirujano de vuelo

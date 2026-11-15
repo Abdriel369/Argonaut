@@ -9,8 +9,13 @@ from comun.niveles import TEXTO_NIVEL
 
 
 def construir_informe(entrada: dict, evaluacion_reglas: dict, alertas: list, junta: list,
-                      nivel_global: str, modo: str, protocolos: dict) -> dict:
-    """Resumen de indicadores, tendencia de 7 días, reglas, especialistas y acciones."""
+                      nivel_global: str, modo: str, protocolos: dict,
+                      sensores_sospechosos: list | None = None) -> dict:
+    """Resumen de indicadores, tendencia de 7 días, reglas, especialistas y acciones.
+
+    Si algún sensor parecía fallar, el informe lo dice: el cirujano de vuelo debe saber
+    qué datos no se usaron.
+    """
     semaforo = evaluacion_reglas["semaforo"]
     indicadores = [
         {
@@ -50,6 +55,7 @@ def construir_informe(entrada: dict, evaluacion_reglas: dict, alertas: list, jun
         "reglas_activadas": evaluacion_reglas["reglas_activadas"],
         "especialistas_consultados": consultados,
         "especialistas_no_disponibles": [m["especialista"] for m in junta if m["estado"] == "no_disponible"],
+        "sensores_sospechosos": list(sensores_sospechosos or []),
         "acciones_recomendadas": [
             {"protocolo_id": pid, "titulo": protocolo["titulo"],
              "pasos": [paso["texto"] for paso in protocolo["pasos"]]}

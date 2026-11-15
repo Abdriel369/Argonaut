@@ -4,10 +4,13 @@
 
 import { esc, icono, NOMBRES_ESPECIALISTA } from "./util.js";
 import { ANIMOS, PREGUNTAS_EQUIPO } from "./contenido.js";
-import { nombreIndicador, unidadIndicador, traducirError, traducirNombre } from "./i18n.js";
+import {
+  nombreIndicador, unidadIndicador, traducirError, traducirNombre,
+  avisoSensor, reglasSinDato, TIPOS_FALLA, DEMO_SENSOR,
+} from "./i18n.js";
 import {
   vistaEstado, vistaTablero, vistaCuerpo, vistaAlertas, vistaJunta, vistaTendencia, vistaInforme,
-  zonaPorDefecto,
+  zonaPorDefecto, sensoresSospechosos,
 } from "./vistas.js";
 
 const INTERVALO_ESTADO_MS = 4000;     // syncs phone and laptop
@@ -162,6 +165,11 @@ function pintarAvisos() {
     avisos.push(`<div class="aviso-sistema">${icono("naranja")}<p><b>Degraded mode.</b> Unavailable: ${esc(nombres)}.
       The system keeps running on the rules and the local solar model.</p></div>`);
   }
+  // A sensor that seems to be failing: an equipment notice, not a health alert.
+  for (const ficha of (app.datos ? sensoresSospechosos(app.datos) : [])) {
+    avisos.push(`<div class="aviso-sistema sensor">${icono("sospechoso")}<p><b>Suspicious data: ${
+      esc(nombreIndicador(ficha.indicador).toLowerCase())}.</b> ${esc(avisoSensor(ficha))} ${esc(reglasSinDato(ficha))}</p></div>`);
+  }
   if (r && r.respuestas_guardadas) {
     avisos.push(`<div class="aviso-sistema guardadas">${icono("reloj")}<p><b>Single-machine demo.</b>
       Model answers are saved results from real runs; they are not computed now.</p></div>`);
@@ -181,6 +189,13 @@ function pintarControles(e) {
   const reproducir = $("demo-reproducir");
   reproducir.setAttribute("aria-pressed", String(Boolean(app.reproduccion)));
   reproducir.textContent = app.reproduccion ? "Pause" : "Play week";
+  const falla = e.sensor_defectuoso || {};
+  const sensor = $("demo-sensor");
+  sensor.setAttribute("aria-pressed", String(Boolean(falla.activo_hoy)));
+  sensor.textContent = falla.activo_hoy ? DEMO_SENSOR.reparar : DEMO_SENSOR.simular;
+  const tipoFalla = $("demo-sensor-tipo");
+  if (falla.activo_hoy && document.activeElement !== tipoFalla) tipoFalla.value = falla.tipo;
+  tipoFalla.disabled = app.ocupado || Boolean(falla.activo_hoy);
   if (app.red) $("demo-caida").checked = Boolean(app.red.laptop2.simulada);
   for (const boton of document.querySelectorAll("#sec-demo button")) boton.disabled = app.ocupado;
 
@@ -430,6 +445,15 @@ function prepararEventos() {
     app.zonaElegida = false;
     const datos = await accion("api/demo/evento-solar", { activo }, mensaje);
     if (datos) mensaje.textContent = activo ? "Solar event simulated on the current day." : "Solar event ended.";
+  });
+  // Faulty sensor: fills the fault-type list once and toggles the fault on the current day.
+  $("demo-sensor-tipo").innerHTML = TIPOS_FALLA.map(([valor, texto]) =>
+    `<option value="${valor}">${esc(texto)}</option>`).join("");
+  $("demo-sensor").addEventListener("click", async () => {
+    const activo = !(app.datos && app.datos.sensor_defectuoso && app.datos.sensor_defectuoso.activo_hoy);
+    app.zonaElegida = false;
+    const datos = await accion("api/demo/sensor-defectuoso", { activo, tipo: $("demo-sensor-tipo").value }, mensaje);
+    if (datos) mensaje.textContent = activo ? DEMO_SENSOR.activado : DEMO_SENSOR.reparado;
   });
   $("demo-enlace").addEventListener("click", async () => {
     const datos = await accion("api/demo/enlace-tierra", {}, mensaje);

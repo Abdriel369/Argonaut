@@ -7,6 +7,11 @@ Tres niveles, todos configurados en config/umbrales.toml:
 
 La misma función sirve en la Laptop 3 (orquestador) y como respaldo en la
 Laptop 1 cuando el orquestador no responde. No diagnostica: avisa por riesgo.
+
+Datos sospechosos: si la entrada trae 'sensores_sospechosos' (lecturas que la
+validación de sensores de la Laptop 1 apartó), esos indicadores se excluyen del
+cálculo y su semáforo queda en "sospechoso". Un sensor roto no puede activar una
+regla, y las alertas que dependen de otras señales no cambian.
 """
 
 import tomllib
@@ -29,6 +34,67 @@ def cargar_config(ruta: Path | None = None) -> dict:
 
 def _numero(valor) -> bool:
     return isinstance(valor, (int, float)) and not isinstance(valor, bool)
+
+
+# --------------------------------------------------------------------------
+# Datos sospechosos (sensor que parece fallar)
+# --------------------------------------------------------------------------
+
+# Qué indicadores usa cada regla de combinación. Sirve para decir qué reglas se
+# quedan hoy sin un dato cuando su sensor falla.
+ENTRADAS_COMBINACION = {
+    "FATIGA": ("sueno_h", "estres", "ejercicio_min", "animo"),
+    "AISLAMIENTO": ("animo", "cohesion_equipo"),
+    "PERDIDA_MUSCULAR_OSEA": ("ejercicio_min",),
+    "RADIACION": ("tasa_dosis_usv_h", "fc_reposo", "temperatura"),
+    "CARDIOVASCULAR": ("fc_reposo", "hrv", "sueno_h"),
+    "ENERGIA_BAJA": ("ingesta_pct",),
+}
+
+
+def sospechosos(entrada: dict) -> dict:
+    """{indicador: ficha} de las lecturas de hoy marcadas como 'dato sospechoso'."""
+    return {
+        ficha["indicador"]: ficha
+        for ficha in (entrada.get("sensores_sospechosos") or [])
+        if isinstance(ficha, dict) and isinstance(ficha.get("indicador"), str)
+    }
+
+
+def excluir_sospechosos(entrada: dict) -> dict:
+    """Entrada sin las lecturas sospechosas de hoy: quedan como 'sin dato'.
+
+    Un dato sospechoso se excluye del cálculo. Ni las reglas ni los modelos lo ven,
+    aunque quien envió la entrada no lo hubiera borrado. Si no hay ninguno devuelve
+    la misma entrada, sin copiarla ni cambiarla.
+    """
+    marcados = sospechosos(entrada)
+    if not marcados:
+        return entrada
+    limpia = dict(entrada)
+    limpia["indicadores"] = {**(entrada.get("indicadores") or {}), **{clave: None for clave in marcados}}
+    desviaciones = dict(entrada.get("desviaciones_vs_base") or {})
+    tendencias = dict(entrada.get("tendencias_7d") or {})
+    for clave in marcados:
+        if clave in desviaciones:
+            desviaciones[clave] = None
+        serie = list(tendencias.get(clave) or [])
+        if serie:
+            serie[-1] = None          # el último valor de la serie es el de hoy
+            tendencias[clave] = serie
+    limpia["desviaciones_vs_base"] = desviaciones
+    limpia["tendencias_7d"] = tendencias
+    return limpia
+
+
+def _reglas_afectadas(indicador: str, config: dict) -> list:
+    """Reglas que usan este indicador y hoy se evalúan sin él."""
+    afectadas = []
+    regla = config["indicadores"].get(indicador)
+    if regla:
+        afectadas.append(regla["alerta_id"])
+    afectadas += [nombre for nombre, entradas in ENTRADAS_COMBINACION.items() if indicador in entradas]
+    return afectadas
 
 
 def _formato(valor: float, decimales: int) -> str:
@@ -103,7 +169,8 @@ def _umbral_en_unidades(referencia, regla: dict, factor: float):
     return round(referencia + distancia if regla["sentido"] == "alto" else referencia - distancia, 3)
 
 
-def _evaluar_indicador(entrada: dict, indicador: str, regla: dict, factor_adaptacion: float) -> dict:
+def _evaluar_indicador(entrada: dict, indicador: str, regla: dict, factor_adaptacion: float,
+                       sospechoso: dict | None = None) -> dict:
     valor = (entrada.get("indicadores") or {}).get(indicador)
     referencia = _referencia(entrada, indicador, regla)
     estado = {
@@ -113,6 +180,11 @@ def _evaluar_indicador(entrada: dict, indicador: str, regla: dict, factor_adapta
         "tendencia": "sin_dato", "frase": None, "sentido": regla["sentido"],
         "umbral_amarillo": None,
     }
+    if sospechoso:
+        # El sensor parece fallar: no se evalúa. Se guarda lo que marcó, solo para mostrarlo.
+        estado.update(nivel="sospechoso", valor=None, valor_leido=sospechoso.get("valor_leido"),
+                      motivo_sospecha=sospechoso.get("motivo"))
+        return estado
     if not _numero(valor):
         return estado   # un sensor sin dato no rompe nada: se muestra "sin dato"
 
@@ -318,19 +390,21 @@ def evaluar(entrada: dict, config: dict) -> dict:
     Devuelve: nivel global, semáforo por indicador, alertas (con hechos en lenguaje
     sencillo), señales para el enrutamiento y la lista de reglas activadas.
     """
+    marcados = sospechosos(entrada)
+    entrada = excluir_sospechosos(entrada)   # un dato sospechoso no entra en ningún cálculo
     general = config["general"]
     en_adaptacion = entrada["dia_mision"] <= general["dias_adaptacion"]
     factor = general["factor_tolerancia_adaptacion"] if en_adaptacion else 1.0
 
     # Nivel 1
     semaforo = {
-        indicador: _evaluar_indicador(entrada, indicador, regla, factor)
+        indicador: _evaluar_indicador(entrada, indicador, regla, factor, marcados.get(indicador))
         for indicador, regla in config["indicadores"].items()
     }
     alertas_indicador = []
     senales = []
     for indicador, estado in semaforo.items():
-        if estado["nivel"] in ("sin_dato", "verde"):
+        if estado["nivel"] in ("sin_dato", "sospechoso", "verde"):
             continue
         regla = config["indicadores"][indicador]
         senales.append(f"{indicador}:{regla['sentido']}")
@@ -382,4 +456,8 @@ def evaluar(entrada: dict, config: dict) -> dict:
         "senales": sorted(set(senales)),
         "reglas_activadas": [a["id"] for a in alertas],
         "ventana_adaptacion": en_adaptacion,
+        "sensores_sospechosos": [
+            {**ficha, "reglas_afectadas": _reglas_afectadas(indicador, config)}
+            for indicador, ficha in marcados.items()
+        ],
     }

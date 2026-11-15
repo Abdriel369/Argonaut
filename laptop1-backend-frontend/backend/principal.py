@@ -96,6 +96,12 @@ def crear_app(ajustes: Ajustes | None = None, transporte_orquestador=None) -> Fa
     async def demo_evento_solar(cuerpo: dict):
         return await servicio.evento_solar(bool(cuerpo.get("activo", True)))
 
+    @app.post("/api/demo/sensor-defectuoso")
+    async def demo_sensor_defectuoso(cuerpo: dict):
+        """{"activo": true|false, "tipo": "imposible"|"salto"|"congelado", "indicador": opcional}"""
+        return await protegido(servicio.sensor_defectuoso(
+            bool(cuerpo.get("activo", True)), cuerpo.get("tipo") or "imposible", cuerpo.get("indicador")))
+
     @app.post("/api/demo/caida-laptop2")
     async def demo_caida_laptop2(cuerpo: dict):
         return await protegido(servicio.caida_laptop2(bool(cuerpo.get("activa"))))

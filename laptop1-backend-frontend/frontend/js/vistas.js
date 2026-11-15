@@ -7,9 +7,18 @@ import {
   nombreIndicador, unidadIndicador, tituloAlerta, tituloProtocolo, pasoProtocolo,
   traducirMotivo, traducirCausa, traducirPaso, explicacionGlobal, opinionJunta,
   explicacionCorta, notaDia, MUSCULO, MODULOS, NOTA_INFORME, ESCALAMIENTO, ETIQUETAS,
+  avisoSensor, MOTIVO_SENSOR, OPINION_LIMITADA,
 } from "./i18n.js";
 
 const semaforo = (e) => (e.resultado && e.resultado.semaforo_indicadores) || {};
+
+/** Today's readings set aside because the sensor seems to be failing.
+ *  The orchestrator's list carries the affected rules; the backend's own list is the fallback. */
+export function sensoresSospechosos(e) {
+  const delResultado = (e.resultado && e.resultado.sensores_sospechosos) || [];
+  return delResultado.length ? delResultado : (e.sensores_sospechosos || []);
+}
+const sospecha = (e, clave) => sensoresSospechosos(e).find((s) => s.indicador === clave);
 
 // ---------------------------------------------------------------------------
 // Overall status + mission week
@@ -53,9 +62,21 @@ function tarjeta(e, clave, extra = "") {
   const estado = semaforo(e)[clave];
   const valor = e.indicadores[clave];
   const hayDato = typeof valor === "number";
-  const nivel = !hayDato ? "sin_dato" : (estado ? estado.nivel : "verde");
+  const dudoso = sospecha(e, clave);
+  const nivel = dudoso ? "sospechoso" : (!hayDato ? "sin_dato" : (estado ? estado.nivel : "verde"));
   const unidad = unidadIndicador(clave) || ficha.unidad;
   let pie = "";
+  if (dudoso) {
+    // The value is shown struck through, only so the person can see what the sensor read.
+    return `
+    <article class="tarjeta nivel-sospechoso">
+      <p class="tarjeta-nombre">${icono(ficha.icono)}<span>${esc(nombreIndicador(clave))}</span></p>
+      <p class="tarjeta-valor"><s class="leido">${formato(dudoso.valor_leido, ficha.decimales)}</s><small>${esc(unidad)}</small></p>
+      ${insignia("sospechoso")}
+      <p class="tarjeta-pie"><span>Sensor reading not used: ${esc(MOTIVO_SENSOR[dudoso.motivo] || "unreliable value")}. Check the equipment.</span></p>
+      ${extra}
+    </article>`;
+  }
   if (hayDato && estado && typeof estado.desviacion === "number") {
     const signo = estado.desviacion > 0 ? "+" : estado.desviacion < 0 ? "−" : "";
     const contra = clave === "ejercicio_min" ? "vs the plan" : "vs your normal";
@@ -164,7 +185,10 @@ export function vistaCuerpo(e, zonaActiva) {
     const ficha = e.catalogo[clave] || { nombre: clave, unidad: "", decimales: 0 };
     const valor = e.indicadores[clave];
     const unidad = unidadIndicador(clave) || ficha.unidad;
-    const texto = typeof valor === "number" ? `${formato(valor, ficha.decimales)} ${esc(unidad)}` : "No data";
+    const dudoso = sospecha(e, clave);
+    const texto = dudoso
+      ? `Suspicious data (the sensor read ${formato(dudoso.valor_leido, ficha.decimales)} ${esc(unidad)}; not used)`
+      : (typeof valor === "number" ? `${formato(valor, ficha.decimales)} ${esc(unidad)}` : "No data");
     return `<li>${esc(nombreIndicador(clave))}: <b>${texto}</b></li>`;
   });
   if (z.id === "radiacion") {
@@ -278,6 +302,7 @@ export function vistaJunta(e) {
         </div>
         <p>${esc(explicacionCorta(resp))}</p>
         ${factores ? `<ul class="factores">${factores}</ul>` : ""}
+        ${m.opinion_limitada ? `<p class="opinion-limitada">${icono("sospechoso")}<span>${esc(OPINION_LIMITADA)}</span></p>` : ""}
         <p class="ficha">Why it was consulted: ${esc(traducirMotivo(m.motivo) || "board round")}.</p>
         <p class="ficha">Model v${esc(resp.version_modelo)}, trained on ${esc(datosEntrenamiento(resp.datos_entrenamiento))} data.
           Confidence ${Math.round(resp.confianza * 100)} %.${resp.dispositivo ? ` Runs on ${esc(resp.dispositivo.toUpperCase())}.` : ""}${
@@ -426,7 +451,7 @@ export function vistaInforme(e, abiertos) {
     const pendiente = inf.estado === "pendiente";
     const filas = (c.indicadores || []).map((i) => `
       <tr><td>${esc(nombreIndicador(i.indicador) || i.nombre)}</td>
-        <td class="num">${typeof i.valor === "number" ? i.valor : "no data"} ${esc(unidadIndicador(i.indicador) || i.unidad)}</td>
+        <td class="num">${typeof i.valor === "number" ? i.valor : (i.nivel === "sospechoso" ? "not used" : "no data")} ${esc(unidadIndicador(i.indicador) || i.unidad)}</td>
         <td class="num">${typeof i.linea_base === "number" ? Math.round(i.linea_base * 10) / 10 : "–"}</td>
         <td>${insignia(i.nivel)}</td></tr>`).join("");
     const tomadas = (c.acciones_tomadas || []).length
@@ -438,6 +463,9 @@ export function vistaInforme(e, abiertos) {
       : '<p class="ayuda">No specialist answered; the report is based on the rules.</p>';
     const reglas = (c.reglas_activadas || []).length
       ? c.reglas_activadas.map((id) => tituloAlerta(id)).join(", ") : "None";
+    const dudosos = (c.sensores_sospechosos || []).length
+      ? `<div><h4>Suspicious sensor data (not used)</h4><ul>${c.sensores_sospechosos.map((s) =>
+        `<li>${esc(avisoSensor(s))}</li>`).join("")}</ul></div>` : "";
     return `
       <details class="informe" data-informe="${esc(inf.id)}" ${abiertos.has(inf.id) ? "open" : ""}>
         <summary><span>Day ${inf.dia} report</span> ${insignia(c.nivel_global)}
@@ -449,6 +477,7 @@ export function vistaInforme(e, abiertos) {
             <div class="tabla-envoltura"><table>
               <thead><tr><th>Indicator</th><th>Value</th><th>Baseline</th><th>Status</th></tr></thead>
               <tbody>${filas}</tbody></table></div></div>
+          ${dudosos}
           <div><h4>Rules activated</h4><p>${esc(reglas)}</p></div>
           <div><h4>Specialists consulted</h4>${consultados}
             ${(c.especialistas_no_disponibles || []).length ? `<p class="ayuda">Unavailable: ${c.especialistas_no_disponibles.map((n) => esc(NOMBRES_ESPECIALISTA[n] || n)).join(", ")}.</p>` : ""}</div>

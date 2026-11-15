@@ -51,6 +51,26 @@
         "dosis_acumulada": { "type": "number", "minimum": 0, "description": "mSv acumulados en la misión" },
         "evento_solar": { "type": "boolean" }
       }
+    },
+    "sensores_sospechosos": {
+      "description": "OPCIONAL. Lecturas de hoy que la validación de sensores de la Laptop 1 marcó como 'dato sospechoso'. Solo se envía cuando hay alguna. Esos indicadores llegan como null en 'indicadores' y se excluyen del cálculo; aquí va el motivo para poder avisar. No cambia el nivel.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicador", "motivo"],
+        "properties": {
+          "indicador": { "type": "string", "minLength": 1 },
+          "motivo": { "enum": ["fuera_de_rango", "cambio_brusco", "valor_congelado"] },
+          "nombre": { "type": "string", "description": "Nombre sencillo del indicador, para el aviso." },
+          "unidad": { "type": "string" },
+          "valor_leido": { "type": "number", "description": "Lo que marcó el sensor. Solo se muestra; no se usa." },
+          "minimo": { "type": ["number", "null"], "description": "Rango posible (motivo fuera_de_rango)." },
+          "maximo": { "type": ["number", "null"] },
+          "valor_anterior": { "type": "number", "description": "Última lectura válida (motivo cambio_brusco)." },
+          "cambio_maximo": { "type": "number" },
+          "dias": { "type": "integer", "minimum": 1, "description": "Días seguidos con el mismo valor (motivo valor_congelado)." }
+        }
+      }
     }
   }
 }

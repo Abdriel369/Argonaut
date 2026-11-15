@@ -22,7 +22,7 @@ ingesta_pct = 100.0     # % de lo planeado
 
 # Metas planificadas (no se recalibran: son el plan de la misión).
 [plan]
-ejercicio_min = 120.0   # FUENTE POR CITAR: contramedidas de ejercicio en ISS (~2 h/día)
+ejercicio_min = 120.0   # unas dos horas al día en misiones largas: Agencia Espacial Canadiense, [F4] en FUENTES.md
 
 # Recalibración: al terminar los días de adaptación, la base se mezcla con lo
 # observado en esos días (el cuerpo cambia en microgravedad).

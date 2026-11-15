@@ -1,0 +1,118 @@
+# ============================================================================
+# VALIDACIÓN DE SENSORES  ·  VALORES DE EJEMPLO
+# ============================================================================
+# Esta capa corre ANTES del motor de reglas y de los modelos. Una lectura que
+# falla un chequeo queda como "dato sospechoso": no se usa en ningún cálculo y
+# la pantalla pide revisar el equipo.
+#
+# Ningún número de este archivo es una recomendación médica ni una especificación
+# de un sensor real. Son valores de ejemplo, FUENTE POR CITAR, explicados en
+# laptop1-backend-frontend/SUPUESTOS.md.
+#
+# Tres chequeos por indicador. Si una clave falta, o vale 0, ese chequeo no se aplica.
+#   minimo / maximo   (a) rango posible. Fuera de aquí el valor no es creíble.
+#                     Siempre igual o más amplio que el rango del catálogo
+#                     (indicadores.toml), para que un dato aceptado a mano nunca
+#                     se marque por rango.
+#   cambio_maximo     (b) cambio demasiado rápido: diferencia máxima creíble entre
+#                     dos lecturas seguidas. El prototipo guarda una lectura por día.
+#   dias_congelado    (c) valor congelado: días seguidos con exactamente el mismo
+#                     valor a partir de los cuales se sospecha del sensor.
+#
+# Los chequeos (b) y (c) no se aplican a un dato ingresado a mano: lo confirmó una persona.
+# ============================================================================
+
+# --- Sensores fisiológicos: los tres chequeos --------------------------------
+
+[indicadores.fc_reposo]
+minimo = 30.0
+maximo = 200.0
+cambio_maximo = 35.0     # lpm de un día a otro
+dias_congelado = 4
+
+[indicadores.hrv]
+minimo = 5.0
+maximo = 200.0
+cambio_maximo = 45.0     # ms de un día a otro
+dias_congelado = 4
+
+[indicadores.temperatura]
+minimo = 32.0
+maximo = 43.0
+cambio_maximo = 4.0      # °C de un día a otro. Amplio a propósito: una fiebre real sube rápido.
+dias_congelado = 5       # con resolución de 0.1 °C es normal repetir el valor dos o tres días
+
+[indicadores.sueno_h]
+minimo = 0.0
+maximo = 24.0            # un día tiene 24 horas
+# Sin chequeo de cambio: dormir 7 h una noche y 3 h la siguiente es posible y es justo lo que hay que ver.
+dias_congelado = 5
+
+# --- Solo rango -----------------------------------------------------------------
+
+[indicadores.spo2]
+minimo = 50.0
+maximo = 100.0           # más del 100 % no existe
+# Sin chequeo de cambio: una caída rápida de oxígeno es una emergencia real y no debe ocultarse.
+# El protocolo de oxigenación ya empieza por recolocar el sensor y volver a medir.
+# Sin chequeo de congelado: con resolución de 1 % lo normal es repetir el mismo valor varios días.
+
+[indicadores.animo]
+minimo = 1.0
+maximo = 5.0             # respuesta de la persona, no un sensor
+
+[indicadores.estres]
+minimo = 0.0
+maximo = 100.0           # estrés percibido: respuesta de la persona
+
+[indicadores.ejercicio_min]
+minimo = 0.0
+maximo = 600.0           # repetir el plan exacto varios días es normal: sin chequeo de congelado
+
+[indicadores.ingesta_pct]
+minimo = 0.0
+maximo = 300.0
+
+[indicadores.tasa_dosis_usv_h]
+minimo = 0.0             # una tasa negativa no existe
+# Sin máximo ni chequeo de cambio: en una tormenta solar la radiación sube mucho y muy
+# rápido, y eso nunca debe descartarse como fallo de sensor.
+# Sin chequeo de congelado: el guion simulado usa una tasa constante (21 µSv/h).
+
+# --- Señales de apoyo de los especialistas: solo rango (igual que el catálogo) ---
+
+[indicadores.desfase_circadiano_h]
+minimo = 0.0
+maximo = 12.0
+
+[indicadores.luz_brillante_min]
+minimo = 0.0
+maximo = 1440.0          # un día tiene 1440 minutos
+
+[indicadores.cohesion_equipo]
+minimo = 1.0
+maximo = 5.0
+
+[indicadores.tiempo_reaccion_ms]
+minimo = 100.0
+maximo = 2000.0
+
+[indicadores.presion_sistolica]
+minimo = 60.0
+maximo = 250.0
+
+[indicadores.presion_diastolica]
+minimo = 30.0
+maximo = 150.0
+
+[indicadores.glucosa]
+minimo = 30.0
+maximo = 500.0
+
+# ----------------------------------------------------------------------------
+# Botón "Simular sensor defectuoso" del panel de demo
+# ----------------------------------------------------------------------------
+[demo]
+indicador = "fc_reposo"       # sensor que falla al pulsar el botón
+factor_imposible = 1.25       # valor imposible = maximo x este factor (pulso: 250 lpm)
+factor_salto = 1.7            # salto = lectura anterior + cambio_maximo x este factor

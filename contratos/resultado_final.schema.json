@@ -67,6 +67,24 @@
       }
     },
     "protocolos": { "type": "object", "description": "Protocolos referenciados por las alertas, por protocolo_id." },
+    "sensores_sospechosos": {
+      "description": "Avisos de equipo: lecturas de hoy apartadas porque el sensor parece fallar. No son alertas de salud y no cambian el nivel. Lista vacía si no hay ninguna.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicador", "motivo", "aviso"],
+        "properties": {
+          "indicador": { "type": "string" },
+          "motivo": { "enum": ["fuera_de_rango", "cambio_brusco", "valor_congelado"] },
+          "aviso": { "type": "string", "description": "Texto sencillo: qué sensor parece fallar y qué hacer." },
+          "valor_leido": { "type": "number" },
+          "reglas_afectadas": {
+            "description": "Reglas que usan este dato y hoy se evalúan sin él.",
+            "type": "array", "items": { "type": "string" }
+          }
+        }
+      }
+    },
     "reglas_activadas": { "type": "array", "items": { "type": "string" } },
     "ventana_adaptacion": { "type": "boolean" },
     "respuestas_guardadas": { "type": "boolean" },

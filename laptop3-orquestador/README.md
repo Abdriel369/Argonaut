@@ -19,6 +19,16 @@ El modelo de **riesgo solar** (el más pesado) vive en su propio contenedor, en 
 5. **Síntesis:** explicación en lenguaje sencillo, protocolo, escalamiento (verde, amarillo, naranja, rojo) e informe
    para el cirujano de vuelo (naranja o superior).
 
+**Datos sospechosos.** Si la entrada trae `sensores_sospechosos` (lecturas que la validación de sensores de la
+Laptop 1 apartó), las reglas excluyen esos indicadores y su semáforo queda en "sospechoso". Un sensor roto no activa
+ninguna regla y las alertas de otras señales no cambian. El resultado lleva un aviso por cada dato ("El sensor de
+pulso en reposo parece fallar... Revisa el equipo") y la lista de reglas que hoy se evalúan sin él. El aviso no cambia
+el nivel. Ese día, el especialista al que le falta el dato opina pero no sube alertas
+(`sin_voto_con_dato_sospechoso` en `orquestador/config/orquestador.toml`).
+
+**Fuentes de los umbrales.** Cada bloque de `reglas/config/umbrales.toml` lleva un campo `fuente`. El detalle está en
+`FUENTES.md`, en la raíz del repositorio.
+
 **Modo degradado:** si el gateway no responde a tiempo, el orquestador sigue con las reglas y el modelo solar local,
 marca `modo: "degradado"` y lista los especialistas no disponibles.
 

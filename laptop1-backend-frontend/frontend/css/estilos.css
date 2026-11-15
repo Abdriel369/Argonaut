@@ -158,6 +158,9 @@ svg { flex: none; }
 .nivel-naranja { color: var(--naranja); }
 .nivel-rojo { color: var(--rojo); }
 .nivel-sin_dato { color: var(--sin-dato); }
+/* Dato sospechoso (el sensor parece fallar): mismo tono que "sin dato", porque no hay dato
+   utilizable, pero con icono y texto propios y borde discontinuo. Nunca solo color. */
+.nivel-sospechoso { color: var(--sin-dato); }
 
 /* ---- Estado general -------------------------------------------------------- */
 .estado-global { display: grid; gap: 1.1rem; }
@@ -200,6 +203,8 @@ svg { flex: none; }
 .tarjeta-pie { color: var(--tinta-2); font-size: 0.92rem; display: flex; align-items: flex-start; gap: 0.3rem; line-height: 1.35; }
 .tarjeta-pie .icono { width: 1.05em; height: 1.05em; margin-top: 0.15em; }
 .tarjeta .etiqueta-manual { font-size: 0.82rem; color: var(--acento); }
+.tarjeta.nivel-sospechoso { border: 1.5px dashed var(--naranja); }
+.tarjeta-valor .leido { color: var(--tinta-2); text-decoration: line-through; text-decoration-thickness: 2px; }
 
 .subtitulo { margin: 1.1rem 0 0.55rem; color: var(--tinta-2); font-size: 1rem; font-weight: 700; }
 .tarjetas.chicas { grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr)); }
@@ -351,6 +356,9 @@ details[open] > summary::before { content: "–"; }
 .factores .icono { width: 1em; height: 1em; }
 .ficha { color: var(--tinta-2); font-size: 0.88rem; }
 .resultado-final { border: 1.5px solid var(--borde); border-radius: var(--radio-chico); padding: 0.85rem 0.95rem; display: grid; gap: 0.35rem; background: var(--vidrio-2); }
+.opinion-limitada { display: flex; align-items: flex-start; gap: 0.4rem; color: var(--tinta); font-size: 0.95rem;
+  padding: 0.4rem 0.6rem; border: 1.5px dashed var(--naranja); border-radius: var(--radio-chico); }
+.opinion-limitada .icono { color: var(--naranja); margin-top: 0.15rem; }
 .modo { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 700; }
 .modo.degradado { color: var(--naranja); }
 .modo.completo { color: var(--verde); }
@@ -408,6 +416,12 @@ input[type="range"] { width: 100%; height: var(--toque); accent-color: var(--dem
 .panel.demo .boton:hover { background: #ddceff; border-color: #ddceff; }
 .panel.demo .boton[aria-pressed="true"] { background: var(--tinta); border-color: var(--tinta); }
 .panel.demo .boton-secundario { background: transparent; color: var(--tinta); border-color: var(--demo); }
+.demo-sensor { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 0.4rem; }
+.demo-sensor select {
+  min-height: var(--toque); padding: 0.4rem 0.6rem; font: inherit; color: var(--tinta);
+  background: var(--noche-2); border: 2px solid var(--demo); border-radius: var(--radio-chico);
+}
+.demo-sensor select:disabled { opacity: 0.6; }
 .interruptor { display: inline-flex; align-items: center; gap: 0.6rem; min-height: var(--toque); cursor: pointer; font-weight: 700; }
 .interruptor input { position: absolute; opacity: 0; }
 .interruptor-pista {
@@ -442,7 +456,7 @@ input[type="range"] { width: 100%; height: var(--toque); accent-color: var(--dem
 }
 
 @media (min-width: 1160px) {
-  body { padding-bottom: 7.5rem; }
+  body { padding-bottom: 10.5rem; }   /* deja libre el panel de demo, que puede ocupar dos filas */
   .nav-inferior { display: none; }
   .rejilla { grid-template-columns: repeat(12, minmax(0, 1fr)); align-items: start; }
   #sec-estado { grid-column: 1 / -1; }
@@ -462,10 +476,13 @@ input[type="range"] { width: 100%; height: var(--toque); accent-color: var(--dem
   }
   #sec-demo h2 { margin: 0; font-size: 1.1rem; }
   #sec-demo > .ayuda { display: none; }
-  #sec-demo .demo-controles { flex-wrap: nowrap; gap: 0.6rem; }
-  #sec-demo .demo-dia { flex: 1 1 22rem; min-width: 19rem; grid-template-columns: auto 1fr; align-items: center; gap: 0.6rem; white-space: nowrap; }
+  /* Si los controles no caben en una fila pasan a una segunda; nunca se recortan. */
+  #sec-demo .demo-controles { flex-wrap: wrap; gap: 0.45rem 0.6rem; }
+  #sec-demo .demo-dia { flex: 1 1 19rem; min-width: 17rem; grid-template-columns: auto 1fr; align-items: center; gap: 0.6rem; white-space: nowrap; }
   #sec-demo .boton { min-height: 2.6rem; padding: 0.3rem 0.75rem; font-size: 0.93rem; white-space: nowrap; }
-  #sec-demo .interruptor { font-size: 0.93rem; max-width: 13rem; line-height: 1.2; }
+  #sec-demo .demo-sensor { flex-wrap: nowrap; }
+  #sec-demo .demo-sensor select { min-height: 2.6rem; padding: 0.3rem 0.4rem; font-size: 0.93rem; }
+  #sec-demo .interruptor { font-size: 0.93rem; line-height: 1.2; min-height: 2.6rem; white-space: nowrap; }
   #sec-demo input[type="range"] { height: 2.4rem; }
   #demo-mensaje { grid-column: 1 / -1; font-size: 0.9rem; }
   #demo-mensaje:empty { display: none; }

@@ -3,18 +3,29 @@
 # ============================================================================
 # Ningún número de este archivo es una recomendación médica. Son valores de
 # ejemplo para el prototipo. Antes de cualquier uso serio hay que sustituirlos
-# por valores revisados y citar la fuente en el comentario "FUENTE POR CITAR".
-# Sugerencias de dónde buscar (documentos públicos, verificar la versión vigente):
-#   - NASA-STD-3001 (Space Flight Human-System Standard), volúmenes 1 y 2.
-#   - NASA Human Research Program (HRP): Evidence Reports por riesgo.
-#   - CSA (Agencia Espacial Canadiense): páginas públicas de salud en el espacio.
+# por valores revisados.
+#
+# FUENTES. Cada bloque lleva un campo `fuente`. Las referencias completas [F1]..[F10]
+# (autores, título, revista o editor, año, DOI o URL, fecha de consulta y licencia)
+# están en FUENTES.md, en la raíz del repositorio. Reglas:
+#   - No se inventan citas, números, páginas ni enlaces, y no se cita de memoria.
+#     Una fuente solo cuenta si se abrió el documento y se comprobó el pasaje.
+#   - "Principio respaldado por [Fn]; corte de diseño propio": la fuente respalda
+#     la idea, pero el número del umbral NO aparece en ella. Lo eligió el equipo.
+#   - `fuente = "FUENTE POR CITAR ..."`: el umbral no tiene fuente verificada. Si
+#     nombra una candidata, es una pista que no se pudo abrir completa.
+#   - Los cortes del tipo "1 h bajo la base = amarillo" son decisiones de diseño.
+#     Ninguno es un valor copiado de una norma o de un artículo.
+#   - Verificada por el equipo: NASA-STD-3001 Vol. 1 [V1 4030] (600 mSv de carrera).
+#     Las demás las abrió y comprobó el asistente el 2026-11-15 (detalle en FUENTES.md).
 # ============================================================================
 
 [general]
+fuente = "Principio respaldado por [F7] Wood et al. 2011 (NASA): el mareo espacial dura en general 2-3 días en vuelo. El valor de 2 días y el factor 1.5 son cortes de diseño propio."
 # Ventana de adaptación: los primeros días el cuerpo se ajusta a la microgravedad
 # y los umbrales relativos a la línea base se hacen más tolerantes.
 dias_adaptacion = 2
-factor_tolerancia_adaptacion = 1.5   # FUENTE POR CITAR (duración típica de la adaptación inicial)
+factor_tolerancia_adaptacion = 1.5   # corte de diseño propio (ver `fuente`)
 
 # ----------------------------------------------------------------------------
 # NIVEL 1 · Reglas por indicador contra la línea base, con persistencia
@@ -29,6 +40,7 @@ factor_tolerancia_adaptacion = 1.5   # FUENTE POR CITAR (duración típica de la
 # tolerante:  si se relaja durante la ventana de adaptación.
 
 [indicadores.sueno_h]
+fuente = "Principio respaldado por [F2] Watson et al. 2015 (consenso AASM/SRS): los adultos deben dormir 7 h o más por noche. Los cortes relativos a la línea base son cortes de diseño propio."
 decimales = 1
 frase = "dormiste {valor} h (tu normal son {referencia} h)"
 consecuencia = "Con poco sueño baja la atención y es más fácil cometer errores."
@@ -37,7 +49,7 @@ unidad = "h"
 sentido = "bajo"
 medida = "absoluta"
 referencia = "base"
-amarillo = 1.0        # 1 h menos que tu normal   · FUENTE POR CITAR (NASA HRP, riesgo de sueño y fatiga)
+amarillo = 1.0        # 1 h menos que tu normal   · corte de diseño propio
 naranja = 2.5
 rojo = 3.5
 persistencia_dias = 3
@@ -47,6 +59,7 @@ titulo = "Estás durmiendo menos de lo normal"
 protocolo_id = "sueno"
 
 [indicadores.animo]
+fuente = "Principio respaldado por [F9] Basner et al. 2014 (PLoS ONE, simulación de 520 días): el confinamiento prolongado afecta la salud conductual de forma distinta en cada tripulante. La escala y los cortes son cortes de diseño propio."
 decimales = 0
 frase = "tu ánimo está bajo ({valor} de 5)"
 consecuencia = "Un ánimo bajo sostenido quita energía y afecta la convivencia con el equipo."
@@ -55,7 +68,7 @@ unidad = "1-5"
 sentido = "bajo"
 medida = "absoluta"
 referencia = "base"
-amarillo = 2.0        # 2 puntos menos en escala 1-5 · FUENTE POR CITAR (NASA HRP, salud conductual)
+amarillo = 2.0        # 2 puntos menos en escala 1-5 · corte de diseño propio
 naranja = 3.0
 persistencia_dias = 3
 tolerante = false
@@ -64,6 +77,7 @@ titulo = "Tu ánimo está bajo"
 protocolo_id = "animo_estres"
 
 [indicadores.estres]
+fuente = "Principio respaldado por [F9] Basner et al. 2014 (PLoS ONE, simulación de 520 días): el confinamiento prolongado afecta la salud conductual de forma distinta en cada tripulante. La escala de 0 a 100 y los cortes son cortes de diseño propio."
 decimales = 0
 frase = "tu estrés está alto ({valor} de 100)"
 consecuencia = "El estrés alto sostenido cansa, quita sueño y dificulta concentrarse."
@@ -72,7 +86,7 @@ unidad = "0-100"
 sentido = "alto"
 medida = "absoluta"
 referencia = "base"
-amarillo = 20.0       # 20 puntos sobre tu normal · FUENTE POR CITAR (escala propia del prototipo)
+amarillo = 20.0       # 20 puntos sobre tu normal · escala y corte de diseño propio
 naranja = 35.0
 rojo = 55.0
 persistencia_dias = 4
@@ -82,6 +96,7 @@ titulo = "Tu estrés está alto"
 protocolo_id = "animo_estres"
 
 [indicadores.ejercicio_min]
+fuente = "Principio respaldado por [F4] Agencia Espacial Canadiense (unas dos horas de ejercicio al día en misiones largas; pérdida media de 1 % de densidad ósea al mes) y [F1] NASA-STD-3001 Vol. 1 Rev. C [V1 4024] y [V1 4027] (mantener fuerza muscular y densidad ósea). Los porcentajes y los días son cortes de diseño propio."
 decimales = 0
 frase = "hiciste {valor} min de ejercicio de los {referencia} planeados"
 consecuencia = "Sin gravedad, los músculos y los huesos se debilitan si no se ejercitan."
@@ -90,7 +105,7 @@ unidad = "min"
 sentido = "bajo"
 medida = "porcentual"
 referencia = "plan"
-amarillo = 30.0       # 30 % menos que el plan · FUENTE POR CITAR (contramedidas de ejercicio, ~2 h/día en ISS)
+amarillo = 30.0       # 30 % menos que el plan · corte de diseño propio (el plan de 2 h/día sí tiene fuente, [F4])
 naranja = 50.0
 persistencia_dias = 5
 tolerante = false
@@ -99,6 +114,7 @@ titulo = "Hiciste poco ejercicio"
 protocolo_id = "muscular_oseo"
 
 [indicadores.fc_reposo]
+fuente = "FUENTE POR CITAR · candidata [F10] Baevsky et al. 2007 (J Appl Physiol): solo se pudo abrir el resumen, no el artículo. No cuenta como verificada (ver FUENTES.md)."
 decimales = 0
 frase = "tu pulso en reposo está en {valor} (tu normal es {referencia})"
 consecuencia = "Un pulso en reposo alto indica que tu cuerpo está bajo carga."
@@ -117,6 +133,7 @@ titulo = "Tu pulso en reposo está alto"
 protocolo_id = "cardiovascular"
 
 [indicadores.hrv]
+fuente = "FUENTE POR CITAR · candidata [F10] Baevsky et al. 2007 (J Appl Physiol): solo se pudo abrir el resumen, no el artículo. No cuenta como verificada (ver FUENTES.md)."
 decimales = 0
 frase = "la variabilidad de tu pulso está baja ({valor}, tu normal es {referencia})"
 consecuencia = "Es señal de que tu cuerpo no se está recuperando bien."
@@ -135,6 +152,7 @@ titulo = "Tu cuerpo se está recuperando menos"
 protocolo_id = "cardiovascular"
 
 [indicadores.spo2]
+fuente = "Principio respaldado por [F8] British Thoracic Society 2017: rango objetivo de saturación 94-98 % y evaluación más completa ante una caída súbita de más de 3 %. El corte amarillo de 3 puntos se apoya en ese criterio, que la guía da para pacientes y no para astronautas; los de 5 y 8 puntos son cortes de diseño propio."
 decimales = 0
 frase = "tu oxigenación está en {valor} %"
 consecuencia = "Con poco oxígeno en la sangre puedes sentir cansancio, mareo o confusión."
@@ -143,7 +161,7 @@ unidad = "%"
 sentido = "bajo"
 medida = "absoluta"
 referencia = "base"
-amarillo = 3.0        # 3 puntos bajo tu normal (aprox. 95 %) · FUENTE POR CITAR
+amarillo = 3.0        # 3 puntos bajo tu normal (aprox. 95 %) · ver [F8] en `fuente`
 naranja = 5.0
 rojo = 8.0
 persistencia_dias = 2
@@ -153,6 +171,7 @@ titulo = "Tu oxigenación está baja"
 protocolo_id = "oxigenacion"
 
 [indicadores.temperatura]
+fuente = "Principio respaldado por [F3] Stahn et al. 2017 (Sci Rep): la temperatura central en reposo sube cerca de 1 °C en misiones largas en la ISS. Los cortes de +0.8, +1.3 y +2.0 °C son cortes de diseño propio."
 decimales = 1
 frase = "tu temperatura está en {valor} °C"
 consecuencia = "Una temperatura elevada indica que tu cuerpo está reaccionando a algo."
@@ -161,7 +180,7 @@ unidad = "°C"
 sentido = "alto"
 medida = "absoluta"
 referencia = "base"
-amarillo = 0.8        # +0.8 °C sobre tu normal · FUENTE POR CITAR
+amarillo = 0.8        # +0.8 °C sobre tu normal · corte de diseño propio
 naranja = 1.3
 rojo = 2.0
 persistencia_dias = 2
@@ -171,6 +190,7 @@ titulo = "Tu temperatura está elevada"
 protocolo_id = "temperatura"
 
 [indicadores.ingesta_pct]
+fuente = "Principio respaldado por [F1] NASA-STD-3001 Vol. 1 Rev. C [V1 4020] (dar el 100 % de las necesidades de nutrientes y energía) y [F5] Smith y Zwart, NASA (ingesta media observada en la ISS: 74 % de lo recomendado). Los cortes de 75 % y 60 % son cortes de diseño propio."
 decimales = 0
 frase = "comiste el {valor} % de lo planeado"
 consecuencia = "Comer poco te deja sin energía para trabajar y entrenar."
@@ -179,7 +199,7 @@ unidad = "%"
 sentido = "bajo"
 medida = "valor"
 referencia = "ninguna"
-amarillo = 75.0       # comer menos del 75 % de lo planeado · FUENTE POR CITAR (NASA HRP, nutrición)
+amarillo = 75.0       # comer menos del 75 % de lo planeado · corte de diseño propio
 persistencia_dias = 3
 tolerante = false
 alerta_id = "INGESTA_BAJA"
@@ -187,6 +207,7 @@ titulo = "Estás comiendo menos de lo planeado"
 protocolo_id = "energia"
 
 [indicadores.tasa_dosis_usv_h]
+fuente = "Principio respaldado por [F6] Berger et al. 2017 (dosis equivalente de hasta 647 µSv/día dentro de la ISS, unos 27 µSv/h) y [F1] NASA-STD-3001 Vol. 1 Rev. C [V1 4031] (protección ante eventos de partículas solares). Los cortes en µSv/h son cortes de diseño propio."
 decimales = 0
 frase = "la radiación que llega ahora es de {valor} µSv/h, más alta de lo habitual"
 consecuencia = "Conviene reducir el tiempo de exposición."
@@ -195,7 +216,7 @@ unidad = "µSv/h"
 sentido = "alto"
 medida = "valor"
 referencia = "ninguna"
-amarillo = 60.0       # varias veces la tasa habitual simulada (~20 µSv/h) · FUENTE POR CITAR
+amarillo = 60.0       # varias veces la tasa habitual simulada (~20 µSv/h) · corte de diseño propio
 naranja = 200.0
 rojo = 1000.0
 persistencia_dias = 99
@@ -209,6 +230,7 @@ protocolo_id = "radiacion"
 # ----------------------------------------------------------------------------
 
 [combinaciones.FATIGA]
+fuente = "Principio respaldado por [F2] Watson et al. 2015 (dormir menos de 7 h se asocia a peor rendimiento y más errores) y [F9] Basner et al. 2014 (salud conductual en confinamiento prolongado). La combinación y sus números son cortes de diseño propio."
 consecuencia = "Esta combinación puede causar fatiga: menos atención, reflejos lentos y más errores."
 titulo = "Riesgo de fatiga"
 protocolo_id = "fatiga"
@@ -217,17 +239,19 @@ dias_sueno_bajo = 3             # durante 3 días seguidos
 estres_sobre_base = 20.0        # estrés alto: 20 puntos sobre tu normal
 ejercicio_pct_plan = 120.0      # ejercicio alto: 120 % del plan o más
 caida_animo = 2.0               # sube a ROJO si además el ánimo cae 2 puntos
-# FUENTE POR CITAR (NASA HRP: Risk of Performance Decrements from Sleep Loss, Circadian Desynchronization and Work Overload)
+# Números de la regla: cortes de diseño propio (ver `fuente`).
 
 [combinaciones.AISLAMIENTO]
+fuente = "Principio respaldado por [F9] Basner et al. 2014 (PLoS ONE, simulación de 520 días): el confinamiento prolongado afecta la salud conductual de forma distinta en cada tripulante. La combinación y sus números son cortes de diseño propio."
 consecuencia = "Es una señal frecuente de aislamiento en misiones largas y conviene atenderla pronto."
 titulo = "Señales de aislamiento"
 protocolo_id = "aislamiento"
 dias_animo_bajando = 4          # ánimo bajando 4 días
 cohesion_baja = 2.5             # cohesión del equipo en 2.5 o menos (escala 1-5)
-# FUENTE POR CITAR (NASA HRP: riesgos de salud conductual y de cohesión del equipo)
+# Números de la regla: cortes de diseño propio (ver `fuente`).
 
 [combinaciones.PERDIDA_MUSCULAR_OSEA]
+fuente = "Principio respaldado por [F4] Agencia Espacial Canadiense (unas dos horas de ejercicio al día en misiones largas; pérdida media de 1 % de densidad ósea al mes) y [F1] NASA-STD-3001 Vol. 1 Rev. C [V1 4024] y [V1 4027] (mantener fuerza muscular y densidad ósea). Los porcentajes y los días son cortes de diseño propio."
 consecuencia = "En microgravedad eso acelera la pérdida de músculo y de hueso."
 titulo = "Riesgo de pérdida muscular y ósea"
 protocolo_id = "muscular_oseo"
@@ -235,18 +259,20 @@ ejercicio_pct_plan = 50.0       # menos del 50 % del plan
 dias = 5                        # 5 días seguidos -> naranja
 dias_aviso = 3                  # 3 días seguidos -> amarillo
 dias_mision_larga = 14          # a partir de este día de misión basta un día menos
-# FUENTE POR CITAR (NASA HRP: pérdida ósea y muscular en microgravedad; contramedidas de ejercicio)
+# Números de la regla: cortes de diseño propio (ver `fuente`).
 
 [combinaciones.RADIACION]
+fuente = "Principio respaldado por [F6] Berger et al. 2017 (dosis equivalente de hasta 647 µSv/día dentro de la ISS, unos 27 µSv/h) y [F1] NASA-STD-3001 Vol. 1 Rev. C [V1 4031] (protección ante eventos de partículas solares). Los cortes en µSv/h son cortes de diseño propio."
 consecuencia = "Hay que reducir la exposición cuanto antes."
 titulo = "Exposición a radiación"
 protocolo_id = "radiacion"
 tasa_alta_usv_h = 200.0         # tasa de dosis alta
 fc_sobre_base_pct = 10.0        # "pulso elevado" para esta regla
 temperatura_sobre_base = 0.8    # "temperatura elevada" para esta regla
-# FUENTE POR CITAR (NASA-STD-3001 vol. 1: límites de exposición a radiación; procedimientos de refugio)
+# Números de la regla: cortes de diseño propio (ver `fuente`).
 
 [combinaciones.CARDIOVASCULAR]
+fuente = "FUENTE POR CITAR · candidata [F10] Baevsky et al. 2007 (J Appl Physiol): solo se pudo abrir el resumen, no el artículo. No cuenta como verificada (ver FUENTES.md)."
 consecuencia = "Juntas, estas señales indican que tu corazón está trabajando de más."
 titulo = "Señales de sobrecarga del corazón"
 protocolo_id = "cardiovascular"
@@ -256,22 +282,26 @@ sueno_pobre_h = 1.0             # sueño medio de 3 días al menos 1 h bajo tu n
 # FUENTE POR CITAR (NASA HRP: riesgo cardiovascular; desplazamiento de fluidos en microgravedad)
 
 [combinaciones.ENERGIA_BAJA]
+fuente = "Principio respaldado por [F1] NASA-STD-3001 Vol. 1 Rev. C [V1 4020] (dar el 100 % de las necesidades de nutrientes y energía) y [F5] Smith y Zwart, NASA (ingesta media observada en la ISS: 74 % de lo recomendado). Los cortes de 75 % y 60 % son cortes de diseño propio."
 consecuencia = "Sin suficiente comida te faltará energía para trabajar y entrenar."
 titulo = "Energía baja por comer poco"
 protocolo_id = "energia"
 ingesta_pct = 60.0              # menos del 60 % de lo planeado
 dias_para_naranja = 2
-# FUENTE POR CITAR (NASA HRP: nutrición inadecuada)
+# Números de la regla: cortes de diseño propio (ver `fuente`).
 
 # ----------------------------------------------------------------------------
 # NIVEL 3 · Reglas por contexto de misión
 # ----------------------------------------------------------------------------
 
 [contexto.dosis_acumulada]
+fuente = "[F1] NASA-STD-3001 Vol. 1 (Crew Health), requisito [V1 4030]: la dosis efectiva total de carrera por radiación espacial debe ser menor a 600 mSv (basada en 3 % REID de mortalidad por cáncer). Los cortes 50 / 150 / 250 mSv NO están en la norma: son escalones internos de diseño hacia ese límite (cortes de diseño propio)."
 consecuencia = "Conviene limitar exposiciones adicionales y avisar al equipo médico."
 titulo = "Radiación acumulada en la misión"
 protocolo_id = "radiacion"
 alerta_id = "DOSIS_ACUMULADA"
-amarillo = 50.0                 # mSv acumulados · VALOR DE EJEMPLO
-naranja = 150.0                 # FUENTE POR CITAR (NASA-STD-3001 vol. 1: límites de carrera y de corto plazo)
-rojo = 250.0
+limite_norma_msv = 600.0        # límite de carrera de la norma, [V1 4030]. Las reglas no lo usan: es la referencia.
+# Escalones internos de diseño hacia ese límite (no son valores de la norma):
+amarillo = 50.0                 # mSv acumulados · aprox. 8 % del límite de carrera
+naranja = 150.0                 # 25 % del límite de carrera
+rojo = 250.0                    # aprox. 42 % del límite de carrera

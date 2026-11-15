@@ -75,6 +75,8 @@ Qué cubren:
   comportamiento con datos incompletos, determinismo, API (`/salud`, `/info`, `/predecir`) y reproducibilidad de los datos sintéticos.
 - **Backend:** validación de datos, recalibración de la línea base, exposición musculo-hueso, protocolos en el informe,
   enlace con la Tierra, evento solar, caídas y respaldo local.
+- **Validación de sensores:** valor imposible, salto brusco, valor congelado, el guion normal sin falsos positivos,
+  y que un sensor roto no da rojo por sí solo ni baja alertas de otras señales.
 - **Integración:** la historia completa de 7 días; Laptop 2 apagada; un solo modelo caído; la interfaz sin recursos remotos.
 - **Modo demo:** la historia se reproduce igual con respuestas guardadas.
 
@@ -86,6 +88,14 @@ Qué cubren:
 - **Las métricas miden que el modelo aprendió la regla sintética**, no su validez clínica.
 - Los umbrales y pesos viven en archivos de configuración con comentarios. Son **valores de ejemplo**.
   Antes de cualquier uso serio hay que sustituirlos y citar la fuente.
+- **Fuentes:** [`FUENTES.md`](FUENTES.md) dice de dónde sale cada umbral, con la referencia completa de cada
+  fuente. El equipo verificó NASA-STD-3001 Vol. 1 [V1 4030] (dosis de carrera menor a 600 mSv). Otras nueve
+  fuentes se abrieron y comprobaron el 2026-11-15; respaldan el principio de 14 umbrales, no sus números.
+  Tres umbrales siguen como `FUENTE POR CITAR` (pulso, variabilidad del pulso y la regla cardiovascular).
+  Los cortes son decisiones de diseño, no valores copiados de la norma.
+- **Sensores:** antes de las reglas y de los modelos corre una validación de sensores (rango posible, cambio brusco,
+  valor congelado). Un dato sospechoso no se usa y genera un aviso de equipo. Límites de ejemplo y supuestos en
+  `laptop1-backend-frontend/SUPUESTOS.md`.
 
 | Umbral | Valor de ejemplo | Dónde | Fuente sugerida (**por verificar**; no se han comprobado) |
 |---|---|---|---|
@@ -99,12 +109,12 @@ Qué cubren:
 | Temperatura elevada | +0.8 / +1.3 / +2.0 °C | idem | Valor de referencia |
 | Comida baja | menos del 75 % del plan (y 60 % en combinación) | idem | NASA HRP, nutrición |
 | Radiación ahora | 60 / 200 / 1000 µSv/h | idem | NASA-STD-3001 vol. 1 |
-| Radiación acumulada | 50 / 150 / 250 mSv | idem | NASA-STD-3001 vol. 1, límites de exposición |
+| Radiación acumulada | 50 / 150 / 250 mSv | idem | **Verificada:** NASA-STD-3001 Vol. 1 [V1 4030], carrera menor a 600 mSv. Los tres cortes son escalones de diseño hacia ese límite |
 | Corte de riesgo a nivel | 0.20 / 0.50 / 0.75 | `comun/especialista/nucleo.py` | Escala propia del prototipo |
 | Tiempo máximo por modelo | 3 s | `.env` de Laptop 2 y 3 | Diseño del sistema |
 | Ventana de adaptación | 2 días, umbrales ×1.5 | `reglas/config/umbrales.toml` | NASA HRP, duración de la adaptación inicial |
 
-Las fuentes de la tabla son pistas para buscar, no citas verificadas. Antes de presentarlas, abrir cada documento y confirmar la cifra. Documentos sugeridos: NASA-STD-3001 (volúmenes 1 y 2); informes de evidencia del NASA Human
+La columna de fuentes de esta tabla son pistas antiguas, no citas. Las fuentes comprobadas, con su referencia completa, están en `FUENTES.md`. Antes de presentarlas, abrir cada documento y confirmar la cifra. Documentos sugeridos: NASA-STD-3001 (volúmenes 1 y 2); informes de evidencia del NASA Human
 Research Program por riesgo; páginas públicas de salud en el espacio de la Agencia Espacial Canadiense (CSA).
 
 ## Limitaciones (honestas)
@@ -117,6 +127,9 @@ Research Program por riesgo; páginas públicas de salud en el espacio de la Age
 - **Sistema inmune:** línea futura. Requiere sangre, saliva y orina; no se simula.
 - **Radiación:** el evento solar es simulado. No hay pronóstico de clima espacial ni dosímetro real.
 - **Confianza:** es una heurística, no una probabilidad calibrada.
+- **Validación de sensores:** los límites son valores de ejemplo y el prototipo solo tiene una lectura por día. Un sensor
+  trabado en un valor creíble tarda 4 o 5 días en detectarse. Un cambio real muy brusco queda como sospechoso hasta que
+  una persona lo confirma a mano.
 - **Protocolos:** son texto de ejemplo, sin dosis de medicamentos. Un protocolo real lo define el equipo médico de la misión.
 
 ## Estado de la verificación
@@ -133,12 +146,13 @@ Research Program por riesgo; páginas públicas de salud en el espacio de la Age
 ```
 contratos/                  esquemas JSON compartidos + ejemplos + pruebas
 comun/                      validación, niveles, base de los especialistas, verificación compartida
-laptop1-backend-frontend/   backend, frontend (sin CDN), configuración del perfil y del guion
+laptop1-backend-frontend/   backend, frontend (sin CDN), configuración del perfil y del guion, validación de sensores
 laptop2-modelos/            gateway, 3 modelos, datos sintéticos y supuestos
 laptop3-orquestador/        orquestador, reglas, protocolos, modelo de riesgo solar
 modo-demo-sin-laptops/      demo en una sola máquina con respuestas grabadas
 pruebas-integracion/        pila en memoria, fábrica de entradas, pruebas de integración
 scripts/                    verificación de red y arranque local
+FUENTES.md                  de dónde sale cada umbral y qué falta por verificar
 ```
 
 Licencias de las tipografías (SIL OFL 1.1): `laptop1-backend-frontend/frontend/fuentes/`.

@@ -1,4 +1,5 @@
-"""Lógica del backend: guion de 7 días, línea base, evaluación, informes y controles de demo.
+"""Lógica del backend: guion de 7 días, validación de sensores, línea base, evaluación,
+informes y controles de demo.
 
 Todos los datos son SIMULADOS. La clase no sabe de HTTP entrante: principal.py
 expone estos métodos como API.
@@ -9,7 +10,7 @@ import io
 import logging
 import statistics
 
-from backend import calculo
+from backend import calculo, sensores
 from backend.ajustes import Ajustes
 from backend.bd import BaseDatos, ahora
 from backend.cliente_orquestador import ClienteOrquestador
@@ -42,15 +43,21 @@ class Servicio:
             self.bd.guardar_registro(dia, calculo.indicadores_del_guion(self.ajustes.guion, dia), [])
         self.bd.guardar_estado("dia_actual", 1)
         self.bd.guardar_estado("evento_solar_dia", None)
+        self.bd.guardar_estado("sensor_defectuoso", None)
         log.info("Guion de %d días cargado.", self.ajustes.dias_guion)
 
     @property
     def dia_actual(self) -> int:
         return int(self.bd.leer_estado("dia_actual", 1))
 
-    def registros_efectivos(self) -> dict:
-        """{dia: indicadores} aplicando evento solar, dosis acumulada y módulos externos."""
-        crudos = self.bd.registros()
+    def registros_efectivos(self, crudos: dict | None = None) -> dict:
+        """{dia: indicadores} tal como llegan de los sensores: aplica evento solar, dosis
+        acumulada, módulos externos y, si está activo, el sensor defectuoso de la demo.
+
+        Estas lecturas todavía NO están validadas: para calcular hay que usar
+        registros_validados().
+        """
+        crudos = crudos if crudos is not None else self.bd.registros()
         evento_dia = self.bd.leer_estado("evento_solar_dia")
         evento = self.ajustes.perfil["evento_solar"]
         modulos = self.ajustes.perfil["modulos_externos"]
@@ -71,16 +78,43 @@ class Servicio:
             if not modulos["glucosa"]:
                 indicadores["glucosa"] = None
             salida[dia] = indicadores
-        return salida
+        manuales = {dia: crudos[dia]["manuales"] for dia in crudos}
+        return sensores.aplicar_falla(salida, manuales, self.bd.leer_estado("sensor_defectuoso"),
+                                      self.ajustes.sensores)
 
-    def construir_entrada(self, dia: int, registros: dict | None = None) -> dict:
-        """Mensaje para el orquestador (contrato entrada_orquestador)."""
-        registros = registros or self.registros_efectivos()
+    def registros_validados(self) -> tuple[dict, dict]:
+        """Capa de validación de sensores: corre ANTES de las reglas y de los modelos.
+
+        Devuelve ({dia: indicadores} con los datos sospechosos apartados (None),
+                  {dia: [fichas de los datos sospechosos de ese día]}).
+        Todo lo que se calcula después (línea base, tendencias, entrada del orquestador,
+        exposición músculo-hueso) parte de estos registros.
+        """
+        crudos = self.bd.registros()
+        manuales = {dia: crudos[dia]["manuales"] for dia in crudos}
+        validados, sospechosos = sensores.validar(self.registros_efectivos(crudos), manuales,
+                                                  self.ajustes.sensores)
+        fichas = {}
+        for dia, por_indicador in sospechosos.items():
+            fichas[dia] = []
+            for indicador, ficha in por_indicador.items():
+                catalogo = self.ajustes.catalogo.get(indicador, {})
+                fichas[dia].append({**ficha, "nombre": catalogo.get("nombre", indicador),
+                                    "unidad": catalogo.get("unidad", "")})
+        return validados, fichas
+
+    def construir_entrada(self, dia: int) -> dict:
+        """Mensaje para el orquestador (contrato entrada_orquestador).
+
+        Los datos sospechosos van como null y se listan en 'sensores_sospechosos'. Ese campo
+        solo se incluye cuando hay alguno: un día normal produce el mismo mensaje de siempre.
+        """
+        registros, sospechosos = self.registros_validados()
         indicadores = registros[dia]
         base = calculo.linea_base(self.ajustes.perfil, dia, registros)
         series, _ = calculo.tendencias(registros, dia, indicadores.keys())
         evento_dia = self.bd.leer_estado("evento_solar_dia")
-        return {
+        entrada = {
             "astronauta_id": self.ajustes.perfil["astronauta"]["id"],
             "dia_mision": dia,
             "indicadores": indicadores,
@@ -93,6 +127,9 @@ class Servicio:
                 "evento_solar": evento_dia == dia,
             },
         }
+        if sospechosos.get(dia):
+            entrada["sensores_sospechosos"] = sospechosos[dia]
+        return entrada
 
     # ------------------------------------------------------------------
     # Evaluación
@@ -116,10 +153,14 @@ class Servicio:
             if dia not in evaluados:
                 await self.evaluar_dia(dia)
 
-    async def _datos_cambiaron(self):
-        """Tras cualquier cambio de datos: lo evaluado de hoy en adelante ya no vale."""
+    async def _datos_cambiaron(self, desde: int | None = None):
+        """Tras cualquier cambio de datos: lo evaluado de hoy en adelante ya no vale.
+
+        'desde' permite invalidar también días anteriores (un sensor congelado cambia
+        las lecturas de varios días); estado() los vuelve a evaluar.
+        """
         dia = self.dia_actual
-        self.bd.borrar_evaluaciones_desde(dia)
+        self.bd.borrar_evaluaciones_desde(min(dia, desde) if desde else dia)
         await self.evaluar_dia(dia)
 
     # ------------------------------------------------------------------
@@ -152,12 +193,13 @@ class Servicio:
         dia = self.dia_actual
         resultado = self.bd.evaluacion(dia) or await self.evaluar_dia(dia)
         await self._completar_historial(dia)
-        registros = self.registros_efectivos()
+        registros, sospechosos = self.registros_validados()
         indicadores = registros[dia]
         base = calculo.linea_base(self.ajustes.perfil, dia, registros)
         series, dias = calculo.tendencias(registros, dia, indicadores.keys())
         perfil = self.ajustes.perfil
         evento_dia = self.bd.leer_estado("evento_solar_dia")
+        falla = self.bd.leer_estado("sensor_defectuoso") or {}
         modulos = perfil["modulos_externos"]
         return {
             "aviso": AVISO,
@@ -175,6 +217,10 @@ class Servicio:
             "catalogo": self.ajustes.catalogo,
             "resultado": resultado,
             "evento_solar": {"dia": evento_dia, "activo_hoy": evento_dia == dia},
+            # Datos de hoy apartados por la validación de sensores (los indicadores van como null).
+            "sensores_sospechosos": sospechosos.get(dia, []),
+            "sensor_defectuoso": {"dia": falla.get("dia"), "activo_hoy": falla.get("dia") == dia,
+                                  "indicador": falla.get("indicador"), "tipo": falla.get("tipo")},
             "modulos_externos": {
                 "etiqueta": modulos["etiqueta"],
                 "presion": ({"sistolica": indicadores.get("presion_sistolica"),
@@ -201,20 +247,21 @@ class Servicio:
     def exportar_csv(self) -> str:
         """Historial hasta el día actual en CSV (una fila por día)."""
         dia_actual = self.dia_actual
-        registros = self.registros_efectivos()
+        registros, sospechosos = self.registros_validados()
         niveles = {fila["dia"]: fila for fila in self.bd.historial(dia_actual)}
         claves = list(self.ajustes.catalogo.keys())
         salida = io.StringIO()
         escritor = csv.writer(salida)
         escritor.writerow(["# " + AVISO])
-        escritor.writerow(["dia_mision"] + claves + ["nivel_global", "modo", "alertas"])
+        escritor.writerow(["dia_mision"] + claves + ["nivel_global", "modo", "alertas", "datos_sospechosos"])
         for dia in range(1, dia_actual + 1):
             resultado = self.bd.evaluacion(dia) or {}
             alertas = "|".join(a["id"] for a in resultado.get("alertas", []))
             fila = niveles.get(dia, {})
             escritor.writerow(
                 [dia] + ["" if registros[dia].get(c) is None else registros[dia].get(c) for c in claves]
-                + [fila.get("nivel_global", ""), fila.get("modo", ""), alertas])
+                + [fila.get("nivel_global", ""), fila.get("modo", ""), alertas,
+                   "|".join(f"{s['indicador']}={s['valor_leido']:g}" for s in sospechosos.get(dia, []))])
         return salida.getvalue()
 
     # ------------------------------------------------------------------
@@ -292,6 +339,33 @@ class Servicio:
     async def evento_solar(self, activo: bool) -> dict:
         self.bd.guardar_estado("evento_solar_dia", self.dia_actual if activo else None)
         await self._datos_cambiaron()
+        return await self.estado()
+
+    async def sensor_defectuoso(self, activo: bool, tipo: str = "imposible",
+                                indicador: str | None = None) -> dict:
+        """Simula que un sensor falla hoy (valor imposible, salto brusco o valor congelado).
+
+        El fallo queda ligado al día en que se activa, igual que el evento solar.
+        """
+        dia = self.dia_actual
+        config = self.ajustes.sensores
+        previa = self.bd.leer_estado("sensor_defectuoso")
+        afectados = [dia]
+        if previa:
+            try:
+                afectados += sensores.dias_de_la_falla(previa, config)
+            except sensores.ErrorFalla:
+                pass
+        nueva = None
+        if activo:
+            nueva = {"dia": dia, "tipo": tipo,
+                     "indicador": indicador or (config.get("demo") or {}).get("indicador", "fc_reposo")}
+            try:
+                afectados += sensores.dias_de_la_falla(nueva, config)
+            except sensores.ErrorFalla as error:
+                raise ErrorDatos(str(error))
+        self.bd.guardar_estado("sensor_defectuoso", nueva)
+        await self._datos_cambiaron(desde=min(afectados))
         return await self.estado()
 
     async def caida_laptop2(self, activa: bool) -> dict:

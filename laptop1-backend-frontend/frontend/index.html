@@ -94,7 +94,9 @@
 
       <details class="bloque" id="registro-manual">
         <summary>Enter data by hand</summary>
-        <form id="form-manual">
+        <!-- novalidate: the backend validates every value and answers with a clear message. The browser's own
+             check blocked the whole form when a prefilled value did not match its step (e.g. food 92 %, step 5). -->
+        <form id="form-manual" novalidate>
           <div id="manual-campos" class="campos"></div>
           <button type="submit" class="boton">Save today's data</button>
           <p id="manual-resultado" class="ayuda" aria-live="polite"></p>
@@ -116,6 +118,11 @@
         </div>
         <button type="button" class="boton" id="demo-reproducir" aria-pressed="false">Play week</button>
         <button type="button" class="boton" id="demo-solar" aria-pressed="false">Solar event</button>
+        <span class="demo-sensor">
+          <label class="solo-lectores" for="demo-sensor-tipo">Sensor fault type</label>
+          <select id="demo-sensor-tipo"></select>
+          <button type="button" class="boton" id="demo-sensor" aria-pressed="false">Simulate faulty sensor</button>
+        </span>
         <button type="button" class="boton" id="demo-enlace">Simulate link with Earth</button>
         <label class="interruptor">
           <input type="checkbox" id="demo-caida" role="switch">

@@ -275,6 +275,33 @@ export const NOTAS = {
 
 export const MUSCULO = { verde: "Low", amarillo: "Medium", naranja: "High", rojo: "Very high" };
 
+// ---------------------------------------------------------------------------
+// Suspicious sensor data (sensor validation layer) and the "faulty sensor" demo button
+// ---------------------------------------------------------------------------
+export const MOTIVO_SENSOR = {
+  fuera_de_rango: "impossible value",
+  cambio_brusco: "sudden jump",
+  valor_congelado: "frozen value",
+};
+
+// [fault type sent to the backend, label shown in the demo panel]
+export const TIPOS_FALLA = [
+  ["imposible", "Impossible value"],
+  ["salto", "Sudden jump"],
+  ["congelado", "Frozen value"],
+];
+
+export const DEMO_SENSOR = {
+  simular: "Simulate faulty sensor",
+  reparar: "Repair sensor",
+  tipo: "Sensor fault type",
+  activado: "Pulse sensor fault simulated on the current day.",
+  reparado: "Pulse sensor repaired.",
+};
+
+export const OPINION_LIMITADA =
+  "It is missing data from a suspicious sensor: its opinion is shown but does not change the level today.";
+
 export const MODULOS =
   "Blood pressure and glucose are not reliable without dedicated equipment. " +
   "Simulated data from an optional external module.";
@@ -425,6 +452,35 @@ export function unir(frases) {
   return limpias.slice(0, -1).join(", ") + " and " + limpias[limpias.length - 1];
 }
 
+function cifra(valor, unidad = "") {
+  if (typeof valor !== "number" || Number.isNaN(valor)) return "an unknown value";
+  return `${Number(valor.toFixed(2))} ${unidad}`.trim();
+}
+
+/** Rebuilds the "this sensor seems to be failing" notice in English from structured data. */
+export function avisoSensor(ficha) {
+  const clave = ficha.indicador;
+  const sujeto = INDICADORES[clave] ? `The ${INDICADORES[clave].nombre.toLowerCase()} sensor` : "A sensor";
+  const unidad = unidadIndicador(clave);
+  const leido = cifra(ficha.valor_leido, unidad);
+  let detalle = `it reads ${leido} and cannot be trusted`;
+  if (ficha.motivo === "fuera_de_rango") {
+    detalle = `it reads ${leido}, which is not a possible value`;
+  } else if (ficha.motivo === "cambio_brusco") {
+    detalle = `it went from ${cifra(ficha.valor_anterior)} to ${leido} from one reading to the next`;
+  } else if (ficha.motivo === "valor_congelado") {
+    detalle = `it has read exactly ${leido} for ${ficha.dias || "several"} days in a row`;
+  }
+  return `${sujeto} seems to be failing: ${detalle}. ` +
+    "Check the equipment and measure again. Until then this value is not used.";
+}
+
+/** "Rules that go without this value today: ..." (empty if no rule uses it). */
+export function reglasSinDato(ficha) {
+  const reglas = (ficha.reglas_afectadas || []).map((id) => tituloAlerta(id));
+  return reglas.length ? `Rules that go without this value today: ${reglas.join("; ")}.` : "";
+}
+
 export function palabraRiesgo(nivel) {
   return PALABRA_RIESGO[nivel] || "unknown";
 }
@@ -562,6 +618,9 @@ export function explicacionGlobal(resultado) {
   if (resultado.modo === "degradado") {
     texto += " Part of the board is unavailable; I keep watching with the rules.";
   }
+  const sospechosos = (resultado.sensores_sospechosos || []).length;
+  if (sospechosos === 1) texto += " There is 1 suspicious reading: check the equipment.";
+  else if (sospechosos > 1) texto += ` There are ${sospechosos} suspicious readings: check the equipment.`;
   return texto;
 }
 
@@ -608,6 +667,13 @@ const ERRORES_EXACTOS = {
   "No se pudo avisar al orquestador (Laptop 3): no responde.":
     "Could not reach the orchestrator (Laptop 3): it is not responding.",
   "Faltan alerta_id o paso_id.": "Missing alerta_id or paso_id.",
+  "Para simular un salto brusco hace falta al menos un día anterior.":
+    "To simulate a sudden jump you need at least one earlier day. Move to day 2 or later.",
+  "El tipo de fallo debe ser imposible, salto o congelado.":
+    "The fault type must be impossible value, sudden jump or frozen value.",
+  "Ese sensor no tiene chequeo de cambio brusco.": "That sensor has no sudden-jump check.",
+  "Ese sensor no tiene chequeo de valor congelado.": "That sensor has no frozen-value check.",
+  "Ese sensor no tiene un máximo posible configurado.": "That sensor has no possible maximum configured.",
 };
 
 // Spanish indicator names that the backend embeds in validation messages.
@@ -644,6 +710,10 @@ const ERRORES_REGEX = [
     (_, nombre, minimo, maximo, unidad) =>
       `${nombreBackend(nombre)}: must be between ${minimo} and ${maximo} ${unidad}.`],
   [/^El día de misión va de 1 a (\d+)\.$/, (_, dias) => `Mission day goes from 1 to ${dias}.`],
+  [/^Para simular un valor congelado hacen falta al menos (\d+) días de misión\.$/,
+    (_, dias) => `To simulate a frozen value you need at least ${dias} mission days. Move to day ${dias} or later.`],
+  [/^'(.+)' no tiene validación de sensor configurada\.$/,
+    (_, clave) => `'${clave}' has no sensor validation configured.`],
 ];
 
 export function traducirError(texto) {

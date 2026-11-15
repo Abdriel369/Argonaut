@@ -57,3 +57,41 @@ def test_la_interfaz_no_usa_recursos_remotos():
     for ruta in archivos:
         texto = ruta.read_text(encoding="utf-8")
         assert not re.search(r"""(src|href|url)\s*[=(]\s*["']?https?://""", texto), ruta
+
+
+def test_la_historia_no_cambia_y_no_marca_ningun_dato_sospechoso():
+    async def caso():
+        async with pila.navegador(pila.crear_pila()) as nav:
+            dias = [(await nav.post("/api/demo/dia", json={"dia": dia})).json() for dia in range(1, 8)]
+        return dias
+    dias = asyncio.run(caso())
+    assert [d["resultado"]["nivel_global"] for d in dias] == HISTORIA
+    for d in dias:
+        assert d["sensores_sospechosos"] == [] and d["resultado"]["sensores_sospechosos"] == []
+        assert all(m.get("opinion_limitada") in (None, False) for m in d["resultado"]["junta"])
+
+
+def test_sensor_defectuoso_en_el_dia_critico_no_baja_el_rojo_ni_pide_a_los_modelos_el_dato():
+    async def caso():
+        async with pila.navegador(pila.crear_pila()) as nav:
+            await nav.post("/api/demo/dia", json={"dia": 5})
+            return (await nav.post("/api/demo/sensor-defectuoso", json={"activo": True, "tipo": "salto"})).json()
+    e = asyncio.run(caso())
+    r = e["resultado"]
+    assert r["nivel_global"] == "rojo" and r["modo"] == "completo"
+    assert r["sensores_sospechosos"][0]["motivo"] == "cambio_brusco"
+    cardio = next(m for m in r["junta"] if m["especialista"] == "cardiovascular")
+    assert "fc_desv_pct" in cardio["respuesta"]["datos_faltantes"]
+
+
+def test_sensor_defectuoso_con_la_laptop3_apagada_lo_cubre_el_respaldo_local():
+    # La copia local de las reglas en la Laptop 1 también aparta el dato y avisa.
+    async def caso():
+        async with pila.navegador(pila.crear_pila(laptop3_apagada=True)) as nav:
+            await nav.post("/api/demo/dia", json={"dia": 5})
+            return (await nav.post("/api/demo/sensor-defectuoso", json={"activo": True})).json()
+    r = asyncio.run(caso())["resultado"]
+    assert r["origen"] == "respaldo-local"
+    assert r["nivel_global"] == "rojo"
+    assert r["semaforo_indicadores"]["fc_reposo"]["nivel"] == "sospechoso"
+    assert "El sensor de pulso en reposo parece fallar" in r["sensores_sospechosos"][0]["aviso"]

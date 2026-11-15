@@ -60,3 +60,48 @@ def test_sin_especialistas_la_demo_sigue_con_las_reglas_y_lo_indica():
     assert "riesgo-solar" in r["especialistas_no_disponibles"]
     assert r["nivel_global"] == "rojo"
     validar("resultado_final", r)
+
+
+# --------------------------------------------------------------------------
+# Datos sospechosos: un sensor que parece fallar
+# --------------------------------------------------------------------------
+
+def test_un_dato_sospechoso_genera_un_aviso_claro_y_no_cambia_el_nivel():
+    limpio = asyncio.run(evaluar(entrada(1), ClienteNulo(), CFG))
+    r = asyncio.run(evaluar(entrada(1, sensor={1: {"fc_reposo": 250.0}}), ClienteNulo(), CFG))
+    validar("resultado_final", r)
+    assert limpio["sensores_sospechosos"] == []
+    aviso = r["sensores_sospechosos"][0]
+    assert aviso["aviso"] == ("El sensor de pulso en reposo parece fallar: marca 250 lpm, un valor que no es "
+                              "posible. Revisa el equipo y vuelve a medir. Mientras tanto ese dato no se usa.")
+    assert r["nivel_global"] == limpio["nivel_global"] == "verde"
+    assert r["alertas"] == [] and r["informe_cirujano"] is None
+    assert r["explicacion_global"].endswith("Hay 1 dato sospechoso: revisa el equipo.")
+
+
+def test_cada_motivo_tiene_su_aviso():
+    casos = {
+        "cambio_brusco": {5: {"fc_reposo": 128.0}},
+        "valor_congelado": {2: {"fc_reposo": 64.0}, 3: {"fc_reposo": 64.0}, 4: {"fc_reposo": 64.0}, 5: {"fc_reposo": 64.0}},
+    }
+    textos = {}
+    for motivo, sensor in casos.items():
+        r = asyncio.run(evaluar(entrada(5, sensor=sensor), ClienteNulo(), CFG))
+        aviso = r["sensores_sospechosos"][0]
+        assert aviso["motivo"] == motivo
+        textos[motivo] = aviso["aviso"]
+    assert "pasó de 69 a 128 lpm de una lectura a la siguiente" in textos["cambio_brusco"]
+    assert "lleva 4 días marcando exactamente 64 lpm" in textos["valor_congelado"]
+
+
+def test_el_especialista_al_que_le_falta_el_dato_no_sube_la_alerta():
+    alertas = _alerta_sueno("amarillo")
+    respuesta = {**_respuesta("sueno", "rojo", 0.9), "datos_faltantes": ["sueno_h"]}
+    con_voto = fusionar(alertas, {"sueno": respuesta}, CFG.orquestador)
+    sin_voto = fusionar(alertas, {"sueno": respuesta}, CFG.orquestador, sin_voto={"sueno"})
+    assert con_voto[0]["nivel"] == "naranja"
+    assert sin_voto[0]["nivel"] == "amarillo" and sin_voto[0]["elevada_por"] == []
+    assert sin_voto[0]["especialistas_consultados"] == ["sueno"], "su opinión se sigue mostrando"
+    # Tampoco crea una señal temprana por su cuenta.
+    assert fusionar([], {"cardiovascular": {**_respuesta("cardiovascular", "rojo", 0.9)}}, CFG.orquestador,
+                    sin_voto={"cardiovascular"}) == []

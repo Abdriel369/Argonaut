@@ -9,6 +9,10 @@ Flujo de una evaluación:
 
 Si la Laptop 2 no responde: MODO DEGRADADO (reglas + modelo solar local).
 Este módulo no sabe de HTTP: recibe un "cliente" (ver clientes.py).
+
+Sensores que parecen fallar: los datos sospechosos de la entrada se excluyen antes
+del paso 1 y nunca llegan a los modelos (a ellos les falta el dato y baja su
+confianza). El resultado lleva un aviso por cada uno; el aviso no cambia el nivel.
 """
 
 import logging
@@ -55,8 +59,12 @@ def enrutar(senales: list, config: dict) -> dict:
     return convocados
 
 
-def fusionar(alertas: list, respuestas: dict, config: dict) -> list:
-    """Combina reglas y especialistas. Las reglas mandan; los modelos solo pueden subir."""
+def fusionar(alertas: list, respuestas: dict, config: dict, sin_voto=()) -> list:
+    """Combina reglas y especialistas. Las reglas mandan; los modelos solo pueden subir.
+
+    'sin_voto': especialistas cuya opinión hoy no cambia el nivel (les falta un dato
+    porque un sensor parece fallar). Se muestran, pero ni suben una alerta ni crean una.
+    """
     fusion = config["fusion"]
     especialistas = config["especialistas"]
     resultado = []
@@ -69,6 +77,7 @@ def fusionar(alertas: list, respuestas: dict, config: dict) -> list:
             n for n in vinculados
             if indice(respuestas[n]["nivel"]) > indice(nivel)
             and respuestas[n]["confianza"] >= fusion["confianza_minima"]
+            and n not in sin_voto
         ]
         if elevadores:
             nivel = subir(nivel, fusion["escalones_maximos"])
@@ -77,7 +86,7 @@ def fusionar(alertas: list, respuestas: dict, config: dict) -> list:
 
     # Un especialista ve riesgo donde las reglas no vieron nada: aviso temprano en amarillo.
     for nombre, respuesta in respuestas.items():
-        if nombre in cubiertos or respuesta["nivel"] == "verde":
+        if nombre in cubiertos or respuesta["nivel"] == "verde" or nombre in sin_voto:
             continue
         if respuesta["confianza"] < fusion["confianza_minima"]:
             continue
@@ -100,6 +109,8 @@ def fusionar(alertas: list, respuestas: dict, config: dict) -> list:
 async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "orquestador") -> dict:
     """Evalúa un día de misión y devuelve el resultado final (contrato resultado_final)."""
     validar("entrada_orquestador", entrada)
+    # Un dato sospechoso se excluye del cálculo: ni las reglas ni los modelos lo ven.
+    entrada = reglas.excluir_sospechosos(entrada)
     cfg = config.orquestador
     consulta_id = f"{entrada['astronauta_id']}-D{entrada['dia_mision']}-{uuid.uuid4().hex[:8]}"
 
@@ -126,7 +137,11 @@ async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "
     modo = "degradado" if no_disponibles else "completo"
 
     # 4. Fusión
-    alertas = fusionar(evaluacion["alertas"], respuestas, cfg)
+    # Con un dato sospechoso, el especialista al que le faltan datos opina pero no cambia el nivel.
+    sin_voto = set()
+    if evaluacion["sensores_sospechosos"] and cfg["fusion"].get("sin_voto_con_dato_sospechoso", True):
+        sin_voto = {nombre for nombre, respuesta in respuestas.items() if respuesta.get("datos_faltantes")}
+    alertas = fusionar(evaluacion["alertas"], respuestas, cfg, sin_voto)
     nivel_global = maximo(*[a["nivel"] for a in alertas])
 
     # 5. Síntesis, protocolos, junta, escalamiento e informe
@@ -154,7 +169,8 @@ async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "
                    "motivo": "", "respuesta": None}
         if nombre in respuestas:
             miembro.update(estado="respondio", respuesta=respuestas[nombre],
-                           motivo="; ".join(convocados.get(nombre, [])))
+                           motivo="; ".join(convocados.get(nombre, [])),
+                           opinion_limitada=nombre in sin_voto)
         elif nombre in no_disponibles:
             miembro.update(estado="no_disponible",
                            motivo=fallidos.get(nombre) or f"Laptop 2 no disponible ({estado_l2[1]})")
@@ -162,11 +178,15 @@ async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "
             miembro.update(estado="no_convocado", motivo="Las reglas no vieron motivo para consultarlo.")
         junta.append(miembro)
 
+    # Avisos de equipo: un sensor que parece fallar. No son alertas de salud y no cambian el nivel.
+    avisos_sensores = [{**ficha, "aviso": sintesis.aviso_sensor(ficha)}
+                       for ficha in evaluacion["sensores_sospechosos"]]
+
     escalamiento = {"nivel": nivel_global, **cfg["escalamiento"][nivel_global]}
     informe = None
     if indice(nivel_global) >= indice(cfg["informe"]["nivel_minimo"]):
         informe = construir_informe(entrada, evaluacion, alertas_finales, junta, nivel_global,
-                                    modo, protocolos_usados)
+                                    modo, protocolos_usados, avisos_sensores)
 
     resultado = {
         "nivel_global": nivel_global,
@@ -176,7 +196,8 @@ async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "
         "escalamiento": escalamiento,
         "informe_cirujano": informe,
         "explicacion_global": sintesis.explicacion_global(
-            nivel_global, alertas_finales, evaluacion["ventana_adaptacion"], modo),
+            nivel_global, alertas_finales, evaluacion["ventana_adaptacion"], modo, len(avisos_sensores)),
+        "sensores_sospechosos": avisos_sensores,
         "semaforo_indicadores": evaluacion["semaforo"],
         "junta": junta,
         "protocolos": protocolos_usados,
@@ -188,7 +209,7 @@ async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "
         "aviso": AVISO,
     }
     validar("resultado_final", resultado)
-    log.info("dia=%s nivel=%s modo=%s reglas=%s consultados=%s no_disponibles=%s",
+    log.info("dia=%s nivel=%s modo=%s reglas=%s consultados=%s no_disponibles=%s sospechosos=%s",
              entrada["dia_mision"], nivel_global, modo, evaluacion["reglas_activadas"],
-             sorted(respuestas), no_disponibles)
+             sorted(respuestas), no_disponibles, [f["indicador"] for f in avisos_sensores])
     return resultado
