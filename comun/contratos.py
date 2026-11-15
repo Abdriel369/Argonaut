@@ -18,6 +18,12 @@ NOMBRES = (
     "consulta_gateway",
     "respuesta_gateway",
     "resultado_final",
+    "lectura_reloj",
+    "respuesta_lectura_reloj",
+    "respuesta_lote_reloj",
+    "estado_reloj",
+    "tripulacion",
+    "detalle_tripulacion",
 )
 
 

@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "lectura_reloj",
+  "title": "Lectura del reloj simulado (navegador -> Laptop 1)",
+  "description": "Una lectura del reloj web de un astronauta. Todos los datos son simulados. El reloj solo puede escribir indicadores editables del catálogo.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["lectura_id", "astronauta_id", "capturado_en", "origen", "indicadores"],
+  "properties": {
+    "lectura_id": {
+      "type": "string", "minLength": 8, "maxLength": 64,
+      "description": "UUID generado por el cliente. Reenviarlo no duplica ni reevalúa."
+    },
+    "astronauta_id": {
+      "type": "string", "pattern": "^AST-0[1-6]$",
+      "description": "Debe existir en el roster simulado."
+    },
+    "capturado_en": {
+      "type": "string", "format": "date-time",
+      "description": "Momento de la lectura en ISO 8601."
+    },
+    "origen": { "enum": ["reloj-simulado"] },
+    "indicadores": {
+      "type": "object", "minProperties": 1,
+      "description": "Solo los indicadores enviados; cada valor debe ser numérico y estar dentro del rango del catálogo.",
+      "additionalProperties": { "type": "number" }
+    }
+  }
+}

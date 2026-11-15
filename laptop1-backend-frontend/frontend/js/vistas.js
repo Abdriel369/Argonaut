@@ -7,7 +7,7 @@ import {
   nombreIndicador, unidadIndicador, tituloAlerta, tituloProtocolo, pasoProtocolo,
   traducirMotivo, traducirCausa, traducirPaso, explicacionGlobal, opinionJunta,
   explicacionCorta, notaDia, MUSCULO, MODULOS, NOTA_INFORME, ESCALAMIENTO, ETIQUETAS,
-  avisoSensor, MOTIVO_SENSOR, OPINION_LIMITADA,
+  avisoSensor, MOTIVO_SENSOR, OPINION_LIMITADA, EQUIPO, TEXTO_TENDENCIA, traducirRol,
 } from "./i18n.js";
 
 const semaforo = (e) => (e.resultado && e.resultado.semaforo_indicadores) || {};
@@ -491,4 +491,218 @@ export function vistaInforme(e, abiertos) {
     <p class="ayuda" style="margin-top:.7rem">${pendientes
       ? `${pendientes} report${pendientes === 1 ? "" : "s"} waiting. They are sent when you press "Simulate link with Earth" in the demo panel.`
       : "No reports waiting."}</p>${enlace}`;
+}
+
+// ---------------------------------------------------------------------------
+// Crew view (team dashboard) and individual detail
+// ---------------------------------------------------------------------------
+function sparklineEquipo(valores, etiqueta) {
+  const numeros = (valores || []).map((v) => (typeof v === "number" ? v : null));
+  const validos = numeros.filter((v) => v !== null);
+  if (!validos.length) return `<span class="crew-sin-dato">${EQUIPO.sinDatos}</span>`;
+  const ANCHO = 132, ALTO = 34, PAD = 3;
+  let min = Math.min(...validos), max = Math.max(...validos);
+  if (max - min < 1e-9) { min -= 1; max += 1; }
+  const x = (i) => PAD + (i * (ANCHO - 2 * PAD)) / Math.max(1, numeros.length - 1);
+  const y = (v) => ALTO - PAD - ((v - min) / (max - min)) * (ALTO - 2 * PAD);
+  const tramos = [];
+  let actual = [];
+  numeros.forEach((v, i) => {
+    if (v === null) {
+      if (actual.length) { tramos.push(actual); actual = []; }
+    } else {
+      actual.push(`${x(i).toFixed(1)},${y(v).toFixed(1)}`);
+    }
+  });
+  if (actual.length) tramos.push(actual);
+  const puntos = numeros.map((v, i) => (v === null ? "" :
+    `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.2"/>`)).join("");
+  return `<svg class="crew-spark" viewBox="0 0 ${ANCHO} ${ALTO}" role="img" aria-label="${esc(etiqueta)}">
+    ${tramos.map((t) => `<polyline points="${t.join(" ")}"/>`).join("")}${puntos}</svg>`;
+}
+
+function barraPreparacion(pct) {
+  if (typeof pct !== "number") return `<span class="crew-sin-dato">${EQUIPO.sinDatos}</span>`;
+  return `<span class="crew-barra" role="img" aria-label="Readiness ${pct} percent"><i style="width:${pct}%"></i></span>
+    <b class="crew-pct">${pct} %</b>`;
+}
+
+function nivelCuenta(nivel, cantidad) {
+  return `<span class="nivel nivel-${nivel}">${icono(nivel)}${TEXTO_NIVEL[nivel]} <b>×${cantidad}</b></span>`;
+}
+
+function nombreDe(datos, id) {
+  const fila = (datos.astronautas || []).find((a) => a.id === id);
+  return fila ? fila.nombre : id || "—";
+}
+
+function filaCumple(fila, filtro) {
+  if (filtro === "alerts") return ["amarillo", "naranja", "rojo"].includes(fila.nivel);
+  if (filtro === "incomplete") return fila.preparacion_pct === null || fila.estado !== "ok";
+  return true;
+}
+
+export function vistaTripulacion(datos, filtro = "all") {
+  if (!datos) {
+    return `<div class="vacio"><b>Loading crew…</b>The team view is read from the local rules.</div>`;
+  }
+  const equipo = datos.equipo || {};
+  const niveles = equipo.niveles || {};
+  const filas = (datos.astronautas || []).filter((fila) => filaCumple(fila, filtro));
+  const resumen = `
+    <div class="crew-resumen">
+      <div class="crew-dato"><span>${EQUIPO.dia}</span><b>${datos.dia_mision}</b></div>
+      <div class="crew-dato"><span>${EQUIPO.total}</span><b>${equipo.total ?? 0}</b></div>
+      <div class="crew-dato"><span>${EQUIPO.niveles}</span>
+        <span class="crew-niveles">${nivelCuenta("verde", niveles.verde || 0)}
+        ${nivelCuenta("amarillo", niveles.amarillo || 0)}
+        ${nivelCuenta("naranja", niveles.naranja || 0)}
+        ${nivelCuenta("rojo", niveles.rojo || 0)}</span></div>
+      <div class="crew-dato"><span>${EQUIPO.promedio}</span><b>${equipo.promedio_preparacion ?? "—"}${equipo.promedio_preparacion != null ? " %" : ""}</b></div>
+      <div class="crew-dato"><span>${EQUIPO.mejor}</span><b>${esc(nombreDe(datos, equipo.mejor))}</b></div>
+      <div class="crew-dato"><span>${EQUIPO.menor}</span><b>${esc(nombreDe(datos, equipo.menor))}</b></div>
+      <div class="crew-dato"><span>${EQUIPO.cobertura}</span><b>${Math.round((equipo.cobertura_media || 0) * 100)} %</b></div>
+      <div class="crew-dato"><span>${EQUIPO.debil}</span><b>${esc(nombreIndicador(equipo.indicador_mas_debil) || "—")}</b></div>
+    </div>`;
+
+  const botones = Object.entries(EQUIPO.filtros).map(([clave, texto]) => `
+    <button type="button" class="boton boton-chico" data-filtro-equipo="${clave}"
+      aria-pressed="${filtro === clave}">${texto}</button>`).join("");
+
+  const columnas = `
+    <div class="crew-columnas" aria-hidden="true">
+      <span>${EQUIPO.tabla.pos}</span><span>${EQUIPO.tabla.astronaut}</span>
+      <span>${EQUIPO.tabla.level}</span><span>${EQUIPO.tabla.readiness}</span>
+      <span>${EQUIPO.tabla.coverage}</span><span>${EQUIPO.tabla.trend}</span>
+      <span>${EQUIPO.tabla.alerts}</span><span>${EQUIPO.tabla.spark}</span>
+    </div>`;
+
+  const lista = filas.length ? `
+    ${columnas}
+    <ul class="crew-lista" role="list">
+      ${filas.map((fila) => `
+      <li>
+        <button type="button" class="crew-fila nivel-${fila.nivel}" data-astronauta="${esc(fila.id)}"
+          aria-label="${esc(fila.nombre)}: ${TEXTO_NIVEL[fila.nivel] || "No data"}, ${EQUIPO.tabla.readiness} ${fila.preparacion_pct ?? EQUIPO.sinDatos}">
+          <span class="crew-pos">${fila.posicion ?? "—"}</span>
+          <span class="crew-quien"><b>${esc(fila.nombre)}</b><small>${esc(traducirRol(fila.rol))}</small></span>
+          <span class="crew-nivel-celda">${insignia(fila.nivel)}</span>
+          <span class="crew-prep-celda">${barraPreparacion(fila.preparacion_pct)}</span>
+          <span class="crew-cob-celda"><small>${EQUIPO.tabla.coverage}</small>${Math.round((fila.cobertura || 0) * 100)} %</span>
+          <span class="crew-tend-celda"><small>${EQUIPO.tabla.trend}</small>${icono(fila.tendencia === "sin_dato" ? "sin_dato" : fila.tendencia)} ${esc(TEXTO_TENDENCIA[fila.tendencia] || "—")}</span>
+          <span class="crew-alerta-celda"><small>${EQUIPO.tabla.alerts}</small>${(fila.alertas || []).length || "—"}</span>
+          <span class="crew-spark-celda">${sparklineEquipo(fila.sparkline, `${fila.nombre}: readiness trend`)}</span>
+        </button>
+      </li>`).join("")}
+    </ul>` : `<div class="vacio"><b>No astronauts in this filter.</b>Change the filter to see the rest of the crew.</div>`;
+
+  const degradado = datos.degradado
+    ? `<p class="crew-degradado">${icono("naranja")} Degraded: the orchestrator (Laptop 3) is not responding. The team view still works with the local rules.</p>` : "";
+  return `
+    <div class="crew-cabecera">
+      <div><h2 id="t-tripulacion">${EQUIPO.titulo}</h2><p class="ayuda">${esc(EQUIPO.intro)}</p></div>
+      <a class="boton boton-secundario" href="reloj/">Open watch</a>
+    </div>
+    ${degradado}
+    ${resumen}
+    <div class="crew-filtros" role="group" aria-label="Filter crew">${botones}</div>
+    ${lista}
+    <p class="crew-aviso">${icono("amarillo")}<span>${esc(EQUIPO.aviso)}</span></p>`;
+}
+
+function desgloseEquipo(preparacion) {
+  const d = preparacion?.desglose || {};
+  const pesos = preparacion?.pesos || {};
+  const fila = (clave, etiqueta) => `
+    <div class="crew-desglose-fila">
+      <span>${etiqueta}${typeof pesos[clave] === "number" ? ` <small>(${Math.round(pesos[clave] * 100)} % ${EQUIPO.desglose.peso})</small>` : ""}</span>
+      <b>${typeof d[clave] === "number" ? `${d[clave]} %` : "—"}</b>
+    </div>`;
+  return `
+    <div class="crew-desglose">
+      ${fila("indicadores", EQUIPO.desglose.indicadores)}
+      ${fila("plan", EQUIPO.desglose.plan)}
+      ${fila("seguridad", EQUIPO.desglose.seguridad)}
+      ${fila("datos", EQUIPO.desglose.datos)}
+    </div>`;
+}
+
+export function vistaDetalleEquipo(detalle, cargando = false) {
+  if (cargando || !detalle) {
+    return `<p class="crew-cargando" role="status">${EQUIPO.cargando}</p>`;
+  }
+  const a = detalle.astronauta || {};
+  const prep = detalle.preparacion || {};
+  const origen = EQUIPO.origen[detalle.origen] || detalle.origen;
+  const modo = EQUIPO.modo[detalle.modo] || detalle.modo;
+  const degradado = detalle.origen === "respaldo-local"
+    ? `<p class="crew-degradado">${icono("naranja")} The orchestrator did not answer in time: this detail comes from the local rules only.</p>` : "";
+
+  const indicadores = (detalle.indicadores || []).map((i) => `
+    <tr><td>${esc(nombreIndicador(i.clave) || i.nombre)}</td>
+      <td class="num">${typeof i.valor === "number" ? formato(i.valor, (detalle.indicadores || []).length ? 1 : 0) : "No data"} ${esc(unidadIndicador(i.clave) || i.unidad)}</td>
+      <td class="num">${typeof i.linea_base === "number" ? formato(i.linea_base, 1) : "—"}</td>
+      <td>${insignia(i.nivel)}</td></tr>`).join("");
+
+  const tendencias = ["sueno_h", "fc_reposo", "hrv"].map((clave) => `
+    <div class="crew-mini">
+      <span>${esc(nombreIndicador(clave))}</span>
+      ${sparklineEquipo((detalle.tendencias || {})[clave], `${nombreIndicador(clave)} trend`)}
+    </div>`).join("");
+
+  const alertas = (detalle.alertas || []).length ? (detalle.alertas || []).map((alerta) => {
+    const protocolo = (detalle.protocolos || {})[alerta.protocolo_id];
+    const pasos = protocolo ? `<ol class="crew-pasos">${protocolo.pasos.map((paso) =>
+      `<li>${esc(pasoProtocolo(alerta.protocolo_id, paso))}</li>`).join("")}</ol>` : "";
+    return `
+      <article class="alerta nivel-${alerta.nivel}">
+        <div class="alerta-cabecera">${insignia(alerta.nivel)}<h3>${esc(tituloAlerta(alerta))}</h3></div>
+        <p>${esc(traducirCausa(alerta.causa_en_lenguaje_simple, alerta.id))}</p>
+        ${pasos ? `<div class="protocolo"><h4>${EQUIPO.protocolo}</h4>${pasos}</div>` : ""}
+      </article>`;
+  }).join("") : `<p class="vacio">${EQUIPO.sinAlertas}</p>`;
+
+  const junta = (detalle.junta || []).length ? `
+    <ul class="crew-junta">${(detalle.junta || []).map((m) => {
+      const resp = m.respuesta;
+      return `<li><b>${esc(NOMBRES_ESPECIALISTA[m.especialista] || m.especialista)}</b>
+        <span>${esc(m.estado === "respondio" ? `${Math.round((resp?.riesgo || 0) * 100)} % ${TEXTO_NIVEL[resp?.nivel] || ""}` : m.estado.replace("_", " "))}</span></li>`;
+    }).join("")}</ul>` : `<p class="ayuda">No specialist was consulted for this astronaut today.</p>`;
+
+  const sospechosos = (detalle.sensores_sospechosos || []).length
+    ? `<ul class="crew-sospechosos">${(detalle.sensores_sospechosos || []).map((s) =>
+      `<li>${icono("sospechoso")}<span>${esc(nombreIndicador(s.indicador))}: ${esc(avisoSensor(s) || s.aviso || MOTIVO_SENSOR[s.motivo] || "suspicious value")}</span></li>`).join("")}</ul>`
+    : `<p class="ayuda">No suspicious readings today.</p>`;
+
+  return `
+    <div class="crew-detalle" role="region" aria-label="${EQUIPO.detalle}: ${esc(a.nombre)}">
+      <div class="crew-detalle-cabecera">
+        <div>
+          <button type="button" class="boton boton-chico" data-cerrar-detalle>${icono("baja")}${EQUIPO.cerrar}</button>
+          <h3>${esc(a.nombre)} <small>${esc(traducirRol(a.rol))}</small></h3>
+          <p class="ayuda">${origen} · ${modo} · ${EQUIPO.dia} ${detalle.dia_mision}</p>
+        </div>
+        <div class="crew-detalle-nivel">${insignia(detalle.nivel_global)}
+          <b class="crew-pct">${prep.preparacion_pct ?? EQUIPO.sinDatos}${prep.preparacion_pct != null ? " %" : ""}</b></div>
+      </div>
+      ${degradado}
+      <div class="crew-detalle-rejilla">
+        <section><h4>${EQUIPO.desglose.titulo}</h4>${desgloseEquipo(prep)}
+          <p class="ayuda">${esc(prep.motivo || "")}</p>
+          <p class="crew-modelo"><b>${EQUIPO.modeloRiesgo}:</b> ${detalle.riesgo_modelos_pct != null ? `${detalle.riesgo_modelos_pct} %` : EQUIPO.modeloRiesgoNoDisponible}
+            <small>${esc(EQUIPO.modeloRiesgoNota)}</small></p>
+        </section>
+        <section><h4>${EQUIPO.calidad}</h4>
+          <p>${EQUIPO.coberturaEtiqueta}: <b>${Math.round((detalle.calidad?.cobertura || 0) * 100)} %</b></p>
+          <p>${EQUIPO.sospechososHoy}: <b>${detalle.calidad?.sospechosos_hoy ?? 0}</b></p>
+          <p class="ayuda">${esc(detalle.calidad?.nota || "")}</p>
+          ${sospechosos}</section>
+        <section><h4>${EQUIPO.alertas}</h4>${alertas}</section>
+        <section><h4>${EQUIPO.junta}</h4>${junta}</section>
+        <section><h4>${EQUIPO.tendencia}</h4><div class="crew-minis">${tendencias}</div></section>
+        <section class="crew-tabla-indicadores"><h4>${EQUIPO.indicadores}</h4>
+          <div class="tabla-envoltura"><table><thead><tr><th>Indicator</th><th>Value</th><th>Baseline</th><th>Status</th></tr></thead>
+          <tbody>${indicadores}</tbody></table></div></section>
+      </div>
+    </div>`;
 }

@@ -7,3 +7,8 @@ __pycache__/
 .venv/
 node_modules/
 muestra.csv
+# Temporales de desarrollo y respaldos de la migración
+.tmp/
+.deps/
+tmp*/
+*.pre-multiautonauta-*.bak

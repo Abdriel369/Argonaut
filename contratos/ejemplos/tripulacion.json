@@ -1,0 +1,57 @@
+{
+  "dia_mision": 5,
+  "equipo": {
+    "total": 6,
+    "niveles": { "verde": 2, "amarillo": 2, "naranja": 1, "rojo": 1 },
+    "promedio_preparacion": 61,
+    "mejor": "AST-02",
+    "menor": "AST-06",
+    "cobertura_media": 0.83,
+    "indicador_mas_debil": "sueno_h"
+  },
+  "astronautas": [
+    {
+      "id": "AST-02",
+      "nombre": "Mateo Ríos",
+      "rol": "Piloto",
+      "posicion": 1,
+      "nivel": "verde",
+      "preparacion_pct": 84,
+      "desglose": { "indicadores": 88.0, "plan": 91.0, "seguridad": 100.0, "datos": 100.0 },
+      "cobertura": 1.0,
+      "tendencia": "estable",
+      "riesgo_modelos_pct": null,
+      "estado": "ok",
+      "sparkline": [78, 80, 82, 83, 84],
+      "indicadores_clave": {
+        "sueno_h": { "valor": 7.2, "nivel": "verde" },
+        "animo": { "valor": 3, "nivel": "verde" }
+      },
+      "alertas": [],
+      "pesos": { "indicadores": 0.4, "plan": 0.25, "seguridad": 0.2, "datos": 0.15 },
+      "motivo": ""
+    },
+    {
+      "id": "AST-05",
+      "nombre": "Hana Sato",
+      "rol": "Científica",
+      "posicion": null,
+      "nivel": "verde",
+      "preparacion_pct": null,
+      "desglose": { "indicadores": 100.0, "plan": 100.0, "seguridad": 100.0, "datos": 58.0 },
+      "cobertura": 0.4,
+      "tendencia": "sin_dato",
+      "riesgo_modelos_pct": null,
+      "estado": "sin_datos_suficientes",
+      "sparkline": [null, null, null, null, null],
+      "indicadores_clave": {},
+      "alertas": [],
+      "pesos": { "indicadores": 0.4, "plan": 0.25, "seguridad": 0.2, "datos": 0.15 },
+      "motivo": "Faltan datos suficientes para calcular un índice comparable."
+    }
+  ],
+  "origen": "reglas-locales",
+  "degradado": false,
+  "conexion_orquestador": { "ok": true, "detalle": "ok", "intentos": 1 },
+  "aviso": "Prototipo con datos simulados. No es una evaluación médica."
+}

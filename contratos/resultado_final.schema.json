@@ -88,6 +88,7 @@
     "reglas_activadas": { "type": "array", "items": { "type": "string" } },
     "ventana_adaptacion": { "type": "boolean" },
     "respuestas_guardadas": { "type": "boolean" },
+    "astronauta_id": { "type": "string", "description": "OPCIONAL. Tripulante evaluado; si falta, se asume AST-01." },
     "origen": { "type": "string", "description": "orquestador (Laptop 3) o respaldo-local (Laptop 1)" },
     "dia_mision": { "type": "integer" },
     "aviso": { "type": "string" }

@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "tripulacion",
+  "title": "Vista general de la tripulación (Laptop 1 -> navegador)",
+  "description": "Roster, datos de equipo y filas ordenadas por índice de preparación. Solo reglas locales; no es una evaluación médica.",
+  "type": "object",
+  "required": ["dia_mision", "equipo", "astronautas", "origen", "degradado", "conexion_orquestador", "aviso"],
+  "properties": {
+    "dia_mision": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "equipo": {
+      "type": "object",
+      "required": ["total", "niveles", "promedio_preparacion", "mejor", "menor",
+                   "cobertura_media", "indicador_mas_debil"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 0 },
+        "niveles": {
+          "type": "object",
+          "required": ["verde", "amarillo", "naranja", "rojo"],
+          "properties": {
+            "verde": { "type": "integer", "minimum": 0 },
+            "amarillo": { "type": "integer", "minimum": 0 },
+            "naranja": { "type": "integer", "minimum": 0 },
+            "rojo": { "type": "integer", "minimum": 0 }
+          }
+        },
+        "promedio_preparacion": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+        "mejor": { "type": ["string", "null"] },
+        "menor": { "type": ["string", "null"] },
+        "cobertura_media": { "type": "number", "minimum": 0, "maximum": 1 },
+        "indicador_mas_debil": { "type": ["string", "null"] }
+      }
+    },
+    "astronautas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "nombre", "rol", "nivel", "preparacion_pct", "desglose",
+                     "cobertura", "tendencia", "riesgo_modelos_pct", "estado"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AST-0[1-6]$" },
+          "nombre": { "type": "string" },
+          "rol": { "type": "string" },
+          "posicion": { "type": ["integer", "null"], "minimum": 1 },
+          "nivel": { "enum": ["verde", "amarillo", "naranja", "rojo", "sin_dato"] },
+          "preparacion_pct": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+          "desglose": {
+            "type": ["object", "null"],
+            "properties": {
+              "indicadores": { "type": ["number", "null"] },
+              "plan": { "type": ["number", "null"] },
+              "seguridad": { "type": ["number", "null"] },
+              "datos": { "type": ["number", "null"] }
+            }
+          },
+          "cobertura": { "type": "number", "minimum": 0, "maximum": 1 },
+          "tendencia": { "enum": ["sube", "baja", "estable", "sin_dato"] },
+          "riesgo_modelos_pct": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+          "estado": { "enum": ["ok", "sin_datos_suficientes", "error"] },
+          "sparkline": {
+            "type": "array",
+            "items": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 }
+          },
+          "indicadores_clave": { "type": "object" },
+          "alertas": { "type": "array", "items": { "type": "object" } },
+          "pesos": { "type": "object" },
+          "motivo": { "type": "string" }
+        }
+      }
+    },
+    "origen": { "type": "string" },
+    "degradado": { "type": "boolean" },
+    "conexion_orquestador": { "type": "object" },
+    "aviso": { "type": "string" }
+  }
+}

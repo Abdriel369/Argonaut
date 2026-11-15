@@ -10,11 +10,12 @@ import {
 } from "./i18n.js";
 import {
   vistaEstado, vistaTablero, vistaCuerpo, vistaAlertas, vistaJunta, vistaTendencia, vistaInforme,
-  zonaPorDefecto, sensoresSospechosos,
+  vistaTripulacion, vistaDetalleEquipo, zonaPorDefecto, sensoresSospechosos,
 } from "./vistas.js";
 
 const INTERVALO_ESTADO_MS = 4000;     // syncs phone and laptop
 const INTERVALO_RED_MS = 5000;        // healthchecks of the three laptops
+const INTERVALO_EQUIPO_MS = 10000;    // crew view (local rules, cached on the server)
 const SEGUNDOS_POR_DIA = 8;           // "Play week": one day every ~8 s
 const SENALES_REACCION = 5;
 
@@ -32,6 +33,12 @@ const app = {
   reproduccion: null,
   ocupado: false,
   diaFormulario: null,
+  equipo: null,               // crew overview (local rules, server-cached)
+  diaEquipo: null,            // mission day of the crew overview
+  filtroEquipo: "all",        // all | alerts | incomplete
+  detalleEquipo: null,        // selected astronaut detail
+  detalleError: null,
+  cargandoDetalle: false,
 };
 const cache = {};   // last HTML painted per container: only what changes is repainted
 const $ = (id) => document.getElementById(id);
@@ -62,6 +69,59 @@ async function cargarEstado() {
     app.conexion = false;
   }
   pintar();
+  if (app.datos && app.diaEquipo !== app.datos.dia_actual) cargarEquipo();
+}
+
+async function cargarEquipo() {
+  const dia = app.datos ? app.datos.dia_actual : null;
+  try {
+    app.equipo = await pedir(`api/tripulacion${dia ? `?dia=${dia}` : ""}`);
+    app.diaEquipo = app.equipo.dia_mision;
+  } catch {
+    // Keep the last crew data; the connection notice already says Laptop 1 is offline.
+  }
+  pintarEquipo();
+}
+
+function pintarEquipo() {
+  poner("tripulacion", vistaTripulacion(app.equipo, app.filtroEquipo));
+  let detalle = "";
+  if (app.detalleError) {
+    detalle = `<div class="crew-degradado" role="alert">${icono("naranja")}<p>${esc(app.detalleError)}</p></div>`;
+  } else if (app.detalleEquipo) {
+    detalle = vistaDetalleEquipo(app.detalleEquipo);
+  } else if (app.cargandoDetalle) {
+    detalle = vistaDetalleEquipo(null, true);
+  }
+  poner("detalle-equipo", detalle);
+}
+
+async function abrirDetalle(astronautaId) {
+  app.cargandoDetalle = true;
+  app.detalleEquipo = null;
+  app.detalleError = null;
+  pintarEquipo();
+  try {
+    const dia = app.datos ? app.datos.dia_actual : "";
+    app.detalleEquipo = await pedir(
+      `api/tripulacion/${encodeURIComponent(astronautaId)}${dia ? `?dia=${dia}` : ""}`);
+  } catch (error) {
+    app.detalleError = error instanceof TypeError
+      ? "No connection to Laptop 1. The crew detail could not be loaded."
+      : traducirError(error.message);
+  } finally {
+    app.cargandoDetalle = false;
+    pintarEquipo();
+    const cerrar = document.querySelector("[data-cerrar-detalle]");
+    if (cerrar) cerrar.focus({ preventScroll: true });
+  }
+}
+
+function cerrarDetalle() {
+  app.detalleEquipo = null;
+  app.detalleError = null;
+  app.cargandoDetalle = false;
+  pintarEquipo();
 }
 
 async function cargarRed() {
@@ -70,7 +130,7 @@ async function cargarRed() {
     const firma = JSON.stringify([app.red.laptop3.ok, app.red.laptop2.ok, app.red.modelo_solar.ok]);
     // If a laptop went down or came back, ask for a new evaluation to reflect it.
     if (app.firmaRed !== null && app.firmaRed !== firma && !app.ocupado) {
-      try { app.datos = await pedir("api/reevaluar", {}); } catch { /* retried next cycle */ }
+      try { app.datos = await pedir("api/reevaluar", {}); cargarEquipo(); } catch { /* retried next cycle */ }
     }
     app.firmaRed = firma;
     app.conexion = true;
@@ -89,6 +149,7 @@ async function accion(ruta, cuerpo, salida) {
     const datos = await pedir(ruta, cuerpo ?? {});
     if (datos && datos.resultado) app.datos = datos;
     app.conexion = true;
+    if (datos && datos.resultado) cargarEquipo();
     return datos;
   } catch (error) {
     const texto = error instanceof TypeError
@@ -118,6 +179,9 @@ function poner(id, html) {
     else if (d.zona) selector = `${activo.tagName.toLowerCase()}[data-zona="${d.zona}"]`;
     else if (d.animo) selector = `[data-animo="${d.animo}"]`;
     else if (d.clave) selector = `[data-clave="${d.clave}"]`;
+    else if (d.filtroEquipo) selector = `[data-filtro-equipo="${d.filtroEquipo}"]`;
+    else if (d.astronauta) selector = `[data-astronauta="${d.astronauta}"]`;
+    else if ("cerrarDetalle" in d) selector = "[data-cerrar-detalle]";
   }
   contenedor.innerHTML = html;
   if (selector) {
@@ -341,6 +405,15 @@ function elegirZona(id) {
 
 function prepararEventos() {
   document.addEventListener("click", async (evento) => {
+    const filtro = evento.target.closest("[data-filtro-equipo]");
+    if (filtro) { app.filtroEquipo = filtro.dataset.filtroEquipo; pintarEquipo(); return; }
+
+    const cerrar = evento.target.closest("[data-cerrar-detalle]");
+    if (cerrar) { cerrarDetalle(); return; }
+
+    const astronauta = evento.target.closest("[data-astronauta]");
+    if (astronauta) { await abrirDetalle(astronauta.dataset.astronauta); return; }
+
     const zona = evento.target.closest("[data-zona]");
     if (zona) { elegirZona(zona.dataset.zona); return; }
 
@@ -477,6 +550,9 @@ function prepararEventos() {
     app.temporizadores.clear();
     app.informesAbiertos.clear();
     app.diaFormulario = null;
+    app.detalleEquipo = null;
+    app.detalleError = null;
+    app.filtroEquipo = "all";
     const datos = await accion("api/demo/reiniciar", {}, mensaje);
     if (datos) mensaje.textContent = "Demo reset to day 1.";
     cargarRed();
@@ -489,6 +565,8 @@ function prepararEventos() {
 prepararEventos();
 cargarEstado();
 cargarRed();
+cargarEquipo();
 setInterval(cargarEstado, INTERVALO_ESTADO_MS);
 setInterval(cargarRed, INTERVALO_RED_MS);
+setInterval(cargarEquipo, INTERVALO_EQUIPO_MS);
 setInterval(pintarTemporizadores, 500);

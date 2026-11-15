@@ -2,6 +2,9 @@
 
 > **Prototipo con datos simulados. No es una herramienta de diagnóstico médico.**
 
+El índice de preparación y la proyección heurística del reloj tienen su propio documento:
+[`SUPUESTOS_TRIPULACION.md`](SUPUESTOS_TRIPULACION.md).
+
 La validación de sensores corre **antes** del motor de reglas y de los modelos. Código:
 `backend/sensores.py`. Límites: `backend/config/sensores.toml`.
 

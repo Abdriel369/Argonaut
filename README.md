@@ -4,6 +4,14 @@ Challenge: Create Health Monitoring Software for Astronauts on Space Missions (i
 Demo tagline: 20 minutes from Earth, the station doctor already knows what to do.
 An assistant that lives inside the station. With a 20-minute communication delay, the crew cannot wait for Earth, so it monitors, interprets, and provides guidance autonomously. It does not diagnose: it raises risk alerts and recommends actions.
 A rules orchestrator detects a potential risk, consults four specialist models (sleep, fatigue and well-being, cardiovascular health, and solar risk), and explains the result in plain language with a step-by-step protocol and a report for the flight surgeon.
+
+Two views share the same simulated data:
+
+- **Crew** (main page): the commander's or medical team's dashboard. It shows the six astronauts, their level, a readiness index with its breakdown, data coverage, trend and an individual detail with alerts, specialist board, protocol and data quality.
+- **Watch** (`/reloj/`): the astronaut's device. A web screen that simulates a smart watch, collects readings, receives alerts and the next protocol step, and stores readings offline to resend them later.
+
+**All data is simulated.** The readiness index is a demo heuristic, not a calibrated probability or a medical evaluation. The watch is a web simulation, not a real device.
+
 Laptop setup
 Laptop	Runs	Folder	Port
 1	Backend (API, SQLite, scenario, baseline), web interface	`laptop1-backend-frontend/`	8100
@@ -33,11 +41,20 @@ python3 scripts/verificar_red.py --desde laptop3   # Laptop 3 → gateway and ea
 ```
 Without all three laptops (for judges): `modo-demo-sin-laptops/arrancar_demo.sh` (with Docker, or `local` without Docker). It uses model responses recorded from real executions, and the screen clearly indicates demo mode at all times.
 Local development on a single machine (seven real processes, on `127.0.0.1` ports): `scripts/arrancar_local.sh` and `scripts/arrancar_local.sh parar`.
+On Windows, without bash: `.\scripts\arrancar_local.ps1` and `.\scripts\arrancar_local.ps1 parar`.
+If the execution policy blocks it: `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\arrancar_local.ps1`.
+Dashboard: `http://127.0.0.1:8100/`. Watch: `http://127.0.0.1:8100/reloj/`.
 Tests
 ```bash
 pip install -r laptop2-modelos/requirements.txt pytest
-python3 -m pytest          # from the repository root (see the exact count in the output)
+python -m pytest           # from the repository root (see the exact count in the output)
 ```
+At the time of this change: **303 tests pass**. `xgboost` is pinned below 3.0 in
+the model requirements: version 3.x crashed while shutting down with this
+machine's CUDA driver. On Windows the tests force `USAR_GPU=no` for the same
+reason; the runtime keeps `USAR_GPU=auto`. The pure watch queue
+also has a Node script: `node laptop1-backend-frontend/frontend/reloj/pruebas/cola.script.mjs`.
+
 Coverage:
 Contracts: every JSON schema is valid; invalid messages are rejected.
 Rules: each day in the scenario produces the expected level (green, green, yellow, orange, red, yellow, green; day 4 rises to orange starting with sleep-specialist version 1.1.0); adaptation window; persistence; missing data does not break the system.
@@ -47,6 +64,9 @@ Backend: data validation, baseline recalibration, muscle-and-bone exposure, prot
 Sensor validation: impossible value, abrupt jump, frozen value, normal scenario without false positives, and ensuring a broken sensor does not trigger a red alert by itself or lower alerts from other signals.
 Integration: complete 7-day scenario; Laptop 2 offline; one model offline; interface without remote resources.
 Demo mode: the scenario plays back identically using saved responses.
+Crew: the readiness formula with a fixed fixture, orange/red caps, `null` when coverage is low, tie-breakers, degraded mode and one astronaut failing without hiding the others.
+Watch: reading isolation, idempotency by `lectura_id`, sensor validation of a suspicious reading, compact-state contract, no orchestrator call on every poll, and the linear projection (including fewer than 3 points).
+Migration: an old single-astronaut SQLite file keeps AST-01's history, gets a backup and seeds the other five.
 Data, assumptions, and thresholds
 All data is simulated. Models are trained on synthetic data generated within public reference ranges (NASA HRP, CSA). Each generator uses a fixed seed and documents its assumptions: `laptop2-modelos/datos-sinteticos/SUPUESTOS.md` and `laptop3-orquestador/modelos/riesgo-solar/SUPUESTOS.md`.
 Metrics show that the model learned the synthetic rule, not that it is clinically valid.
@@ -79,20 +99,28 @@ Radiation: the solar event is simulated. There is no space-weather forecast or r
 Confidence: this is a heuristic, not a calibrated probability.
 Sensor validation: limits are example values and the prototype has only one reading per day. A sensor stuck at a plausible value may take 4 or 5 days to detect. A very abrupt real change remains flagged as suspicious until a person manually confirms it.
 Protocols: these are example text and contain no medication dosages. A real protocol must be defined by the mission medical team.
+Readiness index: it is a demo heuristic built from simulated profiles and local rules. It is not a calibrated probability, a medical evaluation or a fitness-for-duty decision. The weights and caps live in `laptop1-backend-frontend/backend/config/tripulacion.toml`; see `laptop1-backend-frontend/SUPUESTOS_TRIPULACION.md`.
+Crew profiles: the six astronauts are fictional and deterministic. AST-05 intentionally has no records for days 3–7, so the crew view shows **Not enough data** instead of a misleading zero.
+Watch: it is a web screen, not a native app, and it does not use Bluetooth or real sensors. Its offline queue lives in `localStorage` and is limited to 20 readings per astronaut; the demo does not use service workers or background execution.
 Verification status
-Verified here: all tests pass; the 7-day scenario produces the expected scripted levels; the local demo (`arrancar_demo.sh local`) works end to end; the `docker-compose.yml` files have valid syntax.
+Verified here: all 303 tests pass; the 7-day scenario produces the expected scripted levels; the local demo (`arrancar_demo.sh local`) works end to end; the `docker-compose.yml` files have valid syntax. The real server was started and `/`, `/reloj/` (plus its JS/CSS/font assets), `/api/tripulacion`, `/api/reloj/estado`, `/api/reloj/lectura` and `/api/exportar.csv` answered correctly. The crew view, the individual detail and the five watch screens were smoke-tested from Node with a minimal DOM and real backend payloads.
+A visual check with headless Chrome rendered `/` and `/reloj/` at desktop size and with emulated 360/390 px viewports; the Crew table loaded its six rows, the AST-03 detail opened, and there was no horizontal overflow. The full offline → reload → online cycle in browser DevTools was not automated; the pure queue logic is covered by Node tests and the HTTP endpoints by pytest.
 Not verified here: Docker image builds and startup with `docker compose`. The development environment does not have a Docker daemon. The Dockerfiles follow the same folder structure used by the tests.
 To do on site: test with the three actual laptops on the router; set the IP and port in each `.env`; decide whether to use an NVIDIA GPU (see the commented section in `laptop3-orquestador/docker-compose.yml`).
 Repository structure
 ```text
 contratos/                  shared JSON schemas + examples + tests
 comun/                      validation, levels, specialist core, shared verification
-laptop1-backend-frontend/   backend, frontend (no CDN), profile and scenario configuration, sensor validation
+laptop1-backend-frontend/   backend, frontend (no CDN), profile and scenario configuration,
+                            six crew profiles (tripulacion.toml), readiness index (aptitud.py),
+                            sensor validation, /reloj/ watch page with offline queue
 laptop2-modelos/            gateway, 3 models, synthetic data and assumptions
 laptop3-orquestador/        orchestrator, rules, protocols, solar-risk model
 modo-demo-sin-laptops/      single-machine demo with recorded responses
 pruebas-integracion/        in-memory stack, input factory, integration tests
-scripts/                    network verification and local startup
+scripts/                    network verification and local startup (.sh and .ps1)
+PLAN.md                     phases and acceptance state
+DEMO_RELOJ.md               2–3 minute watch + crew demo script
 SOURCES.md                  threshold origins and items still requiring verification
 ```
 

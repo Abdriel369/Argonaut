@@ -714,7 +714,83 @@ const ERRORES_REGEX = [
     (_, dias) => `To simulate a frozen value you need at least ${dias} mission days. Move to day ${dias} or later.`],
   [/^'(.+)' no tiene validación de sensor configurada\.$/,
     (_, clave) => `'${clave}' has no sensor validation configured.`],
+  [/^Astronauta desconocido: '(.+)'\. IDs válidos: (.+)\.$/,
+    (_, id, ids) => `Unknown astronaut '${id}'. Valid IDs: ${ids}.`],
+  [/^El lote debe traer entre 1 y 20 lecturas\.$/,
+    () => "The batch must contain between 1 and 20 readings."],
 ];
+
+// ---------------------------------------------------------------------------
+// Crew view (team dashboard) and readiness index
+// ---------------------------------------------------------------------------
+export const EQUIPO = {
+  titulo: "Crew",
+  intro: "Team view for the commander or the medical team: who needs attention and how readiness compares. Tap a row to see one astronaut in detail.",
+  aviso: "Prototype readiness index built from simulated data. It is not a medical evaluation or a fitness-for-duty decision.",
+  dia: "Mission day",
+  total: "Astronauts",
+  niveles: "Levels",
+  promedio: "Average readiness",
+  mejor: "Best",
+  menor: "Lowest",
+  cobertura: "Average data coverage",
+  debil: "Weakest indicator",
+  filtros: { all: "All", alerts: "With alerts", incomplete: "Incomplete data" },
+  tabla: {
+    pos: "#", astronaut: "Astronaut", role: "Role", level: "Level",
+    readiness: "Readiness", coverage: "Data", trend: "Trend", alerts: "Alerts",
+    spark: "Last days",
+  },
+  sinDatos: "Not enough data",
+  verDetalle: "View detail",
+  detalle: "Astronaut detail",
+  cerrar: "Close detail",
+  cargando: "Loading detail…",
+  modeloRiesgo: "Model risk",
+  modeloRiesgoNoDisponible: "—",
+  modeloRiesgoNota: "Highest specialist risk with confidence ≥ 60 %. It is shown apart and does NOT enter the readiness index.",
+  desglose: {
+    titulo: "Readiness breakdown",
+    indicadores: "Indicators",
+    plan: "Plan adherence",
+    seguridad: "Safety",
+    datos: "Data quality",
+    peso: "weight",
+  },
+  origen: { orquestador: "Orchestrator (models)", "respaldo-local": "Local rules only" },
+  modo: { completo: "Full mode", degradado: "Degraded mode" },
+  calidad: "Data quality",
+  coberturaEtiqueta: "Coverage",
+  sospechososHoy: "Suspicious readings today",
+  alertas: "Alerts",
+  sinAlertas: "No alerts for this astronaut.",
+  junta: "Specialist board",
+  protocolo: "Protocol",
+  indicadores: "Indicators",
+  tendencia: "Last days",
+  como: "How is this calculated?",
+  comoTexto: "Readiness is a demo heuristic. It combines indicator levels (40 %), plan adherence (25 %), rule safety (20 %) and data quality (15 %). A red alert caps it at 45 and an orange alert at 70. With coverage below 50 %, or with more than two main indicators missing, it is shown as “Not enough data”, never as zero. Weights live in backend/config/tripulacion.toml.",
+  limite: "This ranking is a demo tool to compare simulated profiles. It must not be used to exclude anyone.",
+  volver: "Back to all astronauts",
+  sinDatosFila: "Not enough data for a comparable index.",
+};
+
+export const TEXTO_TENDENCIA = {
+  sube: "Rising", baja: "Falling", estable: "Steady", sin_dato: "No data",
+};
+
+const ROLES = {
+  "Comandante": "Commander",
+  "Piloto": "Pilot",
+  "Ingeniera de vuelo": "Flight engineer",
+  "Oficial médico": "Medical officer",
+  "Científica": "Scientist",
+  "Especialista de misión": "Mission specialist",
+};
+
+export function traducirRol(rol) {
+  return ROLES[rol] || rol || "";
+}
 
 export function traducirError(texto) {
   if (!texto) return "The server rejected the data. Please check the values.";

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#081229">
+  <title>Astronaut Watch · Station Doctor</title>
+  <!-- Everything is local: no CDN, no remote fonts, no external APIs. -->
+  <link rel="stylesheet" href="../css/estilos.css">
+  <link rel="stylesheet" href="reloj.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect x='4' y='4' width='24' height='24' rx='7' fill='%23081229' stroke='%237CD4FF' stroke-width='2'/%3E%3Cpath d='M16 9v7l4 3' stroke='%233EE0A1' stroke-width='2.5' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body class="reloj-cuerpo">
+  <div class="reloj-marco">
+    <div class="reloj-carcasa">
+      <header class="reloj-barra">
+        <a class="reloj-volver" href="../" aria-label="Back to the station dashboard">←</a>
+        <span id="reloj-hora" class="reloj-hora">--:--</span>
+        <span id="reloj-conexion" class="reloj-pildora" role="status" aria-live="polite">Connecting…</span>
+      </header>
+
+      <main id="reloj-pantalla" class="reloj-contenido"></main>
+
+      <p class="reloj-pie" role="note">Simulated data. Not a medical diagnosis.</p>
+
+      <nav class="reloj-nav" aria-label="Watch screens">
+        <button type="button" data-pantalla-nav="today" aria-pressed="true">Today</button>
+        <button type="button" data-pantalla-nav="medir" aria-pressed="false">Measure</button>
+        <button type="button" data-pantalla-nav="alerta" aria-pressed="false">Alert</button>
+        <button type="button" data-pantalla-nav="tendencia" aria-pressed="false">Trend</button>
+        <button type="button" data-pantalla-nav="reloj" aria-pressed="false">My watch</button>
+      </nav>
+    </div>
+  </div>
+  <div id="reloj-anuncio" class="solo-lectores" role="status" aria-live="polite"></div>
+  <script type="module" src="reloj.js"></script>
+</body>
+</html>

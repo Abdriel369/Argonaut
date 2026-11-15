@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "estado_reloj",
+  "title": "Estado compacto para el reloj (Laptop 1 -> navegador)",
+  "description": "Respuesta ligera para el reloj web. No incluye el estado completo del tablero. Todos los datos son simulados.",
+  "type": "object",
+  "required": [
+    "astronauta", "dia_mision", "actualizado", "conexion", "nivel_global", "riesgo_pct",
+    "explicacion", "alerta_principal", "alertas", "tendencia", "proyeccion",
+    "datos_sospechosos", "indicadores", "linea_base", "campos", "roster", "aviso"
+  ],
+  "properties": {
+    "astronauta": {
+      "type": "object",
+      "required": ["id", "nombre", "rol"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^AST-0[1-6]$" },
+        "nombre": { "type": "string" },
+        "rol": { "type": "string" }
+      }
+    },
+    "dia_mision": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "actualizado": { "type": "string" },
+    "conexion": {
+      "type": "object",
+      "required": ["orquestador", "modelos", "modo"],
+      "properties": {
+        "orquestador": { "type": "boolean" },
+        "modelos": { "type": "boolean" },
+        "modo": { "enum": ["completo", "degradado"] }
+      }
+    },
+    "nivel_global": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+    "riesgo_pct": { "type": "integer", "minimum": 0, "maximum": 100 },
+    "explicacion": { "type": "string" },
+    "sin_datos": {
+      "type": "boolean",
+      "description": "true si el astronauta no tiene ninguna lectura registrada hoy. El reloj lo muestra como 'No data', no como un nivel verde."
+    },
+    "alerta_principal": {
+      "type": ["object", "null"],
+      "required": ["id", "titulo", "nivel", "causa", "protocolo_id", "siguiente_paso"],
+      "properties": {
+        "id": { "type": "string" },
+        "titulo": { "type": "string" },
+        "nivel": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+        "causa": { "type": "string" },
+        "consecuencia": { "type": "string" },
+        "protocolo_id": { "type": "string" },
+        "pasos": { "type": "array", "items": { "type": "object" } },
+        "siguiente_paso": {
+          "type": ["object", "null"],
+          "required": ["id", "texto"],
+          "properties": { "id": { "type": "string" }, "texto": { "type": "string" } }
+        }
+      }
+    },
+    "alertas": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "titulo", "nivel", "causa", "protocolo_id"],
+        "properties": {
+          "id": { "type": "string" },
+          "titulo": { "type": "string" },
+          "nivel": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+          "causa": { "type": "string" },
+          "consecuencia": { "type": "string" },
+          "protocolo_id": { "type": "string" },
+          "pasos": { "type": "array", "items": { "type": "object" } },
+          "siguiente_paso": { "type": ["object", "null"] }
+        }
+      }
+    },
+    "tendencia": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array", "maxItems": 7,
+        "items": { "type": ["number", "null"] }
+      }
+    },
+    "proyeccion": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicador", "valor_24h", "direccion", "pendiente", "dias_para_base", "metodo", "aviso"],
+        "properties": {
+          "indicador": { "type": "string" },
+          "valor_24h": { "type": ["number", "null"] },
+          "direccion": { "enum": ["sube", "baja", "estable", "sin_dato"] },
+          "pendiente": { "type": ["number", "null"] },
+          "dias_para_base": { "type": ["integer", "null"], "minimum": 0 },
+          "metodo": { "type": "string" },
+          "aviso": { "type": "string" },
+          "puntos": { "type": "integer", "minimum": 0 }
+        }
+      }
+    },
+    "datos_sospechosos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["indicador", "motivo"],
+        "properties": {
+          "indicador": { "type": "string" },
+          "motivo": { "enum": ["fuera_de_rango", "cambio_brusco", "valor_congelado"] },
+          "valor_leido": { "type": "number" },
+          "nombre": { "type": "string" },
+          "unidad": { "type": "string" }
+        }
+      }
+    },
+    "indicadores": { "type": "object", "additionalProperties": { "type": ["number", "null"] } },
+    "linea_base": { "type": "object", "additionalProperties": { "type": "number" } },
+    "campos": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["clave", "nombre", "unidad", "minimo", "maximo", "paso", "decimales"],
+        "properties": {
+          "clave": { "type": "string" },
+          "nombre": { "type": "string" },
+          "unidad": { "type": "string" },
+          "minimo": { "type": "number" },
+          "maximo": { "type": "number" },
+          "paso": { "type": "number" },
+          "decimales": { "type": "integer", "minimum": 0 },
+          "icono": { "type": "string" },
+          "principal": { "type": "boolean" }
+        }
+      }
+    },
+    "roster": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "nombre", "rol"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^AST-0[1-6]$" },
+          "nombre": { "type": "string" },
+          "rol": { "type": "string" }
+        }
+      }
+    },
+    "aviso": { "type": "string" }
+  }
+}

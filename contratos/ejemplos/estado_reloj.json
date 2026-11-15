@@ -1,0 +1,67 @@
+{
+  "astronauta": { "id": "AST-01", "nombre": "Cdte. Lucía Ferrer", "rol": "Comandante" },
+  "dia_mision": 6,
+  "actualizado": "2026-11-15T16:05:03Z",
+  "conexion": { "orquestador": true, "modelos": true, "modo": "completo" },
+  "nivel_global": "amarillo",
+  "riesgo_pct": 42,
+  "explicacion": "Estás durmiendo menos de lo normal.",
+  "alerta_principal": {
+    "id": "SUENO_BAJO",
+    "titulo": "Estás durmiendo menos de lo normal",
+    "nivel": "amarillo",
+    "causa": "Dormiste 6.8 h (tu normal son 7.1 h).",
+    "consecuencia": "Con poco sueño baja la atención.",
+    "protocolo_id": "sueno",
+    "pasos": [
+      { "id": "s1", "texto": "Termina las tareas demandantes 2 horas antes de dormir.", "hecho": false }
+    ],
+    "siguiente_paso": { "id": "s1", "texto": "Termina las tareas demandantes 2 horas antes de dormir." }
+  },
+  "alertas": [
+    {
+      "id": "SUENO_BAJO",
+      "titulo": "Estás durmiendo menos de lo normal",
+      "nivel": "amarillo",
+      "causa": "Dormiste 6.8 h (tu normal son 7.1 h).",
+      "consecuencia": "Con poco sueño baja la atención.",
+      "protocolo_id": "sueno",
+      "pasos": [],
+      "siguiente_paso": null
+    }
+  ],
+  "tendencia": {
+    "sueno_h": [7.1, 6.4, 5.6, 5.2, 5.0, 6.8],
+    "fc_reposo": [62, 63, 66, 69, 72, 67],
+    "hrv": [54, 52, 46, 41, 36, 44],
+    "estres": [28, 35, 48, 60, 72, 55]
+  },
+  "proyeccion": [
+    {
+      "indicador": "sueno_h",
+      "valor_24h": 6.9,
+      "direccion": "sube",
+      "pendiente": 0.21,
+      "dias_para_base": 1,
+      "metodo": "regresión lineal simple, últimos 7 días",
+      "aviso": "Proyección heurística de los últimos días. No es un diagnóstico.",
+      "puntos": 6
+    }
+  ],
+  "datos_sospechosos": [],
+  "indicadores": {
+    "sueno_h": 6.8, "animo": 4, "estres": 38, "ejercicio_min": 110,
+    "fc_reposo": 64, "hrv": 50, "spo2": 98, "temperatura": 36.6,
+    "ingesta_pct": 92, "dosis_acumulada_msv": 2.58
+  },
+  "linea_base": { "sueno_h": 7.1, "fc_reposo": 62.0, "hrv": 55.0 },
+  "campos": [
+    { "clave": "sueno_h", "nombre": "Sueño", "unidad": "h", "minimo": 0.0, "maximo": 14.0,
+      "paso": 0.1, "decimales": 1, "icono": "luna", "principal": true }
+  ],
+  "roster": [
+    { "id": "AST-01", "nombre": "Cdte. Lucía Ferrer", "rol": "Comandante" },
+    { "id": "AST-02", "nombre": "Mateo Ríos", "rol": "Piloto" }
+  ],
+  "aviso": "Prototipo con datos simulados. No es una herramienta de diagnóstico médico."
+}

@@ -189,6 +189,7 @@ async def evaluar(entrada: dict, cliente, config: Configuracion, origen: str = "
                                     modo, protocolos_usados, avisos_sensores)
 
     resultado = {
+        "astronauta_id": entrada["astronauta_id"],
         "nivel_global": nivel_global,
         "alertas": alertas_finales,
         "modo": modo,

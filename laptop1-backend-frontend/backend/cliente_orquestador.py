@@ -28,21 +28,29 @@ class ClienteOrquestador:
         return httpx.AsyncClient(transport=self._transporte,
                                  timeout=httpx.Timeout(tiempo, connect=min(tiempo, 2.0)))
 
-    async def evaluar(self, entrada: dict) -> tuple[dict, dict]:
-        """Devuelve (resultado_final, info de conexión). Nunca lanza por fallos de red."""
+    async def evaluar(self, entrada: dict, tiempo_max_s: float | None = None,
+                      reintentos: int | None = None) -> tuple[dict, dict]:
+        """Devuelve (resultado_final, info de conexión). Nunca lanza por fallos de red.
+
+        ``tiempo_max_s`` y ``reintentos`` permiten un camino corto (por ejemplo, el
+        detalle de un astronauta: 4 s y sin reintentos) sin tocar la configuración
+        del flujo principal.
+        """
         validar("entrada_orquestador", entrada)
+        tiempo = self.tiempo_max_s if tiempo_max_s is None else float(tiempo_max_s)
+        intentos_totales = self.reintentos if reintentos is None else max(0, int(reintentos))
         ultimo_error = ""
-        for intento in range(1, self.reintentos + 2):
+        for intento in range(1, intentos_totales + 2):
             try:
-                async with self._http(self.tiempo_max_s) as http:
+                async with self._http(tiempo) as http:
                     respuesta = await http.post(f"{self.url}/evaluar", json=entrada)
                     respuesta.raise_for_status()
                     resultado = validar("resultado_final", respuesta.json())
                 return resultado, {"ok": True, "detalle": "ok", "intentos": intento}
             except (httpx.HTTPError, ErrorContrato, ValueError) as error:
                 ultimo_error = type(error).__name__
-                log.warning("Orquestador: intento %d de %d falló (%s)", intento, self.reintentos + 1, ultimo_error)
-                if intento <= self.reintentos:
+                log.warning("Orquestador: intento %d de %d falló (%s)", intento, intentos_totales + 1, ultimo_error)
+                if intento <= intentos_totales:
                     await asyncio.sleep(0.3 * intento)   # espera corta antes de reintentar
 
         # Respaldo local: mismas reglas, sin junta de especialistas.
@@ -51,7 +59,7 @@ class ClienteOrquestador:
             entrada, ClienteNulo("orquestador (Laptop 3) no disponible"),
             self._config_local, origen="respaldo-local")
         return resultado, {"ok": False, "detalle": f"sin respuesta ({ultimo_error})",
-                           "intentos": self.reintentos + 1}
+                           "intentos": intentos_totales + 1}
 
     async def red(self) -> dict:
         """Estado de las tres laptops y del modelo solar, visto desde la Laptop 1."""

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "detalle_tripulacion",
+  "title": "Detalle individual de un astronauta (Laptop 1 -> navegador)",
+  "description": "Indicadores, tendencia, alertas, junta de especialistas y calidad de los datos. Si el orquestador no responde, origen es 'respaldo-local'. No es una evaluación médica.",
+  "type": "object",
+  "required": ["astronauta", "dia_mision", "nivel_global", "origen", "modo", "explicacion",
+               "preparacion", "alertas", "junta", "protocolos", "sensores_sospechosos",
+               "calidad", "tendencias", "dias_tendencia", "indicadores", "riesgo_modelos_pct", "aviso"],
+  "properties": {
+    "astronauta": {
+      "type": "object",
+      "required": ["id", "nombre", "rol"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^AST-0[1-6]$" },
+        "nombre": { "type": "string" },
+        "rol": { "type": "string" }
+      }
+    },
+    "dia_mision": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "nivel_global": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+    "origen": { "enum": ["orquestador", "respaldo-local"] },
+    "modo": { "enum": ["completo", "degradado"] },
+    "explicacion": { "type": "string" },
+    "preparacion": { "type": "object" },
+    "alertas": { "type": "array", "items": { "type": "object" } },
+    "junta": { "type": "array", "items": { "type": "object" } },
+    "protocolos": { "type": "object" },
+    "sensores_sospechosos": { "type": "array", "items": { "type": "object" } },
+    "calidad": {
+      "type": "object",
+      "required": ["cobertura", "estado", "sospechosos_hoy", "nota"],
+      "properties": {
+        "cobertura": { "type": "number", "minimum": 0, "maximum": 1 },
+        "estado": { "enum": ["ok", "sin_datos_suficientes"] },
+        "sospechosos_hoy": { "type": "integer", "minimum": 0 },
+        "nota": { "type": "string" }
+      }
+    },
+    "tendencias": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array", "maxItems": 7,
+        "items": { "type": ["number", "null"] }
+      }
+    },
+    "dias_tendencia": { "type": "array", "items": { "type": "integer" } },
+    "indicadores": { "type": "array", "items": { "type": "object" } },
+    "riesgo_modelos_pct": { "type": ["integer", "null"], "minimum": 0, "maximum": 100 },
+    "aviso": { "type": "string" }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "respuesta_lote_reloj",
+  "title": "Respuesta al lote de lecturas del reloj (Laptop 1 -> navegador)",
+  "description": "El reloj envía una lectura o un lote pequeño. Cada elemento de 'resultados' es la respuesta individual ya validada.",
+  "type": "object",
+  "required": ["aceptado", "resultados"],
+  "properties": {
+    "aceptado": { "type": "boolean" },
+    "resultados": {
+      "type": "array", "minItems": 1, "maxItems": 20,
+      "items": { "type": "object" }
+    }
+  }
+}

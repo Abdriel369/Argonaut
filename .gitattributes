@@ -1,0 +1,6 @@
+# Los artefactos de los modelos son JSON y sus hashes se calculan sobre los
+# bytes guardados. Forzar LF evita que un checkout en Windows cambie el hash.
+*.json text eol=lf
+*.toml text eol=lf
+*.md text eol=lf
+*.py text eol=lf

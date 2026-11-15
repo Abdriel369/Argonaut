@@ -26,6 +26,7 @@ class Ajustes:
     guion: dict
     catalogo: dict
     sensores: dict
+    tripulacion: dict
 
     @classmethod
     def desde_entorno(cls) -> "Ajustes":
@@ -39,6 +40,7 @@ class Ajustes:
             guion=_toml("guion_7_dias.toml"),
             catalogo=_toml("indicadores.toml"),
             sensores=_toml("sensores.toml"),
+            tripulacion=_toml("tripulacion.toml"),
         )
 
     @property

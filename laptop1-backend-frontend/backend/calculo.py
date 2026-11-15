@@ -86,6 +86,78 @@ def validar_indicadores(nuevos: dict, catalogo: dict) -> tuple[dict, list]:
     return aceptados, errores
 
 
+AVISO_PROYECCION = ("Proyección heurística de los últimos días. No es un pronóstico "
+                    "médico ni un diagnóstico.")
+METODO_PROYECCION = "regresión lineal simple, últimos 7 días"
+
+
+def proyeccion_lineal(serie, dias=None, decimales: int = 0, minimo=None, maximo=None,
+                      linea_base=None, horizonte: int = 14, max_puntos: int = 7):
+    """Proyección heurística a 24 h con una recta de mínimos cuadrados.
+
+    - Usa hasta los últimos ``max_puntos`` valores válidos (ignora None).
+    - Con menos de 3 puntos devuelve None: no se inventa una tendencia.
+    - Nunca proyecta fuera del rango físico del indicador.
+    - ``dias_para_base`` solo se informa si el cruce con la línea base cae dentro
+      del horizonte y en la dirección de la pendiente.
+
+    Es una herramienta de demo, no un modelo predictivo ni una evaluación médica.
+    """
+    pares = []
+    for i, valor in enumerate(serie or []):
+        if es_numero(valor):
+            x = dias[i] if dias and i < len(dias) and es_numero(dias[i]) else i + 1
+            pares.append((float(x), float(valor)))
+    pares = pares[-max_puntos:]
+    if len(pares) < 3:
+        return None
+
+    n = len(pares)
+    suma_x = sum(x for x, _ in pares)
+    suma_y = sum(y for _, y in pares)
+    suma_xx = sum(x * x for x, _ in pares)
+    suma_xy = sum(x * y for x, y in pares)
+    denominador = n * suma_xx - suma_x * suma_x
+    pendiente = (n * suma_xy - suma_x * suma_y) / denominador if denominador else 0.0
+    intercepto = (suma_y - pendiente * suma_x) / n
+
+    ultimo_x, ultimo_y = pares[-1]
+    valor_24h = intercepto + pendiente * (ultimo_x + 1)
+    if es_numero(minimo):
+        valor_24h = max(minimo, valor_24h)
+    if es_numero(maximo):
+        valor_24h = min(maximo, valor_24h)
+    valor_24h = round(valor_24h, decimales)
+
+    paso = 0.5 * (10 ** -decimales)
+    umbral = max(paso, 0.02 * abs(ultimo_y))
+    if abs(pendiente) <= umbral:
+        direccion = "estable"
+    else:
+        direccion = "sube" if pendiente > 0 else "baja"
+
+    dias_para_base = None
+    if es_numero(linea_base) and abs(pendiente) > 1e-12:
+        distancia = linea_base - ultimo_y
+        if abs(distancia) <= paso:
+            dias_para_base = 0
+        else:
+            cruce = distancia / pendiente
+            if 0 < cruce <= horizonte:
+                dias_para_base = max(1, round(cruce))
+
+    return {
+        "indicador": None,   # lo completa quien llama, que conoce el catálogo
+        "valor_24h": valor_24h,
+        "direccion": direccion,
+        "pendiente": round(pendiente, 3),
+        "dias_para_base": dias_para_base,
+        "metodo": METODO_PROYECCION,
+        "aviso": AVISO_PROYECCION,
+        "puntos": n,
+    }
+
+
 def exposicion_musculo_hueso(registros: dict, dia: int, plan_ejercicio: float, proteccion: float) -> dict:
     """ESTIMACIÓN (no medición) de la exposición de músculos y huesos a la microgravedad.
 

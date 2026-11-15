@@ -1,0 +1,16 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "respuesta_lectura_reloj",
+  "title": "Respuesta al envío de una lectura del reloj (Laptop 1 -> navegador)",
+  "type": "object",
+  "required": ["aceptado", "lectura_id", "astronauta_id", "dia_mision", "nivel_global", "estado_reloj"],
+  "properties": {
+    "aceptado": { "type": "boolean" },
+    "lectura_id": { "type": "string", "minLength": 8 },
+    "astronauta_id": { "type": "string", "pattern": "^AST-0[1-6]$" },
+    "dia_mision": { "type": "integer", "minimum": 1, "maximum": 7 },
+    "nivel_global": { "enum": ["verde", "amarillo", "naranja", "rojo"] },
+    "repetida": { "type": "boolean", "description": "true si el lectura_id ya se había aplicado." },
+    "estado_reloj": { "type": "object", "description": "Mismo objeto que GET /api/reloj/estado." }
+  }
+}

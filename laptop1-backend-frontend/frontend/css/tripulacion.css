@@ -1,0 +1,145 @@
+/* ==========================================================================
+   Vista de tripulación (Crew) y ajustes de navegación.
+   Reutiliza las variables de estilos.css. Sin recursos remotos.
+   ========================================================================== */
+
+#sec-tripulacion { grid-column: 1 / -1; }
+#sec-tripulacion h2 { margin-bottom: 0.3rem; }
+
+.crew-cabecera {
+  display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between;
+  gap: 0.7rem 1rem; margin-bottom: 0.9rem;
+}
+.crew-cabecera .ayuda { margin-top: 0.15rem; }
+
+.crew-resumen {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+  gap: 0.55rem; margin-bottom: 0.9rem;
+}
+.crew-dato {
+  display: grid; gap: 0.1rem; padding: 0.55rem 0.7rem;
+  background: var(--noche-2); border: 1px solid var(--borde); border-radius: var(--radio-chico);
+}
+.crew-dato > span:first-child { color: var(--tinta-2); font-size: 0.88rem; }
+.crew-dato b { font-family: var(--cifras); font-size: 1.25rem; font-weight: 600; }
+.crew-niveles { display: flex; flex-wrap: wrap; gap: 0.2rem 0.6rem; font-size: 0.92rem; }
+.crew-niveles .nivel { font-size: 0.92rem; }
+
+.crew-filtros { display: flex; flex-wrap: wrap; gap: 0.45rem; margin-bottom: 0.8rem; }
+
+.crew-columnas {
+  display: grid; gap: 0.7rem; padding: 0 0.7rem 0.3rem;
+  grid-template-columns: 1.6rem minmax(8rem, 1.6fr) auto minmax(8rem, 1fr) 4.2rem 5.2rem 3.6rem 8.5rem;
+  color: var(--tinta-2); font-size: 0.78rem; font-weight: 700;
+}
+.crew-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.5rem; }
+.crew-fila {
+  width: 100%; display: grid; align-items: center; gap: 0.35rem 0.7rem;
+  grid-template-columns: 1.6rem minmax(8rem, 1.6fr) auto minmax(8rem, 1fr) 4.2rem 5.2rem 3.6rem 8.5rem;
+  grid-template-areas: "pos quien nivel prep cob tend alerta spark";
+  padding: 0.6rem 0.7rem; text-align: left; font: inherit; color: var(--tinta);
+  background: var(--noche-2); border: 1.5px solid var(--borde);
+  border-left: 6px solid var(--nivel-color, var(--sin-dato));
+  border-radius: var(--radio-chico); cursor: pointer;
+}
+.crew-fila:hover { background: var(--vidrio-2); border-color: var(--tinta-2); }
+.crew-fila.nivel-verde { --nivel-color: var(--verde); color: var(--tinta); }
+.crew-fila.nivel-amarillo { --nivel-color: var(--amarillo); color: var(--tinta); }
+.crew-fila.nivel-naranja { --nivel-color: var(--naranja); color: var(--tinta); }
+.crew-fila.nivel-rojo { --nivel-color: var(--rojo); color: var(--tinta); }
+.crew-fila.nivel-sin_dato { --nivel-color: var(--sin-dato); color: var(--tinta); }
+
+.crew-pos { grid-area: pos; font-family: var(--cifras); font-size: 1.25rem; font-weight: 600; color: var(--tinta-2); }
+.crew-quien { grid-area: quien; display: grid; gap: 0.05rem; min-width: 0; }
+.crew-quien b { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.crew-quien small { color: var(--tinta-2); }
+.crew-nivel-celda { grid-area: nivel; }
+.crew-prep-celda { grid-area: prep; display: flex; align-items: center; gap: 0.45rem; min-width: 0; }
+.crew-cob-celda { grid-area: cob; display: grid; gap: 0.05rem; }
+.crew-tend-celda { grid-area: tend; display: flex; align-items: center; gap: 0.25rem; }
+.crew-alerta-celda { grid-area: alerta; display: grid; gap: 0.05rem; }
+.crew-spark-celda { grid-area: spark; }
+.crew-cob-celda small, .crew-tend-celda small, .crew-alerta-celda small { color: var(--tinta-2); font-size: 0.78rem; }
+
+.crew-barra {
+  display: block; flex: 1; min-width: 2.5rem; height: 0.65rem; border-radius: 999px;
+  background: rgba(196, 215, 255, 0.14); overflow: hidden;
+}
+.crew-barra i { display: block; height: 100%; background: var(--acento); border-radius: inherit; }
+.crew-pct { font-family: var(--cifras); font-size: 1.2rem; font-weight: 600; white-space: nowrap; }
+.crew-sin-dato { color: var(--sin-dato); font-size: 0.9rem; }
+.crew-spark { width: 100%; max-width: 8.5rem; height: 2.1rem; overflow: visible; }
+.crew-spark polyline { fill: none; stroke: var(--acento); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.crew-spark circle { fill: var(--acento); }
+
+.crew-aviso {
+  display: flex; gap: 0.55rem; align-items: flex-start; margin-top: 0.9rem;
+  padding: 0.65rem 0.8rem; border: 1.5px dashed var(--borde); border-radius: var(--radio-chico);
+  color: var(--tinta-2); font-size: 0.94rem;
+}
+.crew-aviso .icono { color: var(--amarillo); margin-top: 0.1rem; }
+.crew-degradado {
+  display: flex; gap: 0.55rem; align-items: flex-start; margin: 0 0 0.9rem;
+  padding: 0.65rem 0.8rem; border: 2px dashed var(--naranja); border-radius: var(--radio-chico);
+  background: rgba(255, 159, 69, 0.10); color: var(--tinta);
+}
+.crew-degradado .icono { color: var(--naranja); margin-top: 0.1rem; }
+
+.crew-detalle {
+  margin-top: 1rem; padding: 0.95rem; border: 2px solid var(--acento);
+  scroll-margin-top: 5.5rem;
+  border-radius: var(--radio); background: var(--noche-2); display: grid; gap: 0.8rem;
+}
+.crew-detalle-cabecera { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.7rem; align-items: flex-start; }
+.crew-detalle-cabecera h3 { margin: 0.5rem 0 0.15rem; font-size: 1.25rem; }
+.crew-detalle-cabecera h3 small { color: var(--tinta-2); font-weight: 400; font-size: 0.95rem; }
+.crew-detalle-nivel { display: flex; flex-direction: column; align-items: flex-end; gap: 0.15rem; }
+.crew-detalle-rejilla { display: grid; gap: 0.9rem; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); }
+.crew-detalle-rejilla > section { display: grid; gap: 0.4rem; align-content: start; }
+.crew-detalle-rejilla h4 { margin: 0; color: var(--tinta-2); font-size: 0.98rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.crew-tabla-indicadores { grid-column: 1 / -1; }
+.crew-cargando { color: var(--tinta-2); padding: 0.8rem 0; }
+.crew-desglose { display: grid; gap: 0.3rem; }
+.crew-desglose-fila { display: flex; justify-content: space-between; gap: 0.6rem; border-bottom: 1px solid var(--borde); padding-bottom: 0.2rem; }
+.crew-desglose-fila small { color: var(--tinta-2); }
+.crew-modelo { font-size: 0.95rem; display: grid; gap: 0.2rem; margin-top: 0.4rem; }
+.crew-modelo small { color: var(--tinta-2); }
+.crew-junta { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+.crew-junta li { display: flex; justify-content: space-between; gap: 0.6rem; padding: 0.25rem 0; border-bottom: 1px solid var(--borde); }
+.crew-junta span { color: var(--tinta-2); }
+.crew-minis { display: grid; grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); gap: 0.5rem; }
+.crew-mini { display: grid; gap: 0.1rem; }
+.crew-mini > span { color: var(--tinta-2); font-size: 0.9rem; }
+.crew-pasos { margin: 0; padding-left: 1.1rem; color: var(--tinta); }
+.crew-sospechosos { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+.crew-sospechosos li { display: flex; gap: 0.4rem; align-items: flex-start; color: var(--tinta-2); }
+.crew-sospechosos .icono { color: var(--sin-dato); margin-top: 0.15rem; }
+.crew-ayuda { margin-top: 1rem; border-top: 1px solid var(--borde); }
+.crew-ayuda p { color: var(--tinta-2); max-width: 70ch; margin-top: 0.35rem; }
+
+/* La barra inferior pasa de 6 a 8 destinos. */
+.nav-inferior { grid-template-columns: repeat(8, 1fr); }
+.nav-inferior a { font-size: 0.78rem; padding: 0 0.1rem; text-align: center; }
+
+@media (max-width: 860px) {
+  .crew-columnas { display: none; }
+  .crew-fila {
+    grid-template-columns: 1.6rem minmax(0, 1fr) auto;
+    grid-template-areas:
+      "pos quien nivel"
+      "prep prep prep"
+      "cob tend alerta"
+      "spark spark spark";
+  }
+  .crew-spark { max-width: 100%; height: 2.4rem; }
+  .crew-detalle-nivel { align-items: flex-start; }
+}
+
+@media (max-width: 480px) {
+  .nav-inferior a { font-size: 0.68rem; }
+}
+
+@media (min-width: 1160px) {
+  #sec-tripulacion { grid-column: 1 / -1; }
+  .nav-inferior { display: none; }
+}
