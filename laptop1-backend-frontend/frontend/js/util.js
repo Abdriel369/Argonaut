@@ -1,14 +1,14 @@
-// Utilidades compartidas por la interfaz: iconos locales, textos de nivel y formato.
-// Todo es código propio: sin librerías ni recursos remotos.
+// Shared UI helpers: local icons, level texts and formatting.
+// All code is our own: no libraries and no remote resources.
 
-/** Escapa texto antes de insertarlo como HTML. */
+/** Escapes text before inserting it as HTML. */
 export function esc(texto) {
   return String(texto ?? "").replace(/[&<>"']/g, (c) => (
     { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]
   ));
 }
 
-// Trazos SVG (24x24). Cada nivel tiene una FORMA distinta, no solo un color.
+// SVG strokes (24x24). Each level has a DIFFERENT SHAPE, not just a color.
 const TRAZOS = {
   verde: '<circle cx="12" cy="12" r="9"/><path d="m8 12.5 3 3 5-6"/>',
   amarillo: '<path d="M12 3.5 2.8 19.5h18.4L12 3.5Z"/><path d="M12 10v4.5M12 17.2v.3"/>',
@@ -37,28 +37,28 @@ export function icono(nombre) {
 }
 
 export const TEXTO_NIVEL = {
-  verde: "Normal", amarillo: "Atención", naranja: "Alerta", rojo: "Crítico", sin_dato: "Sin dato",
+  verde: "Normal", amarillo: "Attention", naranja: "Alert", rojo: "Critical", sin_dato: "No data",
 };
 const ORDEN = ["sin_dato", "verde", "amarillo", "naranja", "rojo"];
 
-/** Insignia de nivel: icono + texto + color (nunca solo color). */
+/** Level badge: icon + text + color (never color alone). */
 export function insignia(nivel) {
   const n = TEXTO_NIVEL[nivel] ? nivel : "sin_dato";
   return `<span class="nivel nivel-${n}">${icono(n)}${TEXTO_NIVEL[n]}</span>`;
 }
 
-/** El nivel más grave de una lista (ignora los vacíos). */
+/** The most severe level in a list (ignores empty values). */
 export function nivelMaximo(niveles) {
   return niveles.filter(Boolean).reduce((a, b) => (ORDEN.indexOf(b) > ORDEN.indexOf(a) ? b : a), "sin_dato");
 }
 
-/** Número con los decimales del catálogo, o "Sin dato". */
+/** Number with the catalog's decimals, or "No data". */
 export function formato(valor, decimales = 0) {
-  if (typeof valor !== "number" || Number.isNaN(valor)) return "Sin dato";
+  if (typeof valor !== "number" || Number.isNaN(valor)) return "No data";
   return valor.toFixed(decimales);
 }
 
 export const NOMBRES_ESPECIALISTA = {
-  "sueno": "Sueño", "fatiga-bienestar": "Fatiga y bienestar",
-  "cardiovascular": "Cardiovascular", "riesgo-solar": "Riesgo solar",
+  "sueno": "Sleep", "fatiga-bienestar": "Fatigue & wellbeing",
+  "cardiovascular": "Cardiovascular", "riesgo-solar": "Solar risk",
 };

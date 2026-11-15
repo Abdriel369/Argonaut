@@ -1,69 +1,69 @@
-// Textos del mapa corporal: qué afecta a cada zona en el espacio y qué hacer.
-// Lenguaje sencillo, sin jerga y sin dosis de medicamentos.
+// Body-map texts: what affects each zone in space and what to do about it.
+// Plain language, no jargon and no medication doses.
 
 export const ZONAS = [
   {
     id: "cabeza",
-    nombre: "Cabeza: sueño, ánimo y estrés",
-    corto: "Cabeza",
+    nombre: "Head: sleep, mood and stress",
+    corto: "Head",
     indicadores: ["sueno_h", "animo", "estres"],
     alertas: ["FATIGA", "AISLAMIENTO", "SUENO_BAJO", "ESTRES_ALTO", "ANIMO_BAJO"],
-    causa: "En órbita ves unos 16 amaneceres al día y eso confunde a tu reloj interno. " +
-      "El encierro, la carga de trabajo y estar lejos de casa suben el estrés y bajan el ánimo.",
-    hacer: "Mantén un horario fijo de sueño, busca luz brillante al empezar tu día y habla con tu equipo de cómo te sientes.",
+    causa: "In orbit you see about 16 sunrises a day, and that confuses your body clock. " +
+      "Being confined, the workload and being far from home raise stress and lower mood.",
+    hacer: "Keep a fixed sleep schedule, get bright light at the start of your day and talk to your crew about how you feel.",
   },
   {
     id: "corazon",
-    nombre: "Corazón",
-    corto: "Corazón",
+    nombre: "Heart",
+    corto: "Heart",
     indicadores: ["fc_reposo", "hrv"],
     alertas: ["CARDIOVASCULAR", "FC_ALTA", "HRV_BAJA"],
-    causa: "Sin gravedad, los líquidos del cuerpo suben hacia el pecho y la cabeza, y el corazón trabaja de otra forma. " +
-      "El cansancio y el estrés también aceleran el pulso en reposo.",
-    hacer: "Descansa, bebe agua y vuelve a medir. Cumple tu plan de ejercicio: mantiene al corazón en forma.",
+    causa: "Without gravity, body fluids shift toward your chest and head, and your heart works differently. " +
+      "Tiredness and stress also speed up your resting pulse.",
+    hacer: "Rest, drink water and measure again. Stick to your exercise plan: it keeps your heart fit.",
   },
   {
     id: "pulmones",
-    nombre: "Pulmones: oxigenación",
-    corto: "Pulmones",
+    nombre: "Lungs: oxygenation",
+    corto: "Lungs",
     indicadores: ["spo2"],
     alertas: ["SPO2_BAJA"],
-    causa: "El aire de la estación se recicla. Si la ventilación falla en un rincón del módulo, " +
-      "el aire usado se queda alrededor de ti y tu oxigenación puede bajar.",
-    hacer: "Si baja, recoloca el sensor, respira profundo, cambia de lugar y pide revisar el aire del módulo.",
+    causa: "The station's air is recycled. If ventilation fails in a corner of the module, " +
+      "used air stays around you and your oxygen level can drop.",
+    hacer: "If it drops, reposition the sensor, breathe deeply, move somewhere else and ask for the module's air to be checked.",
   },
   {
     id: "musculo",
-    nombre: "Músculos y huesos: piernas y columna",
-    corto: "Músculos y huesos",
+    nombre: "Muscles and bones: legs and spine",
+    corto: "Muscles and bones",
     indicadores: ["ejercicio_min"],
     alertas: ["PERDIDA_MUSCULAR_OSEA", "EJERCICIO_BAJO"],
     estimado: true,
-    causa: "Sin gravedad, las piernas y la columna dejan de cargar tu peso. " +
-      "Los músculos se achican y los huesos pierden minerales si no se ejercitan.",
-    hacer: "Cumple tu ejercicio diario, sobre todo el de fuerza para piernas y espalda.",
+    causa: "Without gravity, your legs and spine stop carrying your weight. " +
+      "Muscles shrink and bones lose minerals if they are not exercised.",
+    hacer: "Keep up your daily exercise, especially strength work for legs and back.",
   },
   {
     id: "radiacion",
-    nombre: "Cuerpo completo: radiación",
-    corto: "Radiación",
+    nombre: "Whole body: radiation",
+    corto: "Radiation",
     indicadores: ["tasa_dosis_usv_h"],
     alertas: ["RADIACION", "TASA_DOSIS_ALTA", "DOSIS_ACUMULADA"],
-    causa: "Fuera de la atmósfera y del campo magnético de la Tierra llega más radiación. " +
-      "Durante una tormenta solar puede subir mucho en pocas horas.",
-    hacer: "Si hay tormenta solar, ve al refugio de la estación y suspende las salidas al exterior.",
+    causa: "Outside the atmosphere and Earth's magnetic field, more radiation reaches you. " +
+      "During a solar storm it can rise a lot in a few hours.",
+    hacer: "If there is a solar storm, go to the station shelter and cancel any trips outside.",
   },
 ];
 
 export const INMUNE = {
-  titulo: "Sistema inmune: línea futura",
-  texto: "Vigilar las defensas requiere muestras de sangre, saliva y orina. Este prototipo no lo mide ni lo simula.",
+  titulo: "Immune system: future work",
+  texto: "Monitoring the immune system needs blood, saliva and urine samples. This prototype does not measure or simulate it.",
 };
 
 export const PREGUNTAS_EQUIPO = [
-  { clave: "comunicacion", texto: "¿Qué tan bien se comunicó el equipo esta semana?" },
-  { clave: "conflictos", texto: "¿Qué tan bien se resolvieron los desacuerdos?" },
-  { clave: "carga", texto: "¿Qué tan manejable fue la carga de trabajo?" },
+  { clave: "comunicacion", texto: "How well did the team communicate this week?" },
+  { clave: "conflictos", texto: "How well were disagreements resolved?" },
+  { clave: "carga", texto: "How manageable was the workload?" },
 ];
 
-export const ANIMOS = ["Muy bajo", "Bajo", "Regular", "Bien", "Muy bien"];
+export const ANIMOS = ["Very low", "Low", "Okay", "Good", "Very good"];
