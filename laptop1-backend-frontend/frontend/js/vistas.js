@@ -547,17 +547,22 @@ export function vistaTripulacion(datos, filtro = "all") {
     return `<div class="vacio"><b>Loading crew…</b>The team view is read from the local rules.</div>`;
   }
   const equipo = datos.equipo || {};
-  const niveles = equipo.niveles || {};
   const filas = (datos.astronautas || []).filter((fila) => filaCumple(fila, filtro));
+  const conteo = { verde: 0, amarillo: 0, naranja: 0, rojo: 0 };
+  for (const fila of datos.astronautas || []) {
+    if (fila.preparacion_pct !== null && conteo[fila.nivel] !== undefined) conteo[fila.nivel] += 1;
+  }
+  const sinDatos = (datos.astronautas || []).filter((fila) => fila.preparacion_pct === null).length;
   const resumen = `
     <div class="crew-resumen">
       <div class="crew-dato"><span>${EQUIPO.dia}</span><b>${datos.dia_mision}</b></div>
       <div class="crew-dato"><span>${EQUIPO.total}</span><b>${equipo.total ?? 0}</b></div>
       <div class="crew-dato"><span>${EQUIPO.niveles}</span>
-        <span class="crew-niveles">${nivelCuenta("verde", niveles.verde || 0)}
-        ${nivelCuenta("amarillo", niveles.amarillo || 0)}
-        ${nivelCuenta("naranja", niveles.naranja || 0)}
-        ${nivelCuenta("rojo", niveles.rojo || 0)}</span></div>
+        <span class="crew-niveles">${nivelCuenta("verde", conteo.verde)}
+        ${nivelCuenta("amarillo", conteo.amarillo)}
+        ${nivelCuenta("naranja", conteo.naranja)}
+        ${nivelCuenta("rojo", conteo.rojo)}
+        ${sinDatos ? nivelCuenta("sin_dato", sinDatos) : ""}</span></div>
       <div class="crew-dato"><span>${EQUIPO.promedio}</span><b>${equipo.promedio_preparacion ?? "—"}${equipo.promedio_preparacion != null ? " %" : ""}</b></div>
       <div class="crew-dato"><span>${EQUIPO.mejor}</span><b>${esc(nombreDe(datos, equipo.mejor))}</b></div>
       <div class="crew-dato"><span>${EQUIPO.menor}</span><b>${esc(nombreDe(datos, equipo.menor))}</b></div>
@@ -580,20 +585,23 @@ export function vistaTripulacion(datos, filtro = "all") {
   const lista = filas.length ? `
     ${columnas}
     <ul class="crew-lista" role="list">
-      ${filas.map((fila) => `
+      ${filas.map((fila) => {
+        const nivelFila = fila.preparacion_pct === null ? "sin_dato" : fila.nivel;
+        return `
       <li>
-        <button type="button" class="crew-fila nivel-${fila.nivel}" data-astronauta="${esc(fila.id)}"
-          aria-label="${esc(fila.nombre)}: ${TEXTO_NIVEL[fila.nivel] || "No data"}, ${EQUIPO.tabla.readiness} ${fila.preparacion_pct ?? EQUIPO.sinDatos}">
+        <button type="button" class="crew-fila nivel-${nivelFila}" data-astronauta="${esc(fila.id)}"
+          aria-label="${esc(fila.nombre)}: ${TEXTO_NIVEL[nivelFila] || "No data"}, ${EQUIPO.tabla.readiness} ${fila.preparacion_pct ?? EQUIPO.sinDatos}">
           <span class="crew-pos">${fila.posicion ?? "—"}</span>
           <span class="crew-quien"><b>${esc(fila.nombre)}</b><small>${esc(traducirRol(fila.rol))}</small></span>
-          <span class="crew-nivel-celda">${insignia(fila.nivel)}</span>
+          <span class="crew-nivel-celda">${insignia(nivelFila)}</span>
           <span class="crew-prep-celda">${barraPreparacion(fila.preparacion_pct)}</span>
           <span class="crew-cob-celda"><small>${EQUIPO.tabla.coverage}</small>${Math.round((fila.cobertura || 0) * 100)} %</span>
           <span class="crew-tend-celda"><small>${EQUIPO.tabla.trend}</small>${icono(fila.tendencia === "sin_dato" ? "sin_dato" : fila.tendencia)} ${esc(TEXTO_TENDENCIA[fila.tendencia] || "—")}</span>
           <span class="crew-alerta-celda"><small>${EQUIPO.tabla.alerts}</small>${(fila.alertas || []).length || "—"}</span>
           <span class="crew-spark-celda">${sparklineEquipo(fila.sparkline, `${fila.nombre}: readiness trend`)}</span>
         </button>
-      </li>`).join("")}
+      </li>`;
+      }).join("")}
     </ul>` : `<div class="vacio"><b>No astronauts in this filter.</b>Change the filter to see the rest of the crew.</div>`;
 
   const degradado = datos.degradado

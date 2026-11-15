@@ -44,6 +44,8 @@ const TEXTOS = {
   needsReview: "Needs review", pending: "Pending", noQueue: "No saved readings.",
   reviewHint: "The server rejected this reading. Edit it or discard it.",
   offlineHint: "No connection. Readings are saved on the watch and retried automatically.",
+  onlineHint: "Readings are sent immediately while the station is online.",
+  syncHint: "Readings are saved on the watch and retried automatically.",
   synced: "Synced.", syncFailed: "Could not sync yet. It will retry automatically.",
   newAlert: "New alert", stepSaved: "Step saved.", stepError: "The step could not be saved.",
   noDataHint: "No data yet. Wait for the station or take a simulated measurement.",
@@ -241,7 +243,7 @@ function pantallaHoy() {
   const accion = principal
     ? `<div class="reloj-accion">
         <small>${TEXTOS.whatNow}</small>
-        <p>${esc(paso ? paso.texto : TEXTOS.allDone)}</p>
+        <p>${esc(paso ? pasoProtocolo(principal.protocolo_id, paso) : TEXTOS.allDone)}</p>
         <div class="reloj-botones">
           ${paso ? `<button type="button" class="reloj-boton" data-accion="hecho"
             data-alerta="${esc(principal.id)}" data-paso="${esc(paso.id)}">${icono("verde")}${TEXTOS.done}</button>` : ""}
@@ -400,7 +402,8 @@ function pantallaReloj() {
       <span>${TEXTOS.signal} <b>strong</b></span>
       <span>${TEXTOS.lastSync} <b>${S.ultimaSync ? S.ultimaSync.toLocaleTimeString() : TEXTOS.never}</b></span>
     </div>
-    <p class="reloj-ayuda">${revisar.length ? TEXTOS.reviewHint : TEXTOS.offlineHint}</p>
+    <p class="reloj-ayuda">${revisar.length ? TEXTOS.reviewHint
+      : (S.cola.length ? TEXTOS.syncHint : (S.conectado ? TEXTOS.onlineHint : TEXTOS.offlineHint))}</p>
     <div class="reloj-cola-cabecera"><b>${TEXTOS.queue} (${S.cola.length})</b>
       <button type="button" class="reloj-boton reloj-boton-mini" data-accion="sincronizar">${TEXTOS.sync}</button></div>
     <ul class="reloj-cola">${filas}</ul>

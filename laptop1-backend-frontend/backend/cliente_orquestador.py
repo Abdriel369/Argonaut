@@ -9,7 +9,7 @@ import logging
 
 import httpx
 
-from comun.contratos import ErrorContrato, validar
+from comun.contratos import validar
 from orquestador import nucleo
 from orquestador.clientes import ClienteNulo
 
@@ -47,7 +47,10 @@ class ClienteOrquestador:
                     respuesta.raise_for_status()
                     resultado = validar("resultado_final", respuesta.json())
                 return resultado, {"ok": True, "detalle": "ok", "intentos": intento}
-            except (httpx.HTTPError, ErrorContrato, ValueError) as error:
+            # Con ASGITransport en proceso, una excepción del orquestador puede
+            # propagarse aquí en vez de llegar como respuesta 500. Cualquier fallo
+            # cuenta como intento fallido y acaba en el respaldo local.
+            except Exception as error:
                 ultimo_error = type(error).__name__
                 log.warning("Orquestador: intento %d de %d falló (%s)", intento, intentos_totales + 1, ultimo_error)
                 if intento <= intentos_totales:
@@ -80,7 +83,7 @@ class ClienteOrquestador:
             estado["laptop2"] = cuerpo["gateway"]
             estado["modelo_solar"] = cuerpo["modelo_solar"]
             estado["respuestas_guardadas"] = bool(cuerpo.get("respuestas_guardadas"))
-        except (httpx.HTTPError, ValueError, KeyError) as error:
+        except Exception as error:
             estado["laptop3"]["detalle"] = f"sin respuesta ({type(error).__name__})"
         return estado
 
@@ -91,5 +94,5 @@ class ClienteOrquestador:
                 respuesta = await http.post(f"{self.url}/demo/caida-laptop2", json={"activa": activa})
                 respuesta.raise_for_status()
             return True
-        except httpx.HTTPError:
+        except Exception:
             return False

@@ -1,0 +1,24 @@
+# Blueprint opcional de Render para la demo de Argonaut (un solo servicio).
+#
+# Uso: en Render, "New +" > "Blueprint" y selecciona este repositorio. Render
+# lee este archivo y crea el Web Service con la configuración de abajo.
+# Alternativa manual: "New +" > "Web Service" con los mismos valores.
+#
+# NO sube nada por sí solo: la publicación la haces tú desde Render.
+
+services:
+  - type: web
+    name: argonaut-station-doctor
+    runtime: docker
+    plan: free
+    region: oregon
+    dockerContext: .
+    dockerfilePath: ./deploy/render/Dockerfile
+    healthCheckPath: /salud
+    autoDeploy: false
+    numInstances: 1
+    envVars:
+      - key: RUTA_BD
+        value: /tmp/astro_medico.db
+      - key: RESPUESTAS_GUARDADAS
+        value: /app/respuestas-guardadas.json
