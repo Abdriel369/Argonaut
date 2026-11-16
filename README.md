@@ -51,30 +51,16 @@ A rules orchestrator detects a potential risk, consults four specialist models (
 
 **All data is simulated.** The readiness index is a demo heuristic, not a calibrated probability or a medical evaluation. The watch is a web simulation, not a real device.
 
-## Deployment (single service)
+## Repository branches
 
-The published demo runs as **one Render Web Service, one Docker container and one process**:
+| Branch | What it contains | Use it for |
+|---|---|---|
+| [`main`](https://github.com/Abdriel369/Argonaut) | The full system: the three-laptop setup, the four models with their training code and synthetic-data generators, the demo mode, all 304 tests, and the documentation. | Studying the project, running it on three laptops or on one machine, and running the tests. |
+| [`Modo-Demo`](https://github.com/Abdriel369/Argonaut/tree/Modo-Demo) | A trimmed copy for the public demo: backend, frontend, orchestrator and recorded responses, plus [`deploy/render/`](https://github.com/Abdriel369/Argonaut/tree/Modo-Demo/deploy/render) and [`render.yaml`](https://github.com/Abdriel369/Argonaut/blob/Modo-Demo/render.yaml). It does not include the models, the gateway or the tests. | Building and deploying the single-service demo on Render. |
 
-```text
-Browser (HTTPS) ──▶ FastAPI backend (API + frontend)
-                          │  httpx.ASGITransport (in-process, no network)
-                          ▼
-                     Orchestrator (rules, panel, protocols, report)
-                          │
-                          ▼
-                     respuestas-guardadas.json (88 recorded model responses)
-```
+## Full architecture: the three-laptop setup
 
-- The backend serves the web interface and the API on the same port.
-- The orchestrator and its rules are embedded in the same process: no second service, no IP addresses.
-- The specialist models are **not executed**: the orchestrator answers from responses recorded from real runs.
-- SQLite lives in `/tmp/astro_medico.db` and is rebuilt on every start (schema + six astronauts + 7-day script).
-
-Resources measured with the free-plan limit (`--memory=512m --cpus=0.1`): **~41 MiB of RAM**, under 1 % CPU, 211 MB image, one process, ~10 s cold start. Full instructions: [`deploy/render/README.md`](deploy/render/README.md).
-
-### Full architecture: the three-laptop setup
-
-The public demo above is a compact version of the system. The full prototype was designed and tested as a small distributed system: three laptops connected to a dedicated router with static IP addresses, each running its own `docker compose` setup and communicating over HTTP. The idea is to mimic a station where the dashboard, the specialist models and the decision logic live on separate computers, so that one of them can fail without taking the rest down.
+The full prototype was designed as a small distributed system and **tested on three laptops**: three laptops connected to a dedicated router with static IP addresses, each running its own `docker compose` setup and communicating over HTTP. The team ran the complete system this way and it worked as designed. The idea is to mimic a station where the dashboard, the specialist models and the decision logic live on separate computers, so that one of them can fail without taking the rest down.
 
 | Laptop | What it runs | Folder | Port |
 |---|---|---|---|
@@ -82,7 +68,7 @@ The public demo above is a compact version of the system. The full prototype was
 | 2 | Gateway + three specialist models: sleep, fatigue and well-being, cardiovascular | `laptop2-modelos/` | 8200 (gateway) |
 | 3 | Orchestrator (rules, medical board, synthesis, protocols, report) + solar-risk model | `laptop3-orquestador/` | 8300 (orchestrator), 8310 (solar) |
 
-No IP address is hard-coded: each laptop reads the addresses of the others from its `.env` file.
+No IP address is hard-coded: each laptop reads the addresses of the others from its `.env` file (`IP_LAPTOP1`, `IP_LAPTOP2`, `IP_LAPTOP3`).
 
 **How a reading travels through the system**
 
@@ -105,7 +91,7 @@ Laptop 1 ──HTTP──▶ Laptop 3 orchestrator ──HTTP──▶ Laptop 2 
 - If Laptop 3 does not respond: Laptop 1 evaluates using its local copy of the rules.
 - A broken sensor never triggers a red alert by itself and never lowers the alerts coming from other signals.
 
-**Getting started (on each laptop, with Docker installed)**
+**Getting started (on each laptop, with Docker installed, `main` branch)**
 
 ```bash
 cd laptop2-modelos        # then laptop3-orquestador, laptop1-backend-frontend
@@ -122,12 +108,47 @@ python3 scripts/verificar_red.py --desde laptop1   # Laptop 1 → Laptop 3 and w
 python3 scripts/verificar_red.py --desde laptop3   # Laptop 3 → gateway and each model on Laptop 2
 ```
 
-**Other ways to run it without the three laptops**
+## Run it on one machine
 
-- **Demo mode** (for judges): `modo-demo-sin-laptops/arrancar_demo.sh` (with Docker, or `local` without Docker). It uses model responses recorded from real runs, and the screen indicates demo mode at all times. The public Render demo works this way.
-- **Local development on one machine** (seven real processes on `127.0.0.1` ports): `scripts/arrancar_local.sh` and `scripts/arrancar_local.sh parar`. On Windows: `.\scripts\arrancar_local.ps1` and `.\scripts\arrancar_local.ps1 parar` (if the execution policy blocks it: `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\arrancar_local.ps1`). Dashboard: `http://127.0.0.1:8100/`, Watch: `http://127.0.0.1:8100/reloj/`.
+### Option A · Demo mode (`main` branch)
 
-## Run locally
+Uses model responses recorded from real runs; the screen indicates demo mode at all times.
+
+```bash
+pip install -r laptop1-backend-frontend/requirements.txt
+./modo-demo-sin-laptops/arrancar_demo.sh local     # without Docker
+./modo-demo-sin-laptops/arrancar_demo.sh           # with Docker (docker compose)
+```
+
+On Windows: `.\modo-demo-sin-laptops\arrancar_demo.ps1`. Dashboard: `http://localhost:8100/`, Watch: `http://localhost:8100/reloj/`.
+
+### Option B · Full system on one machine (`main` branch)
+
+Seven real processes on `127.0.0.1` ports, including the models:
+
+```bash
+pip install -r laptop2-modelos/requirements.txt
+./scripts/arrancar_local.sh          # start
+./scripts/arrancar_local.sh parar    # stop
+```
+
+On Windows: `.\scripts\arrancar_local.ps1` and `.\scripts\arrancar_local.ps1 parar` (if the execution policy blocks it: `powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\arrancar_local.ps1`). Dashboard: `http://127.0.0.1:8100/`, Watch: `http://127.0.0.1:8100/reloj/`.
+
+### Option C · The single-service Render build (`Modo-Demo` branch)
+
+This is exactly what the public demo runs. The files are on the `Modo-Demo` branch:
+
+```bash
+git clone -b Modo-Demo https://github.com/Abdriel369/Argonaut.git argonaut-demo
+cd argonaut-demo
+```
+
+With Docker (same command Render uses):
+
+```bash
+docker build -f deploy/render/Dockerfile -t argonaut-render:local .
+docker run --rm -p 8100:8100 argonaut-render:local
+```
 
 Without Docker (Python 3.12, from the repository root, PowerShell):
 
@@ -138,30 +159,45 @@ $env:RESPUESTAS_GUARDADAS = "$PWD\modo-demo-sin-laptops\respuestas-guardadas.jso
 .\.venv\Scripts\python.exe -m uvicorn app:app --app-dir deploy/render --port 8100
 ```
 
-With Docker (same command Render uses):
-
-```bash
-docker build -f deploy/render/Dockerfile -t argonaut-render:local .
-docker run --rm -p 8100:8100 argonaut-render:local
-```
-
-- Dashboard: `http://127.0.0.1:8100/`
-- Watch: `http://127.0.0.1:8100/reloj/`
-
 Smoke tests (13 checks):
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File deploy/render/smoke.ps1 -Base http://127.0.0.1:8100
 ```
 
+Full deployment guide: [`deploy/render/README.md`](https://github.com/Abdriel369/Argonaut/blob/Modo-Demo/deploy/render/README.md) on the `Modo-Demo` branch.
+
+## Public deployment (single service)
+
+The published demo runs as **one Render Web Service, one Docker container and one process**:
+
+```text
+Browser (HTTPS) ──▶ FastAPI backend (API + frontend)
+                          │  httpx.ASGITransport (in-process, no network)
+                          ▼
+                     Orchestrator (rules, panel, protocols, report)
+                          │
+                          ▼
+                     respuestas-guardadas.json (88 recorded model responses)
+```
+
+- The backend serves the web interface and the API on the same port.
+- The orchestrator and its rules are embedded in the same process: no second service, no IP addresses.
+- The specialist models are **not executed**: the orchestrator answers from responses recorded from real runs.
+- SQLite lives in `/tmp/astro_medico.db` and is rebuilt on every start (schema + six astronauts + 7-day script).
+
+Resources measured with the free-plan limit (`--memory=512m --cpus=0.1`): **~41 MiB of RAM**, under 1 % CPU, 211 MB image, one process, ~10 s cold start.
+
 ## Tests
+
+From the repository root on the `main` branch:
 
 ```bash
 pip install -r laptop2-modelos/requirements.txt pytest
-python -m pytest           # from the repository root (see the exact count in the output)
+python -m pytest           # see the exact count in the output
 ```
 
-At the time of this change: **304 tests pass**. `xgboost` is pinned below 3.0 in the model requirements: version 3.x crashed while shutting down with this machine's CUDA driver. On Windows the tests force `USAR_GPU=no` for the same reason; the runtime keeps `USAR_GPU=auto`. The pure watch queue also has a Node script: `node laptop1-backend-frontend/frontend/reloj/pruebas/cola.script.mjs`.
+Result on 2026-11-15: **304 tests pass**. `xgboost` is pinned below 3.0 in the model requirements: version 3.x crashed while shutting down with one team machine's CUDA driver. On Windows the tests force `USAR_GPU=no` for the same reason; the runtime keeps `USAR_GPU=auto`. The pure watch queue also has a Node script: `node laptop1-backend-frontend/frontend/reloj/pruebas/cola.script.mjs`.
 
 **Coverage**
 
@@ -185,13 +221,13 @@ Metrics show that the model learned the synthetic rule, not that it is clinicall
 
 Thresholds and weights are stored in configuration files with comments. **They are example values and must be replaced and sourced before any serious use.**
 
-**Sources:** [`SOURCES.md`](SOURCES.md) explains where each threshold comes from and provides the full reference for each source. The team verified NASA-STD-3001 Vol. 1 [V1 4030] (career dose below 600 mSv). Nine other sources were opened and checked on 2026-11-15; they support the rationale behind 14 thresholds, not their numerical values. Three thresholds remain marked `SOURCE TO BE CITED` (heart rate, heart-rate variability, and the cardiovascular rule). The cutoffs are design decisions, not values copied from the standard.
+**Sources:** [`SOURCES.md`](SOURCES.md) (English) and [`FUENTES.md`](FUENTES.md) (Spanish) explain where each threshold comes from and provide the full reference for each source. The team verified NASA-STD-3001 Vol. 1 [V1 4030] (career dose below 600 mSv). Nine other sources were opened and checked on 2026-11-15; they support the rationale behind 14 thresholds, not their numerical values. Three thresholds remain marked `SOURCE TO BE CITED` (heart rate, heart-rate variability, and the cardiovascular rule). The cutoffs are design decisions, not values copied from the standard.
 
 **Sensors:** sensor validation runs before the rules and models (possible range, abrupt change, frozen value). A suspicious reading is not used and generates an equipment warning. Example limits and assumptions are documented in `laptop1-backend-frontend/SUPUESTOS.md`.
 
 | Threshold | Example value | Location | Basis |
 |---|---|---|---|
-| Sleep below baseline | 1 h yellow, 2.5 h orange, 3.5 h red; 3-day persistence | `reglas/config/umbrales.toml` | Rationale: NASA HRP, sleep and fatigue risk |
+| Sleep below baseline | 1 h yellow, 2.5 h orange, 3.5 h red; 3-day persistence | `laptop3-orquestador/reglas/config/umbrales.toml` | Rationale: NASA HRP, sleep and fatigue risk |
 | Low mood | 2 points (1–5 scale); 3-day persistence | same | Rationale: NASA HRP, behavioral health |
 | High stress | 20 / 35 / 55 points above baseline (0–100) | same | Prototype's own scale |
 | Low exercise | 30% and 50% below plan; 5 days | same | Rationale: ISS exercise countermeasures |
@@ -203,8 +239,8 @@ Thresholds and weights are stored in configuration files with comments. **They a
 | Current radiation rate | 60 / 200 / 1000 µSv/h | same | Rationale: NASA-STD-3001 Vol. 1 |
 | Cumulative radiation | 50 / 150 / 250 mSv | same | **Verified:** NASA-STD-3001 Vol. 1 [V1 4030], career dose below 600 mSv. The three cutoffs are design steps toward that limit |
 | Risk-level cutoff | 0.20 / 0.50 / 0.75 | `comun/especialista/nucleo.py` | Prototype's own scale |
-| Maximum time per model | 3 s | `orquestador/clientes.py` (real models only; not used in the demo) | System design |
-| Adaptation window | 2 days, thresholds ×1.5 | `reglas/config/umbrales.toml` | Rationale: NASA HRP, duration of initial adaptation |
+| Maximum time per model | 3 s | `laptop3-orquestador/orquestador/clientes.py` (real models only; not used in the demo) | System design |
+| Adaptation window | 2 days, thresholds ×1.5 | `laptop3-orquestador/reglas/config/umbrales.toml` | Rationale: NASA HRP, duration of initial adaptation |
 
 The "Basis" column gives the rationale for each threshold, not a citation of its numerical value. Complete references and verification status are in [`SOURCES.md`](SOURCES.md).
 
@@ -223,42 +259,54 @@ The "Basis" column gives the rationale for each threshold, not a citation of its
 - **Crew profiles:** the six astronauts are fictional and deterministic. AST-05 intentionally has no records for days 3–7, so the crew view shows **Not enough data** instead of a misleading zero.
 - **Watch:** a web screen, not a native app. It does not use Bluetooth or real sensors. Its offline queue lives in `localStorage` and is limited to 20 readings per astronaut; the demo does not use service workers or background execution.
 
+## Known issues
+
+- **Watch "Today" screen language:** when an alert is active, the next protocol step on the watch's **Today** tab is shown in Spanish, while the rest of the interface is in English. The **Alert** tab shows the same steps correctly in English. Cause: `laptop1-backend-frontend/frontend/reloj/reloj.js` renders `paso.texto` directly instead of passing it through `pasoProtocolo(...)`, which the Alert tab already uses.
+
 ## Verification status
 
 **Verified:**
 
-- All 304 tests pass; the 7-day scenario produces the expected scripted levels.
-- The single-service demo was built with Docker and run under the free-plan limit (`--memory=512m --cpus=0.1`) on a dynamic `PORT`. The 13 smoke checks passed inside the container (`deploy/render/smoke.ps1`): `/`, `/reloj/` and their local assets, `/salud`, six astronauts, day change, solar event, recorded specialist responses, alerts, protocols, suspicious sensor, degraded mode and recovery, watch state and idempotent reading, reset, and CSV export. Memory stayed at ~41 MiB, CPU under 1 %, and SIGTERM shut the server down in ~1.1 s with exit code 0.
+- All 304 tests pass on the `main` branch (re-run on 2026-11-15); the 7-day scenario produces the expected scripted levels.
+- **Three-laptop setup:** the full system was run on three laptops connected through a dedicated router, each with its own `docker compose` stack, and it worked as designed.
+- The single-service demo (`Modo-Demo` branch) was built with Docker and run under the free-plan limit (`--memory=512m --cpus=0.1`) on a dynamic `PORT`. The 13 smoke checks passed inside the container (`deploy/render/smoke.ps1`): `/`, `/reloj/` and their local assets, `/salud`, six astronauts, day change, solar event, recorded specialist responses, alerts, protocols, suspicious sensor, degraded mode and recovery, watch state and idempotent reading, reset, and CSV export. Memory stayed at ~41 MiB, CPU under 1 %, and SIGTERM shut the server down in ~1.1 s with exit code 0.
 - The public deployment on Render is reachable without login at https://argonaut-demo.onrender.com/ (checked on 2026-11-15).
 - A visual check with headless Chrome rendered `/` and `/reloj/` at desktop size and with emulated 360/390 px viewports; the Crew table loaded its six rows, the AST-03 detail opened, and there was no horizontal overflow.
 
 **Not verified:**
 
 - The full offline → reload → online cycle in browser DevTools was not automated; the pure queue logic is covered by Node tests and the HTTP endpoints by pytest.
-- The three-laptop hardware setup was not available for the final test; the public demo does not need it because the specialist responses are recorded.
 
 ## Repository structure
 
+`main` branch:
+
 ```text
-deploy/render/              single-service demo for Render: Dockerfile, entrypoint (backend +
-                            orchestrator in-process via httpx.ASGITransport), requirements,
-                            smoke tests and deployment guide
 contratos/                  shared JSON schemas + examples + tests
-comun/                      validation, levels, shared logging
+comun/                      validation, levels, shared logging, base for the 4 specialist models
 laptop1-backend-frontend/   backend, frontend (no CDN), profile and scenario configuration,
                             six crew profiles (tripulacion.toml), readiness index (aptitud.py),
                             sensor validation, /reloj/ watch page with offline queue
-laptop2-modelos/            gateway, 3 models, synthetic data (training only; not shipped)
-laptop3-orquestador/        orchestrator, rules, protocols, solar-risk model (not shipped)
-modo-demo-sin-laptops/      recorded specialist responses (88) and the script that captured them
+laptop2-modelos/            gateway, 3 models, synthetic-data generators (training only)
+laptop3-orquestador/        orchestrator, rules, protocols, solar-risk model
+modo-demo-sin-laptops/      recorded specialist responses (88), the script that captured them,
+                            and the one-machine demo launcher
 pruebas-integracion/        in-memory stack, input factory, integration tests
-render.yaml                 optional Render Blueprint for the Web Service
+scripts/                    one-machine launcher (7 processes) and network checker
 PLAN.md                     phases and acceptance state
 DEMO_RELOJ.md               2–3 minute watch + crew demo script
-SOURCES.md                  threshold origins and items still requiring verification
+PROMPT_RELOJ_Y_TRIPULACION.md  brief used for the AI-assisted watch and crew work
+SOURCES.md / FUENTES.md     threshold origins and items still requiring verification (EN / ES)
 ```
 
-## Tools used in Argonaut – Station Doctor
+`Modo-Demo` branch (public demo only):
+
+```text
+deploy/render/              Dockerfile, entrypoint (backend + orchestrator in-process via
+                            httpx.ASGITransport), requirements, smoke tests and deployment guide
+render.yaml                 optional Render Blueprint for the Web Service
+```
+
 ## Tools and Resources
 
 | Tool or resource | What it contributed to the project |
@@ -269,10 +317,11 @@ SOURCES.md                  threshold origins and items still requiring verifica
 | Render | Hosts the public demo as a single Docker web service so anyone can try the dashboard and the watch without installing anything. |
 | Python, FastAPI, and Uvicorn | Python was used to write the backend logic. FastAPI organizes the endpoints through which the interface requests information, and Uvicorn runs the server that handles those requests. |
 | SQLite, HTTPX, and jsonschema | SQLite provides local storage for the backend. HTTPX lets services communicate over HTTP (and in-process in the public demo). jsonschema checks that messages have the expected structure, for example that required fields are present and each value has the correct type. |
+| NumPy, scikit-learn, and XGBoost | Used to train and run the four specialist models (logistic regression and small gradient-boosting models) on synthetic data. |
 | HTML, CSS, and JavaScript | HTML organizes elements such as the sleep, mood, and pulse cards. CSS defines their layout, typography, and colors so each indicator's status can be recognized at a glance. JavaScript handles actions such as selecting a region on the body map, replaying the mission week, or triggering a solar event. |
 | Atkinson Hyperlegible and Barlow Semi Condensed | Typefaces used in the dashboard design to distinguish titles, labels, and numeric values. The font files are bundled with the project so the interface works without downloading fonts during the demo. |
 | Gemini (Google) | Used as research support to search for data and background information on the topics behind the project. The team checked the findings against the original sources before using them. |
-| Claude (Anthropic) | Handled most of the programming and the design of the system, including the backend, the dashboard interface, and how its components connect. It also helped review scientific sources, organize references, and draft the project description for the competition. The team tested and validated the result. |
+| Claude (Anthropic) | Handled most of the programming and the design of the system, including the backend, the dashboard interface, and how its components connect. It also helped review scientific sources, organize references, and draft the project description and presentation for the competition. The team tested and validated the result. |
 | ChatGPT Pro (OpenAI) | Used to review and correct the project's flowchart as the system evolved. It also helped proofread texts and supported the writing of the project documentation. The team reviewed and edited the final content. |
 | DeepSeek (with an agent harness) | Used as a coding assistant to merge the backend and the orchestrator into a single container for Render. It replaced the heavy models with saved responses and verified that the full demo runs within 512 MB of memory and 0.1 CPU. The team reviewed and validated the result. |
 
