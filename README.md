@@ -275,6 +275,7 @@ SOURCES.md                  threshold origins and items still requiring verifica
 | Claude (Anthropic) | Used as support to review and explain scientific sources, discuss how to present information on the dashboard, and work through questions while running the application. It also helped organize references and draft the project description for the competition. |
 | ChatGPT Pro (OpenAI) | Used to proofread and correct texts, support the writing of the project documentation, and help define and organize the project's workflow. The team reviewed and edited the final content. |
 | DeepSeek (with an agent harness) | Used as a coding assistant to merge the backend and the orchestrator into a single container for Render. It replaced the heavy models with saved responses and verified that the full demo runs within 512 MB of memory and 0.1 CPU. The team reviewed and validated the result. |
+
 Font licenses (SIL OFL 1.1): `laptop1-backend-frontend/frontend/fuentes/`.
 
 ## Sources and threshold documentation
