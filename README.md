@@ -271,6 +271,7 @@ SOURCES.md                  threshold origins and items still requiring verifica
 | HTML, CSS, and JavaScript | HTML organizes elements such as the sleep, mood, and pulse cards. CSS defines their layout, typography, and colors so each indicator's status can be recognized at a glance. JavaScript handles actions such as selecting a region on the body map, replaying the mission week, or triggering a solar event. |
 | Atkinson Hyperlegible and Barlow Semi Condensed | Typefaces used in the dashboard design to distinguish titles, labels, and numeric values. The font files are bundled with the project so the interface works without downloading fonts during the demo. |
 | Claude (Anthropic) | Used as support to review and explain scientific sources, discuss how to present information on the dashboard, and work through questions while running the application. It also helped organize references and draft the project description for the competition. |
+| DeepSeek (con arnés/harness) | Usado como apoyo para [lo que hizo exactamente: por ejemplo, generar código, revisar pruebas, redactar documentación]. El equipo revisó y validó el resultado. |
 
 Font licenses (SIL OFL 1.1): `laptop1-backend-frontend/frontend/fuentes/`.
 
