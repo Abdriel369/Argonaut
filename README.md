@@ -271,9 +271,10 @@ SOURCES.md                  threshold origins and items still requiring verifica
 | SQLite, HTTPX, and jsonschema | SQLite provides local storage for the backend. HTTPX lets services communicate over HTTP (and in-process in the public demo). jsonschema checks that messages have the expected structure, for example that required fields are present and each value has the correct type. |
 | HTML, CSS, and JavaScript | HTML organizes elements such as the sleep, mood, and pulse cards. CSS defines their layout, typography, and colors so each indicator's status can be recognized at a glance. JavaScript handles actions such as selecting a region on the body map, replaying the mission week, or triggering a solar event. |
 | Atkinson Hyperlegible and Barlow Semi Condensed | Typefaces used in the dashboard design to distinguish titles, labels, and numeric values. The font files are bundled with the project so the interface works without downloading fonts during the demo. |
+| Gemini (Google) | Used as research support to search for data and background information on the topics behind the project. The team checked the findings against the original sources before using them. |
 | Claude (Anthropic) | Used as support to review and explain scientific sources, discuss how to present information on the dashboard, and work through questions while running the application. It also helped organize references and draft the project description for the competition. |
+| ChatGPT Pro (OpenAI) | Used to proofread and correct texts, support the writing of the project documentation, and help define and organize the project's workflow. The team reviewed and edited the final content. |
 | DeepSeek (with an agent harness) | Used as a coding assistant to merge the backend and the orchestrator into a single container for Render. It replaced the heavy models with saved responses and verified that the full demo runs within 512 MB of memory and 0.1 CPU. The team reviewed and validated the result. |
-
 Font licenses (SIL OFL 1.1): `laptop1-backend-frontend/frontend/fuentes/`.
 
 ## Sources and threshold documentation
